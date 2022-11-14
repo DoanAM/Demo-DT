@@ -1,4 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# npm modules
 frontend/node_modules
+
+#bundled files
+frontend/static
