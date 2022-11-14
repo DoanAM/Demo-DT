@@ -3,6 +3,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import React, { Component } from "react";
 import { render } from "react-dom";
 import Topbar from "./scenes/global/Topbar.jsx";
+import Navbar from "./scenes/global/Sidebar.jsx";
+import Live_Data from "./scenes/live_data/index.jsx";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -12,8 +14,11 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <main className="content"></main>
-          <Topbar />
+          <Navbar />
+          <main className="content">
+            <Topbar />
+            <Live_Data />
+          </main>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>

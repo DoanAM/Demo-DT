@@ -1,0 +1,116 @@
+[
+  {
+    "tablename": "cnc",
+    "columnnames": {
+      "Timestamp": "int64",
+      "XCurrPos": "int32",
+      "XActPos": "int32",
+      "ZCurrPos": "int32",
+      "ZActPos": "int32",
+      "YCurrPos": "int32",
+      "YActPos": "int32",
+      "Y2CurrPos": "int32",
+      "Y2ActPos": "int32",
+      "S1Actrev": "int32",
+      "S1Currrev": "int32",
+      "S1Cmdrev": "int32",
+      "Actfeed": "int32",
+      "Actblocknr": "int32",
+      "tbvec0": "int32",
+      "tbvec1": "int32",
+      "tbvec2": "int32"
+    }
+  },
+  {
+    "tablename": "drive",
+    "columnnames": {
+      "Timestamp": "int64",
+      "XEnc2Pos": "int32",
+      "XActTrq": "int32",
+      "XFollDist": "int32",
+      "XEnc1Vel": "int32",
+      "XEnc2Vel": "int32",
+      "XEnc1Pos": "int32",
+      "XEnc1Acc": "int32",
+      "XVelError": "int32",
+      "XMotTemp": "int32",
+      "ZEnc2Pos": "int32",
+      "ZActTrq": "int32",
+      "ZFollDist": "int32",
+      "ZEnc1Vel": "int32",
+      "ZEnc2Vel": "int32",
+      "ZEnc1Pos": "int32",
+      "ZEnc1Acc": "int32",
+      "ZVelError": "int32",
+      "ZMotTemp": "int32",
+      "YEnc2Pos": "int32",
+      "YActTrq": "int32",
+      "YFollDist": "int32",
+      "YEnc1Vel": "int32",
+      "YEnc2Vel": "int32",
+      "YEnc1Pos": "int32",
+      "YEnc1Acc": "int32",
+      "YVelError": "int32",
+      "YMotTemp": "int32",
+      "Y2Enc2Pos": "int32",
+      "Y2ActTrq": "int32",
+      "Y2FollDist": "int32",
+      "Y2Enc1Vel": "int32",
+      "Y2Enc2Vel": "int32",
+      "Y2Enc1Pos": "int32",
+      "Y2Enc1Acc": "int32",
+      "Y2VelError": "int32",
+      "Y2MotTemp": "int32",
+      "S1EncPos": "int32",
+      "S1ActTrq": "int32",
+      "S1FollErr": "int32"
+    }
+  },
+  {
+    "tablename": "prog",
+    "columnnames": {
+      "Timestamp": "int64",
+      "Programname": "object",
+      "Materialnnumber": "int32",
+      "Serialnumber": "int32",
+      "Operation": "int32"
+    }
+  },
+  {
+    "tablename": "tool",
+    "columnnames": {
+      "Timestamp": "int64",
+      "ID": "int64",
+      "Number": "int64",
+      "category": "object",
+      "ArtNr": "object",
+      "Name": "object",
+      "Length": "float64",
+      "Diameter": "float64"
+    }
+  },
+  {
+    "tablename": "wcs",
+    "columnnames": {
+      "Timestamp": "int64",
+      "isActive": "bool",
+      "X": "float64",
+      "Y": "float64",
+      "Z": "float64",
+      "alpha": "float64",
+      "beta": "float64",
+      "gamma": "float64"
+    }
+  },
+  {
+    "tablename": "auxiliary",
+    "columnnames": {
+      "Timestamp": "int64",
+      "ActivateMicrojetMediumExternal2": "bool",
+      "ActivateMicrojetMediumInternal2": "bool",
+      "VacuumActivate": "bool",
+      "CoolingUnitActivate": "bool",
+      "ActivateBlowClearWorkpiece": "bool"
+    }
+  }
+]
