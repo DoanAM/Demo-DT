@@ -8,9 +8,9 @@ const Topbar = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
   return (
-    <Box display="flex" justifyContent="space-between" p={2} gap="152px">
-      <Typography variant="h4">Simulation</Typography>
+    <Box display="flex" justifyContent="flex-end" p={2} gap="152px">
       <Typography variant="h4">Live Data</Typography>
+      <Typography variant="h4">Simulation</Typography>
       <Typography variant="h4">Save View</Typography>
       <Typography variant="h4">My Account</Typography>
     </Box>

@@ -7,10 +7,6 @@ const Live_Data = () => {
   const colors = tokens(theme.palette.mode);
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        DASHBOARD
-      </Box>
-
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
