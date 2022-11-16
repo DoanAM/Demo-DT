@@ -4,7 +4,7 @@
 frontend/node_modules
 
 #bundled files
-frontend/static/frontend
+frontend/static
 
 #logs
 warning.log
