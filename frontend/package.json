@@ -29,6 +29,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.13",
     "@mui/x-data-grid": "^5.17.11",
+    "axios": "^1.1.3",
     "babel-preset-es2015": "^6.24.1",
     "formik": "^2.2.9",
     "react-pro-sidebar": "^0.7.1",
