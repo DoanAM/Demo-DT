@@ -6,8 +6,17 @@ import { tokens } from "../../theme";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GamepadOutlinedIcon from "@mui/icons-material/GamepadOutlined";
 import MiscellaneousServicesOutlinedIcon from "@mui/icons-material/MiscellaneousServicesOutlined";
+import CarpenterOutlinedIcon from "@mui/icons-material/CarpenterOutlined";
+import TerminalOutlinedIcon from "@mui/icons-material/TerminalOutlined";
+import ControlCameraOutlinedIcon from "@mui/icons-material/ControlCameraOutlined";
+import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
+import { CncList } from "../../data/CncList.js";
+import { WcsList } from "../../data/WcsList.js";
+import { ProgList } from "../../data/ProgList.js";
+import { DriveList } from "../../data/DriveList.js";
+import { ToolList } from "../../data/ToolList.js";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -68,8 +77,9 @@ const Navbar = () => {
               selected={selected}
               setSelected={setSelected}
             >
-              <MenuItem>XCurrPos</MenuItem>
-              <MenuItem>XActPos</MenuItem>
+              {CncList.map((item) => {
+                return <DragAndDrop name={item.name} id={item.id} />;
+              })}
             </SubMenu>
             <SubMenu
               title="Auxiliary"
@@ -77,11 +87,49 @@ const Navbar = () => {
               selected={selected}
               setSelected={setSelected}
             >
-              <div>
-                {AuxiliaryList.map((item) => {
-                  return <DragAndDrop name={item.name} id={item.id} />;
-                })}
-              </div>
+              {AuxiliaryList.map((item) => {
+                return <DragAndDrop name={item.name} id={item.id} />;
+              })}
+            </SubMenu>
+            <SubMenu
+              title="Drive"
+              icon={<HubOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            >
+              {DriveList.map((item) => {
+                return <DragAndDrop name={item.name} id={item.id} />;
+              })}
+            </SubMenu>
+            <SubMenu
+              title="WCS"
+              icon={<ControlCameraOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            >
+              {WcsList.map((item) => {
+                return <DragAndDrop name={item.name} id={item.id} />;
+              })}
+            </SubMenu>
+            <SubMenu
+              title="Prog"
+              icon={<TerminalOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            >
+              {ProgList.map((item) => {
+                return <DragAndDrop name={item.name} id={item.id} />;
+              })}
+            </SubMenu>
+            <SubMenu
+              title="Tool"
+              icon={<CarpenterOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            >
+              {ToolList.map((item) => {
+                return <DragAndDrop name={item.name} id={item.id} />;
+              })}
             </SubMenu>
           </Box>
         </Menu>

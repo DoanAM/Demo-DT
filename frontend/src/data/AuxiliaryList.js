@@ -1,8 +1,8 @@
 export const AuxiliaryList = [
-  {
+  /*   {
     id: 1,
     name: "Timestamp",
-  },
+  }, */
   {
     id: 2,
     name: "ActivateMicrojetMediumExternal2",
