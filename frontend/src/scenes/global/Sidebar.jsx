@@ -5,23 +5,9 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GamepadOutlinedIcon from "@mui/icons-material/GamepadOutlined";
-
-const Item = ({ title, icon, selected, setSelected }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: colors.black[100],
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-    </MenuItem>
-  );
-};
+import MiscellaneousServicesOutlinedIcon from "@mui/icons-material/MiscellaneousServicesOutlined";
+import DragAndDrop from "../../components/DragAndDrop.jsx";
+import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -84,6 +70,18 @@ const Navbar = () => {
             >
               <MenuItem>XCurrPos</MenuItem>
               <MenuItem>XActPos</MenuItem>
+            </SubMenu>
+            <SubMenu
+              title="Auxiliary"
+              icon={<MiscellaneousServicesOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            >
+              <div>
+                {AuxiliaryList.map((item) => {
+                  return <DragAndDrop name={item.name} id={item.id} />;
+                })}
+              </div>
             </SubMenu>
           </Box>
         </Menu>

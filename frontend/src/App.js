@@ -5,6 +5,8 @@ import { render } from "react-dom";
 import Topbar from "./scenes/global/Topbar.jsx";
 import Navbar from "./scenes/global/Sidebar.jsx";
 import Live_Data from "./scenes/live_data/index.jsx";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -12,14 +14,16 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          <Navbar />
-          <main className="content">
-            <Topbar />
-            <Live_Data />
-          </main>
-        </div>
+        <DndProvider backend={HTML5Backend}>
+          <CssBaseline />
+          <div className="app">
+            <Navbar />
+            <main className="content">
+              <Topbar />
+              <Live_Data />
+            </main>
+          </div>
+        </DndProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

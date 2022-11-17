@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Auxiliary(models.Model):
-    time = models.BigIntegerField(
+    timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True)
     activatemicrojetmediumexternal2 = models.BooleanField(
         db_column='ActivateMicrojetMediumExternal2', blank=True, null=True)

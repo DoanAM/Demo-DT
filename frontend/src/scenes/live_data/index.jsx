@@ -1,10 +1,16 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
+import { useState } from "react";
 import { tokens } from "../../theme";
 import StatBox from "../../components/StatBox.jsx";
+import { useDrop } from "react-dnd";
+import DragAndDrop from "../../components/DragAndDrop.jsx";
+import { AuxiliaryList } from "../../data/AuxiliaryList.js";
+import DropBox from "../../components/DropBox.jsx";
 
 const Live_Data = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <Box m="20px">
       <Box
@@ -16,59 +22,42 @@ const Live_Data = () => {
         {/* ROW 1 */}
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.black[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
-            increase="+14%"
-          />
+          <DropBox />
         </Box>
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.black[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            increase="+21%"
-          />
+          <DropBox />
+          {/* <StatBox /> */}
         </Box>
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.black[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
-          />
+          <DropBox />
+          {/* <StatBox /> */}
         </Box>
         <Box
           gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
+          backgroundColor={colors.black[400]}
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
-          />
+          <DropBox />
+          {/* <StatBox /> */}
         </Box>
       </Box>
     </Box>
