@@ -26,9 +26,8 @@ const DropBox = () => {
   return (
     <Box
       sx={{
-        width: 300,
-        height: 100,
-        backgroundColor: "black",
+        width: "100%",
+        height: "100%",
       }}
       ref={drop}
     >
