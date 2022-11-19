@@ -1,8 +1,11 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
+import Axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 
-const data = [
+const graphData = [
   {
     id: "japan",
     color: "hsl(238, 70%, 50%)",
@@ -278,9 +281,24 @@ const data = [
 const LineChart = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [graphPoints, setGraphPoints] = useState([]);
+
+  const fetchData = async () => {
+    const response = await Axios.get("/debug/get-enc");
+    setGraphPoints((e) => [...e, response.data]);
+    console.log(graphPoints);
+    return response;
+  };
+
+  const { status, data } = useQuery({
+    queryKey: ["graphData"],
+    queryFn: fetchData,
+    refetchInterval: 1000,
+  });
+
   return (
     <ResponsiveLine
-      data={data}
+      data={[{ id: "Enc", data: graphPoints }]}
       theme={{
         axis: {
           domain: {
