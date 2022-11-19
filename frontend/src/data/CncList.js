@@ -11,10 +11,10 @@ export const CncList = [
     id: 9,
     name: "XActPos",
   },
-  {
+  /* {
     id: 10,
     name: "Timestamp",
-  },
+  }, */
   {
     id: 11,
     name: "ZCurrPos",

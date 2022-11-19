@@ -1,19 +1,24 @@
 import { Box, Typography, useTheme, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { tokens } from "../theme";
-import Axios from "axios";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const StatBox = (props) => {
-  const requestString = props.name.toLowerCase();
+  /* const requestString = props.name.toLowerCase(); */
+  const title = props.name.toLowerCase();
+  const type = props.category;
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [value, setValue] = useState(null);
+  //console.log(title);
+  const [value, setValue] = useState("loading");
+  const close = () => {
+    props.onClose(props.id);
+  };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     async function getData() {
       const request = await Axios.get("/debug/get-auxiliary");
       setValue(request.data[requestString]);
-      console.log("Value is: ", value);
     }
     const refreshIntervalId = setInterval(() => {
       getData();
@@ -22,26 +27,34 @@ const StatBox = (props) => {
       clearInterval(refreshIntervalId);
       console.log("Component Unmounted");
     };
-  });
+  }); */
 
   return (
-    <Box width="100%">
-      <Button onClick={props.onClose}>X</Button>
-      <Box width="100%" flex-direction="column" justifyContent="flex-start">
+    <Box
+      gridColumn="span 3"
+      m="0 30px"
+      backgroundColor="black"
+      borderRadius={"15px"}
+      padding="20px"
+    >
+      <Box display="flex" justifyContent="space-between">
         <Box>
           <Typography variant="h5" sx={{ color: colors.black[100] }}>
             {props.name}
           </Typography>
         </Box>
-        <Box>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            sx={{ color: colors.black[100] }}
-          >
-            {String(value)}
-          </Typography>
+        <Box mr="5px">
+          <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
         </Box>
+      </Box>
+      <Box display="flex">
+        <Typography
+          variant="h1"
+          fontWeight="bold"
+          sx={{ color: colors.black[100] }}
+        >
+          {String(props.readings[type][title])}
+        </Typography>
       </Box>
     </Box>
   );

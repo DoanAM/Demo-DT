@@ -9,6 +9,7 @@ psycopg2 = "*"
 django-timescaledb = "*"
 install = "*"
 djangorestframework = "*"
+django-rest-multiple-models = "*"
 
 [dev-packages]
 

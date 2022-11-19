@@ -7,23 +7,27 @@ import Navbar from "./scenes/global/Sidebar.jsx";
 import Live_Data from "./scenes/live_data/index.jsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 function App() {
   const [theme, colorMode] = useMode();
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <DndProvider backend={HTML5Backend}>
-          <CssBaseline />
-          <div className="app">
-            <Navbar />
-            <main className="content">
-              <Topbar />
-              <Live_Data />
-            </main>
-          </div>
-        </DndProvider>
+        <QueryClientProvider client={queryClient}>
+          <DndProvider backend={HTML5Backend}>
+            <CssBaseline />
+            <div className="app">
+              <Navbar />
+              <main className="content">
+                <Topbar />
+                <Live_Data />
+              </main>
+            </div>
+          </DndProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

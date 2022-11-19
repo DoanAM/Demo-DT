@@ -21,7 +21,7 @@ class Auxiliary(models.Model):
 
 
 class Cnc(models.Model):
-    time = models.BigIntegerField(
+    timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True,)
     xcurrpos = models.IntegerField(db_column='XCurrPos', blank=True, null=True)
     xactpos = models.IntegerField(db_column='XActPos', blank=True, null=True)
@@ -50,7 +50,7 @@ class Cnc(models.Model):
 
 class Drive(models.Model):
 
-    time = models.BigIntegerField(
+    timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True)
 
     xenc2pos = models.IntegerField(db_column='XEnc2Pos', blank=True, null=True)
@@ -158,7 +158,7 @@ class Drive(models.Model):
 
 class Prog(models.Model):
 
-    time = models.BigIntegerField(
+    timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True, )
 
     programname = models.CharField(
@@ -180,7 +180,7 @@ class Prog(models.Model):
 
 class Tool(models.Model):
 
-    time = models.BigIntegerField(
+    timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True, )
 
     id = models.BigIntegerField(db_column='ID', blank=True, null=True)
@@ -205,7 +205,7 @@ class Tool(models.Model):
 
 class Wcs(models.Model):
 
-    time = models.BigIntegerField(
+    timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True, )
 
     isactive = models.SmallIntegerField(

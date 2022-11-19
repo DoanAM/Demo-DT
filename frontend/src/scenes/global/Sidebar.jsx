@@ -21,7 +21,7 @@ import { ToolList } from "../../data/ToolList.js";
 const Navbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [selected, setSelected] = useState("Dashboard");
 
   return (
@@ -46,7 +46,7 @@ const Navbar = () => {
       height="100vh"
     >
       <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+        <Menu iconShape="square" innerSubMenuArrows={true}>
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -70,65 +70,96 @@ const Navbar = () => {
             )}
           </MenuItem>
 
+          {/*           <Box paddingLeft={isCollapsed ? undefined : "10%"}> */}
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <SubMenu
               title="CNC"
               icon={<GamepadOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              defaultOpen={false}
+
+              /*  selected={selected}
+          setSelected={setSelected} */
             >
               {CncList.map((item) => {
-                return <DragAndDrop name={item.name} id={item.id} />;
+                return (
+                  <DragAndDrop name={item.name} id={item.id} category={"cnc"} />
+                );
               })}
             </SubMenu>
             <SubMenu
               title="Auxiliary"
               icon={<MiscellaneousServicesOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              /*             selected={selected}
+            setSelected={setSelected} */
             >
               {AuxiliaryList.map((item) => {
-                return <DragAndDrop name={item.name} id={item.id} />;
+                return (
+                  <DragAndDrop
+                    name={item.name}
+                    id={item.id}
+                    category={"auxiliary"}
+                  />
+                );
               })}
             </SubMenu>
             <SubMenu
               title="Drive"
               icon={<HubOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              /*             selected={selected}
+            setSelected={setSelected} */
             >
               {DriveList.map((item) => {
-                return <DragAndDrop name={item.name} id={item.id} />;
+                return (
+                  <DragAndDrop
+                    name={item.name}
+                    id={item.id}
+                    category={"drive"}
+                  />
+                );
               })}
             </SubMenu>
             <SubMenu
               title="WCS"
               icon={<ControlCameraOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              /*             selected={selected}
+            setSelected={setSelected} */
             >
               {WcsList.map((item) => {
-                return <DragAndDrop name={item.name} id={item.id} />;
+                return (
+                  <DragAndDrop name={item.name} id={item.id} category={"wcs"} />
+                );
               })}
             </SubMenu>
             <SubMenu
               title="Prog"
               icon={<TerminalOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              /*             selected={selected}
+            setSelected={setSelected} */
             >
               {ProgList.map((item) => {
-                return <DragAndDrop name={item.name} id={item.id} />;
+                return (
+                  <DragAndDrop
+                    name={item.name}
+                    id={item.id}
+                    category={"prog"}
+                  />
+                );
               })}
             </SubMenu>
             <SubMenu
               title="Tool"
               icon={<CarpenterOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              /*             selected={selected}
+            setSelected={setSelected} */
             >
               {ToolList.map((item) => {
-                return <DragAndDrop name={item.name} id={item.id} />;
+                return (
+                  <DragAndDrop
+                    name={item.name}
+                    id={item.id}
+                    category={"tool"}
+                  />
+                );
               })}
             </SubMenu>
           </Box>

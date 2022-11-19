@@ -6,6 +6,8 @@ import { useDrop } from "react-dnd";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import DropBox from "../../components/DropBox.jsx";
+import DropBoxStats from "./DropBoxStats.jsx";
+import LineChart from "../../components/LineChart.jsx";
 
 const Live_Data = () => {
   const theme = useTheme();
@@ -13,51 +15,12 @@ const Live_Data = () => {
 
   return (
     <Box m="20px">
-      <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
-        gap="20px"
-      >
-        {/* ROW 1 */}
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.black[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <DropBox />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.black[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <DropBox />
-          {/* <StatBox /> */}
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.black[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <DropBox />
-          {/* <StatBox /> */}
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.black[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <DropBox />
-          {/* <StatBox /> */}
+      <Box height="120px" backgroundColor={colors.black[400]}>
+        <DropBoxStats />
+      </Box>
+      <Box width="100%" backgroundColor={"#0E1317"} mt={"20px"}>
+        <Box height="50vh">
+          <LineChart />
         </Box>
       </Box>
     </Box>
@@ -65,3 +28,8 @@ const Live_Data = () => {
 };
 
 export default Live_Data;
+/* 
+display="grid"
+gridTemplateColumns="repeat(12, 1fr)"
+gap="20px"
+backgroundColor={colors.black[400]} */
