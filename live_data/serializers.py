@@ -47,7 +47,7 @@ class WcsSerializer(serializers.ModelSerializer):
 
 class TestSerializer(serializers.ModelSerializer):
     x = serializers.SerializerMethodField(source='timestamp')
-    y = serializers.IntegerField(source='xenc1vel')
+    y = serializers.IntegerField(source="xenc1vel")
 
     class Meta:
         model = Drive
