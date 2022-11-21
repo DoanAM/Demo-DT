@@ -8,6 +8,7 @@ import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import DropBox from "../../components/DropBox.jsx";
 import DropBoxStats from "./DropBoxStats.jsx";
 import LineChart from "../../components/LineChart.jsx";
+import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
 const Live_Data = () => {
   const theme = useTheme();
@@ -19,9 +20,7 @@ const Live_Data = () => {
         <DropBoxStats />
       </Box>
       <Box width="100%" backgroundColor={"#0E1317"} mt={"20px"}>
-        <Box height="50vh">
-          <LineChart />
-        </Box>
+        <DropBoxGraphs height="50vh"></DropBoxGraphs>
       </Box>
     </Box>
   );

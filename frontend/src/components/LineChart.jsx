@@ -9,6 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const graphData = [
   {
@@ -87,7 +88,7 @@ const graphData = [
   },
 ];
 
-const LineChart = () => {
+const LineChart = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [graphPoints, setGraphPoints] = useState([]);
@@ -115,7 +116,7 @@ const LineChart = () => {
   const fetchData = async () => {
     const response = await Axios.get("/debug/get-enc");
     setGraphPoints((e) => [...e, response.data]);
-    console.log("GraphPoints Are:", graphPoints);
+    //console.log("GraphPoints Are:", graphPoints);
     return response;
   };
 
@@ -128,8 +129,11 @@ const LineChart = () => {
     refetchInterval: 3000,
   });
 
-  //setGraphPoints((e) => [...e, newData.data]);
-  //console.log("GraphPoints Are: ", graphPoints);
+  const close = () => {
+    console.log("Clicked");
+    console.log("Id is: ", props.id);
+    props.onClose(props.id);
+  };
 
   const handleChange = (e) => {
     //console.log(e.target.value);
@@ -260,6 +264,9 @@ const LineChart = () => {
           },
         ]}
       />
+      <Box mr="5px">
+        <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
+      </Box>
     </Box>
   );
 };
