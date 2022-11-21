@@ -15,20 +15,6 @@ const StatBox = (props) => {
     props.onClose(props.id);
   };
 
-  /*   useEffect(() => {
-    async function getData() {
-      const request = await Axios.get("/debug/get-auxiliary");
-      setValue(request.data[requestString]);
-    }
-    const refreshIntervalId = setInterval(() => {
-      getData();
-    }, 1000);
-    return () => {
-      clearInterval(refreshIntervalId);
-      console.log("Component Unmounted");
-    };
-  }); */
-
   return (
     <Box
       gridColumn="span 3"

@@ -1,4 +1,4 @@
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, useTheme, Typography } from "@mui/material";
 import { useState } from "react";
 import { tokens } from "../../theme";
 import StatBox from "../../components/StatBox.jsx";
@@ -19,8 +19,28 @@ const Live_Data = () => {
       <Box height="120px" backgroundColor={colors.black[400]}>
         <DropBoxStats />
       </Box>
-      <Box width="100%" backgroundColor={"#0E1317"} mt={"20px"}>
-        <DropBoxGraphs height="50vh"></DropBoxGraphs>
+      <Box
+        width="100%"
+        backgroundColor={"#0F0F16"}
+        mt={"20px"}
+        display="flex"
+        height={"60vh"}
+      >
+        <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
+        <Box
+          sx={{
+            width: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "5px 5px 5px 0px",
+            border: "2px solid #7A410D",
+            borderRadius: "14px",
+            boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
+          }}
+        >
+          <Typography variant="h1">3D Model</Typography>
+        </Box>
       </Box>
     </Box>
   );

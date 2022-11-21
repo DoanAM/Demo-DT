@@ -1,5 +1,5 @@
 import { ResponsiveLine } from "@nivo/line";
-import { useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { padding } from "@mui/system";
 
 const graphData = [
   {
@@ -91,17 +92,16 @@ const graphData = [
 const LineChart = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const field = props.name.toLowerCase();
+  const model = props.category.toLowerCase();
   const [graphPoints, setGraphPoints] = useState([]);
   const [timeFrame, setTimeFrame] = useState("1day");
+  const valuesToShow = graphPoints.map((v, i) => (i % 3 === 0 ? "" : v));
   //const [oldData, setOldData] = useState([]);
 
-  const fetchOldData = async (t) => {
+  const fetchOldData = async (m, f, t) => {
     const response = await Axios.get(
-      "/debug/get-timedData/" +
-        "?model=drive" +
-        "&field=xenc1vel" +
-        "&timespan=" +
-        t
+      "/debug/get-timedData/" + "?model=" + m + "&field=" + f + "&timespan=" + t
     );
     setGraphPoints((e) => response.data);
     //console.log(response);
@@ -109,12 +109,15 @@ const LineChart = (props) => {
   };
 
   const { status, data: oldData } = useQuery({
-    queryKey: ["OtherData", timeFrame],
-    queryFn: ({ queryKey }) => fetchOldData(queryKey[1]),
+    queryKey: ["OtherData", model, field, timeFrame],
+    queryFn: ({ queryKey }) =>
+      fetchOldData(queryKey[1], queryKey[2], queryKey[3]),
   });
 
-  const fetchData = async () => {
-    const response = await Axios.get("/debug/get-enc");
+  const fetchData = async (m, f) => {
+    const response = await Axios.get(
+      "/debug/get-cur/" + "?model=" + m + "&field=" + f
+    );
     setGraphPoints((e) => [...e, response.data]);
     //console.log("GraphPoints Are:", graphPoints);
     return response;
@@ -123,15 +126,13 @@ const LineChart = (props) => {
   const checkData = oldData?.data;
 
   const { data: newData } = useQuery({
-    queryKey: ["graphData", checkData],
-    queryFn: fetchData,
+    queryKey: ["graphData", model, field, checkData],
+    queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
     enabled: !!checkData,
     refetchInterval: 3000,
   });
 
   const close = () => {
-    console.log("Clicked");
-    console.log("Id is: ", props.id);
     props.onClose(props.id);
   };
 
@@ -139,27 +140,56 @@ const LineChart = (props) => {
     //console.log(e.target.value);
     setTimeFrame(e.target.value);
   };
+  /* useEffect(() => {
+    console.log("Field is: ", field);
+    console.log("Model is: ", model);
+  }); */
 
   return (
-    <Box width={"100%"} height="50vh">
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Time</InputLabel>
-        <Select
-          defaultValue={timeFrame}
-          //defaultValue={"1day"}
-          //placeholder=""
-          sx={{
-            width: 200,
-            height: 50,
-          }}
-          onChange={handleChange}
-        >
-          <MenuItem value="30min">30min</MenuItem>
-          <MenuItem value="1hr">1hr</MenuItem>
-          <MenuItem value="1day">1day</MenuItem>
-          <MenuItem value="1month">1month</MenuItem>
-        </Select>
-      </FormControl>
+    <Box
+      sx={{
+        height: "33%",
+        //backgroundColor: colors.black[700],
+        paddingBottom: "0px",
+        paddingTop: "15px",
+        paddingLeft: "20px",
+        paddingRight: "20px",
+        margin: "5px 5px 5px 0px",
+        border: "2px solid #7A410D",
+        borderRadius: "14px",
+        boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
+      }}
+    >
+      <Box width={"100%"} display="flex" justifyContent={"space-between"}>
+        <Box>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Time</InputLabel>
+            <Select
+              defaultValue={timeFrame}
+              //defaultValue={"1day"}
+              //placeholder=""
+              sx={{
+                width: 200,
+                height: 30,
+              }}
+              onChange={handleChange}
+            >
+              <MenuItem value="30min">
+                <Typography variant="h6">30min</Typography>
+              </MenuItem>
+              <MenuItem value="1hr">1hr</MenuItem>
+              <MenuItem value="1day">1day</MenuItem>
+              <MenuItem value="1month">1month</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box>
+          <Typography variant="h4">{props.name}</Typography>
+        </Box>
+        <Box mr="5px">
+          <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
+        </Box>
+      </Box>
       <ResponsiveLine
         //data={[{ id: "xenc1vel", data: oldData.data }]}
         data={[{ id: "xenc1vel", data: graphPoints }]}
@@ -197,8 +227,16 @@ const LineChart = (props) => {
             },
           },
         }}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "point" }}
+        margin={{ top: 15, right: 5, bottom: 70, left: 35 }}
+        /* xScale={{
+          type: "point",
+        }} */
+        xScale={{
+          type: "time",
+          format: "%Y-%m-%d %H:%M:%S",
+          //precision: "minute",
+        }}
+        //xFormat="time:%Y-%m-%d %H:%M:%S"
         yScale={{
           type: "linear",
           min: "auto",
@@ -211,12 +249,13 @@ const LineChart = (props) => {
         axisTop={null}
         axisRight={null}
         axisBottom={{
+          format: "%H:%M:%S",
           orient: "bottom",
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "transportation",
-          legendOffset: 36,
+          legend: "time",
+          legendOffset: 30,
           legendPosition: "middle",
         }}
         axisLeft={{
@@ -224,8 +263,8 @@ const LineChart = (props) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "count",
-          legendOffset: -40,
+          legend: props.name,
+          legendOffset: -30,
           legendPosition: "middle",
         }}
         enableGridX={false}
@@ -237,36 +276,7 @@ const LineChart = (props) => {
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         useMesh={true}
-        legends={[
-          {
-            anchor: "bottom-right",
-            direction: "column",
-            justify: false,
-            translateX: 100,
-            translateY: 0,
-            itemsSpacing: 0,
-            itemDirection: "left-to-right",
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: "circle",
-            symbolBorderColor: "rgba(0, 0, 0, .5)",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
-              },
-            ],
-          },
-        ]}
       />
-      <Box mr="5px">
-        <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
-      </Box>
     </Box>
   );
 };

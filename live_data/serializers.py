@@ -69,6 +69,6 @@ def getGenericSerializer(model_arg, field_arg):
 
         def get_x(self, obj):
             time = round(obj.timestamp/1000)
-            return (datetime.datetime.fromtimestamp(time))
+            return (datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S'))
 
     return GenericSerializer

@@ -22,10 +22,18 @@ class GetAuxiliary(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-class GetXenc1Vel(APIView):
+class GetCurrentVal(APIView):
+    kwarg1 = "model"
+    kwarg2 = "field"
+    model_dict = {"drive": Drive}
+
     def get(self, request, format=None):
-        queryset = Drive.objects.last()
-        data = TestSerializer(queryset).data
+        param1 = request.GET.get(self.kwarg1)
+        model = self.model_dict[param1]
+        field = request.GET.get(self.kwarg2)
+        queryset = model.objects.last()
+        serializer_class = getGenericSerializer(model, field)
+        data = serializer_class(queryset).data
         return Response(data, status=status.HTTP_200_OK)
 
 
@@ -33,9 +41,7 @@ class GetTimedData(APIView):
     kwarg1 = "model"
     kwarg2 = "field"
     kwarg3 = "timespan"
-    # def get_serializer_class(self, request):
-    #TestSerializer.Meta.model = request.GET.get(self.kwarg3)
-    # return TestSerializer
+
     model_dict = {"drive": Drive}
 
     def get(self, request, format=None):

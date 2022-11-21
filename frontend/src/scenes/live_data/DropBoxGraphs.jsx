@@ -15,7 +15,7 @@ const DropBoxGraphs = () => {
   const addCardToBoard = (item) => {
     item = [...item, generateRandomKey()];
     setBoardContent((boardContent) => [...boardContent, item]);
-    //console.log(boardContent.length);
+    console.log(boardContent);
   };
 
   const closeStatBox = (e) => {
@@ -34,17 +34,16 @@ const DropBoxGraphs = () => {
   }));
 
   return (
-    <Box
-      width="100%"
-      height="50vh"
-      ref={drop}
-      backgroundColor={colors.black[300]}
-      display="grid"
-      gridTemplateColumns="repeat(12, 1fr)"
-      gap="20px"
-    >
+    <Box width="60%" height="100%" ref={drop} backgroundColor={"#0F0F16"}>
       {boardContent.map((e) => {
-        return <LineChart onClose={closeStatBox} id={e[1]} />;
+        return (
+          <LineChart
+            onClose={closeStatBox}
+            id={e[1]}
+            category={e[0].category}
+            name={e[0].name}
+          />
+        );
       })}
     </Box>
   );
