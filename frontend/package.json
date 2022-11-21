@@ -37,8 +37,10 @@
     "formik": "^2.2.9",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
+    "react-hook-form": "^7.39.5",
     "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^6.4.3",
+    "scheduler": "^0.23.0",
     "yup": "^0.32.11"
   }
 }

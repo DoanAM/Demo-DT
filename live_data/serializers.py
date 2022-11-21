@@ -56,3 +56,19 @@ class TestSerializer(serializers.ModelSerializer):
     def get_x(self, obj):
         time = round(obj.timestamp/1000)
         return (datetime.datetime.fromtimestamp(time))
+
+
+def getGenericSerializer(model_arg, field_arg):
+    class GenericSerializer(serializers.ModelSerializer):
+        x = serializers.SerializerMethodField(source='timestamp')
+        y = serializers.IntegerField(source=field_arg)
+
+        class Meta:
+            model = model_arg
+            fields = ['x', 'y']
+
+        def get_x(self, obj):
+            time = round(obj.timestamp/1000)
+            return (datetime.datetime.fromtimestamp(time))
+
+    return GenericSerializer

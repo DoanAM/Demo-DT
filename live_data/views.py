@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from .serializers import CncSerializer, AuxiliarySerializer, DriveSerializer, ProgSerializer, ToolSerializer, WcsSerializer, TestSerializer
+from .serializers import CncSerializer, AuxiliarySerializer, DriveSerializer, ProgSerializer, ToolSerializer, WcsSerializer, TestSerializer, getGenericSerializer
 from .models import Auxiliary, Cnc, Drive, Tool, Wcs, Prog
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 import logging
 import datetime
+import time
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -24,6 +27,42 @@ class GetXenc1Vel(APIView):
         queryset = Drive.objects.last()
         data = TestSerializer(queryset).data
         return Response(data, status=status.HTTP_200_OK)
+
+
+class GetTimedData(APIView):
+    kwarg1 = "model"
+    kwarg2 = "field"
+    kwarg3 = "timespan"
+    # def get_serializer_class(self, request):
+    #TestSerializer.Meta.model = request.GET.get(self.kwarg3)
+    # return TestSerializer
+    model_dict = {"drive": Drive}
+
+    def get(self, request, format=None):
+        param1 = request.GET.get(self.kwarg1)
+        model = self.model_dict[param1]
+
+        field = request.GET.get(self.kwarg2)
+
+        param3 = request.GET.get(self.kwarg3)
+
+        if param3 == "30min":
+            timespan = 30*60*1000
+        elif param3 == "1hr":
+            timespan = 60*60*1000
+        elif param3 == "1day":
+            timespan = 24*60*60*1000
+        elif param3 == "1month":
+            timespan = 30*24*60*60*1000
+
+        currentTime = round(time.time() * 1000)
+
+        queryset = model.objects.filter(
+            timestamp__gt=currentTime-timespan).all()
+        serializer_class = getGenericSerializer(model, field)
+        data = serializer_class(queryset, many=True,).data
+
+        return Response(data)
 
 
 class GetTime(APIView):

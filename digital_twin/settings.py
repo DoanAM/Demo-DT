@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'live_data.apps.LiveDataConfig',
     'frontend.apps.FrontendConfig',
     'rest_framework',
-    'drf_multiple_model',
 ]
 
 MIDDLEWARE = [

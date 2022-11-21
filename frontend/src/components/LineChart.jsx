@@ -92,58 +92,49 @@ const LineChart = () => {
   const colors = tokens(theme.palette.mode);
   const [graphPoints, setGraphPoints] = useState([]);
   const [timeFrame, setTimeFrame] = useState("1day");
+  //const [oldData, setOldData] = useState([]);
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setTimeFrame(e.target.value);
-    //console.log(timeFrame);
-  };
-
-  const fetchOldData = async () => {
+  const fetchOldData = async (t) => {
     const response = await Axios.get(
       "/debug/get-timedData/" +
         "?model=drive" +
         "&field=xenc1vel" +
         "&timespan=" +
-        timeFrame
+        t
     );
-    //setGraphPoints((e) => response.data);
-    console.log(response);
+    setGraphPoints((e) => response.data);
+    //console.log(response);
     return response;
   };
 
-  const { data: TestData } = useQuery({
-    queryKey: ["oldData"],
-    queryFn: fetchOldData(),
-    staleTime: Infinity,
-    cacheTime: Infinity,
+  const { status, data: oldData } = useQuery({
+    queryKey: ["OtherData", timeFrame],
+    queryFn: ({ queryKey }) => fetchOldData(queryKey[1]),
   });
-  const oldData = TestData;
 
-  /*   const fetchData = async () => {
+  const fetchData = async () => {
     const response = await Axios.get("/debug/get-enc");
     setGraphPoints((e) => [...e, response.data]);
-    //console.log(graphPoints);
+    console.log("GraphPoints Are:", graphPoints);
     return response;
   };
 
-  const { status, data } = useQuery({
-    queryKey: ["graphData"],
-    queryFn: fetchData,
-    refetchInterval: 3000,
-  }); */
+  const checkData = oldData?.data;
 
-  function onRenderCallback(
-    id, // the "id" prop of the Profiler tree that has just committed
-    phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
-    actualDuration, // time spent rendering the committed update
-    baseDuration, // estimated time to render the entire subtree without memoization
-    startTime, // when React began rendering this update
-    commitTime, // when React committed this update
-    interactions // the Set of interactions belonging to this update
-  ) {
-    // Aggregate or log render timings...
-  }
+  const { data: newData } = useQuery({
+    queryKey: ["graphData", checkData],
+    queryFn: fetchData,
+    enabled: !!checkData,
+    refetchInterval: 3000,
+  });
+
+  //setGraphPoints((e) => [...e, newData.data]);
+  //console.log("GraphPoints Are: ", graphPoints);
+
+  const handleChange = (e) => {
+    //console.log(e.target.value);
+    setTimeFrame(e.target.value);
+  };
 
   return (
     <Box width={"100%"} height="50vh">
@@ -152,7 +143,7 @@ const LineChart = () => {
         <Select
           defaultValue={timeFrame}
           //defaultValue={"1day"}
-          placeholder="Enter Car Brand"
+          //placeholder=""
           sx={{
             width: 200,
             height: 50,
@@ -162,10 +153,12 @@ const LineChart = () => {
           <MenuItem value="30min">30min</MenuItem>
           <MenuItem value="1hr">1hr</MenuItem>
           <MenuItem value="1day">1day</MenuItem>
+          <MenuItem value="1month">1month</MenuItem>
         </Select>
       </FormControl>
       <ResponsiveLine
-        data={[{ id: "xenc1vel", data: [oldData] }]}
+        //data={[{ id: "xenc1vel", data: oldData.data }]}
+        data={[{ id: "xenc1vel", data: graphPoints }]}
         //data={graphData}
         theme={{
           axis: {
@@ -231,6 +224,7 @@ const LineChart = () => {
           legendOffset: -40,
           legendPosition: "middle",
         }}
+        enableGridX={false}
         enablePoints={false}
         colors={{ scheme: "category10" }}
         pointSize={10}
@@ -271,3 +265,19 @@ const LineChart = () => {
 };
 
 export default LineChart;
+
+/*   useEffect(() => {
+    const fetchOldData = async () => {
+      const response = await Axios.get(
+        "/debug/get-timedData/" +
+          "?model=drive" +
+          "&field=xenc1vel" +
+          "&timespan=" +
+          timeFrame
+      );
+      setOldData(response);
+    };
+    fetchOldData();
+    //setOldData(res);
+    //console.log(oldData);
+  }, [timeFrame]); */
