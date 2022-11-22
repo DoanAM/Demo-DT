@@ -18,8 +18,8 @@ const StatBox = (props) => {
   return (
     <Box
       gridColumn="span 3"
-      m="0 30px"
-      backgroundColor="black"
+      //m="0 30px"
+      backgroundColor={colors.black[400]}
       borderRadius={"15px"}
       padding="20px"
     >
@@ -34,11 +34,7 @@ const StatBox = (props) => {
         </Box>
       </Box>
       <Box display="flex">
-        <Typography
-          variant="h1"
-          fontWeight="bold"
-          sx={{ color: colors.black[100] }}
-        >
+        <Typography variant="h1" sx={{ color: colors.primary[500] }}>
           {String(props.readings[type][title])}
         </Typography>
       </Box>

@@ -58,10 +58,12 @@ const DropBoxStats = () => {
       width="100%"
       height="100%"
       ref={drop}
-      backgroundColor={colors.black[300]}
+      backgroundColor={colors.indigoAccent[800]}
       display="grid"
       gridTemplateColumns="repeat(12, 1fr)"
       gap="20px"
+      boxShadow="inset 20px 20px 23px #1f2433, inset -20px -20px 23px #2b3045"
+      borderRadius={"20px"}
     >
       {boardContent.map((e) => {
         return (

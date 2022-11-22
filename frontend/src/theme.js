@@ -60,62 +60,84 @@ export const tokens = (mode) => ({
           800: "#311a05",
           900: "#180d03",
         },
+        indigoAccent: {
+          100: "#dfe1e9",
+          200: "#bfc3d2",
+          300: "#a0a4bc",
+          400: "#8086a5",
+          500: "#60688f",
+          600: "#4d5372",
+          700: "#3a3e56",
+          800: "#262a39",
+          900: "#13151d",
+        },
       }
     : {
         black: {
-          100: "#cececf",
-          200: "#9d9d9f",
-          300: "#6c6c6f",
-          400: "#3b3b3f",
+          100: "#020203",
+          200: "#040406",
+          300: "#060609",
+          400: "#08080c",
           500: "#0a0a0f",
-          600: "#08080c",
-          700: "#060609",
-          800: "#040406",
-          900: "#020203",
+          600: "#3b3b3f",
+          700: "#6c6c6f",
+          800: "#9d9d9f",
+          900: "#cececf",
         },
         primary: {
-          100: "#d3eff6",
-          200: "#a6deec",
-          300: "#7acee3",
-          400: "#4dbdd9",
+          100: "#07232a",
+          200: "#0d4553",
+          300: "#14687d",
+          400: "#1a8aa6",
           500: "#21add0",
-          600: "#1a8aa6",
-          700: "#14687d",
-          800: "#0d4553",
-          900: "#07232a",
+          600: "#4dbdd9",
+          700: "#7acee3",
+          800: "#a6deec",
+          900: "#d3eff6",
         },
         yellowAccent: {
-          100: "#f7f7f7",
-          200: "#f0f0f0",
-          300: "#e8e8e8",
-          400: "#e1e1e1",
+          100: "#2b2b2b",
+          200: "#575757",
+          300: "#828282",
+          400: "#aeaeae",
           500: "#d9d9d9",
-          600: "#aeaeae",
-          700: "#828282",
-          800: "#575757",
-          900: "#2b2b2b",
+          600: "#e1e1e1",
+          700: "#e8e8e8",
+          800: "#f0f0f0",
+          900: "#f7f7f7",
         },
         purpleAccent: {
-          100: "#ded3f6",
-          200: "#bda6ec",
-          300: "#9b7ae3",
-          400: "#7a4dd9",
+          100: "#12072a",
+          200: "#240d53",
+          300: "#35147d",
+          400: "#471aa6",
           500: "#5921d0",
-          600: "#471aa6",
-          700: "#35147d",
-          800: "#240d53",
-          900: "#12072a",
+          600: "#7a4dd9",
+          700: "#9b7ae3",
+          800: "#bda6ec",
+          900: "#ded3f6",
         },
         orangeAccent: {
-          100: "#e4d9cf",
-          200: "#cab39e",
-          300: "#af8d6e",
-          400: "#95673d",
+          100: "#180d03",
+          200: "#311a05",
+          300: "#492708",
+          400: "#62340a",
           500: "#7a410d",
-          600: "#62340a",
-          700: "#492708",
-          800: "#311a05",
-          900: "#180d03",
+          600: "#95673d",
+          700: "#af8d6e",
+          800: "#cab39e",
+          900: "#e4d9cf",
+        },
+        indigoAccent: {
+          100: "#13151d",
+          200: "#262a39",
+          300: "#3a3e56",
+          400: "#4d5372",
+          500: "#60688f",
+          600: "#8086a5",
+          700: "#a0a4bc",
+          800: "#bfc3d2",
+          900: "#dfe1e9",
         },
       }),
 });
@@ -156,7 +178,7 @@ export const themeSettings = (mode) => {
               light: colors.black[100],
             },
             background: {
-              default: "#fcfcfc",
+              default: "#d1d7e0",
             },
           }),
     },
@@ -194,7 +216,7 @@ export const themeSettings = (mode) => {
 
 //context for color Mode
 export const ColorModeContext = createContext({
-  toggletColorMode: () => {},
+  toggleColorMode: () => {},
 });
 
 export const useMode = () => {
@@ -202,11 +224,12 @@ export const useMode = () => {
 
   const colorMode = useMemo(
     () => ({
-      toggletColorMode: () =>
+      toggleColorMode: () =>
         setMode((prev) => (prev === "light" ? "dark" : "light")),
     }),
     []
   );
+
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
 };

@@ -16,7 +16,7 @@ const Live_Data = () => {
 
   return (
     <Box m="20px">
-      <Box height="120px" backgroundColor={colors.black[400]}>
+      <Box height="120px">
         <DropBoxStats />
       </Box>
       <Box

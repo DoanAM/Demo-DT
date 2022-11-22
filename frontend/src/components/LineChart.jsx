@@ -163,11 +163,12 @@ const LineChart = (props) => {
       <Box width={"100%"} display="flex" justifyContent={"space-between"}>
         <Box>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Time</InputLabel>
+            <InputLabel id="test-select-label">Time</InputLabel>
             <Select
+              labelId="test-select-label"
+              label="Time"
               defaultValue={timeFrame}
               //defaultValue={"1day"}
-              //placeholder=""
               sx={{
                 width: 200,
                 height: 30,
