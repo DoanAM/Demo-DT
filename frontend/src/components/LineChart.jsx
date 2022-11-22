@@ -1,5 +1,5 @@
 import { ResponsiveLine } from "@nivo/line";
-import { Typography, useTheme } from "@mui/material";
+import { IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -187,9 +187,9 @@ const LineChart = (props) => {
         <Box>
           <Typography variant="h4">{props.name}</Typography>
         </Box>
-        <Box mr="5px">
+        <IconButton>
           <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
-        </Box>
+        </IconButton>
       </Box>
       <ResponsiveLine
         //data={[{ id: "xenc1vel", data: oldData.data }]}

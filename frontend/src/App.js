@@ -5,6 +5,7 @@ import { render } from "react-dom";
 import Topbar from "./scenes/global/Topbar.jsx";
 import Navbar from "./scenes/global/Sidebar.jsx";
 import Live_Data from "./scenes/live_data/index.jsx";
+import Simulation from "./scenes/simulation/index.jsx";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -14,6 +15,7 @@ import {
   Route,
   Link,
   Redirect,
+  Routes,
 } from "react-router-dom";
 
 const queryClient = new QueryClient();
@@ -30,7 +32,10 @@ function App() {
               <Navbar />
               <main className="content">
                 <Topbar />
-                <Live_Data />
+                <Routes>
+                  <Route path="/home" element={<Live_Data />} />
+                  <Route path="/simulation" element={<Simulation />} />
+                </Routes>
               </main>
             </div>
           </DndProvider>
