@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'live_data.apps.LiveDataConfig',
     'frontend.apps.FrontendConfig',
+    'simulation.apps.SimulationConfig',
     'rest_framework',
 ]
 
@@ -84,6 +85,10 @@ DATABASES = {
         'PASSWORD': 'minh95',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+    },
+    'simulation_db': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -128,6 +133,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATABASE_ROUTERS = ['routers.db_routers.LiveDataRouter',
+                    'routers.db_routers.SimulationRouter']
 
 LOGGING = {
     'version': 1,
