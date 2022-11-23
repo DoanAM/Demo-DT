@@ -148,13 +148,13 @@ const LineChart = (props) => {
   return (
     <Box
       sx={{
-        height: "33%",
+        gridRow: "span 4",
         //backgroundColor: colors.black[700],
         paddingBottom: "0px",
         paddingTop: "15px",
         paddingLeft: "20px",
         paddingRight: "20px",
-        margin: "5px 5px 5px 0px",
+        //margin: "5px 5px 5px 0px",
         border: "2px solid #7A410D",
         borderRadius: "14px",
         boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
@@ -228,7 +228,7 @@ const LineChart = (props) => {
             },
           },
         }}
-        margin={{ top: 15, right: 5, bottom: 70, left: 35 }}
+        margin={{ top: 15, right: 5, bottom: 75, left: 35 }}
         /* xScale={{
           type: "point",
         }} */

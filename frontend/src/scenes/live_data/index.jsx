@@ -21,10 +21,10 @@ const Live_Data = () => {
       </Box>
       <Box
         width="100%"
-        backgroundColor={"#0F0F16"}
+        backgroundColor={colors.indigoAccent[900]}
         mt={"20px"}
         display="flex"
-        height={"60vh"}
+        height={"70vh"}
       >
         <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
         <Box
@@ -33,7 +33,7 @@ const Live_Data = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            margin: "5px 5px 5px 0px",
+            marginLeft: "5px",
             border: "2px solid #7A410D",
             borderRadius: "14px",
             boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",

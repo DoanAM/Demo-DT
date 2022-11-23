@@ -19,7 +19,7 @@ const StatBox = (props) => {
     <Box
       gridColumn="span 3"
       //m="0 30px"
-      backgroundColor={colors.black[400]}
+      backgroundColor={colors.indigoAccent[900]}
       borderRadius={"15px"}
       padding="20px"
     >

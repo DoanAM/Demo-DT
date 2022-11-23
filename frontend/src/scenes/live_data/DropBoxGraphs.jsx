@@ -34,7 +34,16 @@ const DropBoxGraphs = () => {
   }));
 
   return (
-    <Box width="60%" height="100%" ref={drop} backgroundColor={"#0F0F16"}>
+    <Box
+      width="60%"
+      height="100%"
+      marginRight="5px"
+      ref={drop}
+      backgroundColor={colors.indigoAccent[900]}
+      gap="5px"
+      display="grid"
+      gridTemplateRows="repeat(12, 1fr)"
+    >
       {boardContent.map((e) => {
         return (
           <LineChart
