@@ -35,9 +35,9 @@ const FileUploadBox = () => {
     });
   };
   return (
-    <Button>
-      Upload Simulation
-      <input type="file" onChange={handleUpload} />
+    <Button variant="contained" component="label">
+      Upload
+      <input style={{ display: "None" }} type="file" onChange={handleUpload} />
     </Button>
   );
 };
