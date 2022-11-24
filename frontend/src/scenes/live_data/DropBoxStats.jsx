@@ -2,7 +2,7 @@ import { useDrop } from "react-dnd";
 import { tokens } from "../../theme";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Box, Button, useTheme } from "@mui/material";
 import StatBox from "../../components/StatBox.jsx";
 import Axios from "axios";
@@ -12,12 +12,22 @@ const DropBoxStats = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [boardContent, setBoardContent] = useState([]);
+  const stateRef = useRef();
+  stateRef.boardContentLength = boardContent.length;
 
   const addCardToBoard = (item) => {
+    if (stateRef.boardContentLength >= 4) {
+      return;
+    }
     item = [...item, generateRandomKey()];
     setBoardContent((boardContent) => [...boardContent, item]);
-    console.log(boardContent.length);
+
+    console.log(stateRef.boardContentLength);
   };
+
+  useEffect(() => {
+    console.log("Use Effect", boardContent.length);
+  });
 
   const closeStatBox = (e) => {
     setBoardContent(boardContent.filter((content) => content[1] !== e));

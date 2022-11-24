@@ -95,8 +95,8 @@ const LineChart = (props) => {
   const field = props.name.toLowerCase();
   const model = props.category.toLowerCase();
   const [graphPoints, setGraphPoints] = useState([]);
-  const [timeFrame, setTimeFrame] = useState("1day");
-  const valuesToShow = graphPoints.map((v, i) => (i % 3 === 0 ? "" : v));
+  const [timeFrame, setTimeFrame] = useState("1hr");
+
   //const [oldData, setOldData] = useState([]);
 
   const fetchOldData = async (m, f, t) => {
@@ -258,6 +258,8 @@ const LineChart = (props) => {
           legend: "time",
           legendOffset: 30,
           legendPosition: "middle",
+          tickValues:
+            timeFrame === "1day" ? "every 20 minute" : "every 5 minute",
         }}
         axisLeft={{
           orient: "left",
