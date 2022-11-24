@@ -10,3 +10,6 @@ frontend/static
 warning.log
 frontend/static/frontend/main.js
 frontend/static/frontend/main.js.LICENSE.txt
+
+#Simulation Files
+media
