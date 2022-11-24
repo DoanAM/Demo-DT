@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,10 +87,6 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
-    'simulation_db': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
 }
 
 
@@ -134,8 +131,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DATABASE_ROUTERS = ['routers.db_routers.LiveDataRouter',
-                    'routers.db_routers.SimulationRouter']
+# DATABASE_ROUTERS = ['routers.db_routers.LiveDataRouter',
+# 'routers.db_routers.SimulationRouter']
 
 LOGGING = {
     'version': 1,
@@ -161,3 +158,6 @@ LOGGING = {
         },
     },
 }
+
+MEDIA_ROOT = Path(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

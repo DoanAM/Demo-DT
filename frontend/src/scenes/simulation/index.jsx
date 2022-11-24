@@ -6,7 +6,7 @@ import { useDrop } from "react-dnd";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import DropBox from "../../components/DropBox.jsx";
-//import DropBoxStats from "./DropBoxStats.jsx";
+import FileUploadBox from "./FileUploadBox.jsx";
 import LineChart from "../../components/LineChart.jsx";
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
@@ -14,9 +14,15 @@ const Simulation = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const handleUpload = (e) => {
+    //console.log(e.target.value);
+    console.log(e.target.files);
+  };
+
   return (
     <Box m="20px">
       <Typography variant="h3">Simulation Management</Typography>
+      <FileUploadBox />
       <Box height="120px" backgroundColor={colors.black[400]}></Box>
       {/* <Box
         width="100%"

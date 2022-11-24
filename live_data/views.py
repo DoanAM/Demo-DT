@@ -14,6 +14,9 @@ import time
 logger = logging.getLogger(__name__)
 # Create your views here.
 
+model_dict = {"drive": Drive, "cnc": Cnc, "tool": Tool,
+              "wcs": Wcs, "prog": Prog, "auxiliary": Auxiliary}
+
 
 class GetAuxiliary(APIView):
     def get(self, request, format=None):
@@ -25,11 +28,10 @@ class GetAuxiliary(APIView):
 class GetCurrentVal(APIView):
     kwarg1 = "model"
     kwarg2 = "field"
-    model_dict = {"drive": Drive}
 
     def get(self, request, format=None):
         param1 = request.GET.get(self.kwarg1)
-        model = self.model_dict[param1]
+        model = model_dict[param1]
         field = request.GET.get(self.kwarg2)
         queryset = model.objects.last()
         serializer_class = getGenericSerializer(model, field)
@@ -42,11 +44,9 @@ class GetTimedData(APIView):
     kwarg2 = "field"
     kwarg3 = "timespan"
 
-    model_dict = {"drive": Drive}
-
     def get(self, request, format=None):
         param1 = request.GET.get(self.kwarg1)
-        model = self.model_dict[param1]
+        model = model_dict[param1]
 
         field = request.GET.get(self.kwarg2)
 
