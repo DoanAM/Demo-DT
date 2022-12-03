@@ -8,6 +8,7 @@ import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import DropBox from "../../components/DropBox.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import LineChart from "../../components/LineChart.jsx";
+import SimulationTable from "./SimulationTable.jsx";
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
 const Simulation = () => {
@@ -20,10 +21,14 @@ const Simulation = () => {
   };
 
   return (
-    <Box m="20px">
-      <Typography variant="h3">Simulation Management</Typography>
-      <FileUploadBox />
-      <Box height="120px" backgroundColor={colors.black[400]}></Box>
+    <Box m="20px" display="flex" alignItems={"flex-start"} gap="20px">
+      <Box width={"50%"} height="120px">
+        <Typography variant="h3">Simulation Management</Typography>
+        <FileUploadBox />
+      </Box>
+      <Box width="50%">
+        <SimulationTable />
+      </Box>
       {/* <Box
         width="100%"
         backgroundColor={"#0F0F16"}

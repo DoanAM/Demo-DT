@@ -9,6 +9,7 @@ import DropBox from "../../components/DropBox.jsx";
 import DropBoxStats from "./DropBoxStats.jsx";
 import LineChart from "../../components/LineChart.jsx";
 import DropBoxGraphs from "./DropBoxGraphs.jsx";
+import Navbar from "../global/Sidebar.jsx";
 
 const Live_Data = () => {
   const theme = useTheme();

@@ -28,6 +28,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <DndProvider backend={HTML5Backend}>
             <CssBaseline />
+
             <div className="app">
               <Navbar />
               <main className="content">

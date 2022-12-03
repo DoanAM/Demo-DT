@@ -1,4 +1,4 @@
-import { Box, Button, useTheme, Typography } from "@mui/material";
+import { Box, Button, useTheme, Typography, Slider } from "@mui/material";
 import { useState } from "react";
 import { tokens } from "../../theme";
 import StatBox from "../../components/StatBox.jsx";
@@ -13,17 +13,22 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const FileUploadBox = () => {
-  //const csrftoken = Cookies.get("csrftoken");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selectedFile, setSelectedFile] = useState();
+  const [quality, setQuality] = useState(50);
+
+  const setFile = (e) => {
+    setSelectedFile(e.target.files[0]);
+    console.log(selectedFile);
+  };
 
   const handleUpload = (e) => {
     //console.log(e.target.value);
-    setSelectedFile(e.target.files[0]);
     const fd = new FormData();
-    fd.append("cover", selectedFile);
+    fd.append("nc_file", selectedFile);
     console.log("fd is", fd);
+
     axios({
       method: "POST",
       url: "/simulationAPI/upload-simulation",
@@ -33,12 +38,38 @@ const FileUploadBox = () => {
     }).then((res) => {
       console.log(res);
     });
+    setSelectedFile(null);
   };
+
+  /*   const handleQualityUpdate = (e, val) => {
+    setQuality(val);
+  }; */
+
   return (
-    <Button variant="contained" component="label">
-      Upload
-      <input style={{ display: "None" }} type="file" onChange={handleUpload} />
-    </Button>
+    <Box>
+      <Box display="flex" justifyContent={"flex-start"}>
+        <Button variant="contained" component="label">
+          Select File
+          <input type="file" onChange={setFile} />
+        </Button>
+        <Button variant="contained" component="label" onClick={handleUpload}>
+          Upload
+        </Button>
+      </Box>
+      <Slider
+        aria-label="Temperature"
+        defaultValue={quality}
+        valueLabelDisplay="auto"
+        step={10}
+        marks
+        min={10}
+        max={110}
+        color="secondary"
+        //onChange={handleQualityUpdate}
+      />
+    </Box>
   );
 };
 export default FileUploadBox;
+
+//style={{ display: "None" }}
