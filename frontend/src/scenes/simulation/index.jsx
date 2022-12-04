@@ -9,11 +9,13 @@ import DropBox from "../../components/DropBox.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import LineChart from "../../components/LineChart.jsx";
 import SimulationTable from "./SimulationTable.jsx";
+import SimulationDataContext from "./SimulationDataContext.jsx";
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
 const Simulation = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [simulationData, setSimulationData] = useState([]);
 
   const handleUpload = (e) => {
     //console.log(e.target.value);
@@ -21,38 +23,19 @@ const Simulation = () => {
   };
 
   return (
-    <Box m="20px" display="flex" alignItems={"flex-start"} gap="20px">
-      <Box width={"50%"} height="120px">
-        <Typography variant="h3">Simulation Management</Typography>
-        <FileUploadBox />
-      </Box>
-      <Box width="50%">
-        <SimulationTable />
-      </Box>
-      {/* <Box
-        width="100%"
-        backgroundColor={"#0F0F16"}
-        mt={"20px"}
-        display="flex"
-        height={"60vh"}
-      >
-        <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
-        <Box
-          sx={{
-            width: "50%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "5px 5px 5px 0px",
-            border: "2px solid #7A410D",
-            borderRadius: "14px",
-            boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
-          }}
-        >
-          <Typography variant="h1">3D Model</Typography>
+    <SimulationDataContext.Provider
+      value={{ simulationData, setSimulationData }}
+    >
+      <Box m="20px" display="flex" alignItems={"flex-start"} gap="20px">
+        <Box width={"50%"} height="120px">
+          <Typography variant="h3">Simulation Management</Typography>
+          <FileUploadBox />
         </Box>
-      </Box> */}
-    </Box>
+        <Box width="50%">
+          <SimulationTable />
+        </Box>
+      </Box>
+    </SimulationDataContext.Provider>
   );
 };
 

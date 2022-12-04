@@ -1,14 +1,11 @@
 from django.shortcuts import render
-from rest_framework import generics, status
-from .serializers import SimulationSerializer
-from .models import Simulation
+from django.db.models import F
+from rest_framework import status
+from .serializers import SimulationSerializer, PredictedDataSerializer
+from .models import Simulation, PredictedData
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import logging
-import datetime
 import time
 from .tasks import runSimulation
 
@@ -36,3 +33,21 @@ class GetSimulationsView(APIView):
         #queryset = Simulation.objects.all()
         data = SimulationSerializer(queryset, many=True).data
         return Response(data, status=status.HTTP_200_OK)
+
+
+class GetSimulationDataView(APIView):
+    kwarg1 = "simulation"
+
+    def get(self, request, format=None):
+        param1 = request.GET.get(self.kwarg1)
+        querysetLarge = PredictedData.objects.filter(
+            simulation=param1).all()
+        querysetLargeCount = querysetLarge.count()
+        querysetReduced = querysetLarge[0: querysetLargeCount:100]
+        serializer_class = PredictedDataSerializer
+        data = serializer_class(querysetReduced, many=True,).data
+
+        return Response(data, status=status.HTTP_200_OK)
+
+        # querysetLarge = PredictedData.objects.filter(
+        # simulation=param1).annotate(idmod1000=F('timestamp') % 1000).filter(idmod1000=0).all()

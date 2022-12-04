@@ -68,3 +68,5 @@ class PredictedData(models.Model):
         db_column='PredOriginY2ActTrq', blank=True, null=True)
     predOriginZActTrq = models.FloatField(
         db_column='PredOriginZActTrq', blank=True, null=True)
+    simulation = models.ForeignKey(
+        Simulation, on_delete=models.CASCADE, db_column='Simulation',)

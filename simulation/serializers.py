@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Simulation
+from .models import Simulation, PredictedData
 import datetime
 import string
 import os
@@ -20,3 +20,10 @@ class SimulationSerializer(serializers.ModelSerializer):
     def get_nc_file(self, obj):
         filename = os.path.basename(str(obj.nc_file))
         return filename.split("_", 1)[1]
+
+
+class PredictedDataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PredictedData
+        fields = '__all__'

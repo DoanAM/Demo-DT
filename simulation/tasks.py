@@ -15,7 +15,6 @@ from ctypes import *
 
 
 def uploadCsv(path):
-    # r"\Data\CSV_Dateien\Versuchsteil_Quadrant_test\PredData.csv"
     with open(path) as f:
         reader = csv.reader(f)
         next(reader)
@@ -24,6 +23,7 @@ def uploadCsv(path):
                 timestamp=row[1],
                 xcurrpos=row[2],
                 ycurrpos=row[3],
+                # simulation=simulationObj
             )
 
 
@@ -65,8 +65,20 @@ def runSimulation():
     mwdll2 = ct.cdll.LoadLibrary(
         rf"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib_{instanceKey}.dll")
     SimHandler(fileName, mwdll2, instanceKey)
-    uploadCsv(r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" + pathToFileParent + "/"
-              "PredData.csv")
+    pathToCsv = r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" + \
+        pathToFileParent + "/" + "PredData.csv"
+
+    with open(pathToCsv) as f:
+        reader = csv.reader(f)
+        next(reader)
+        for row in reader:
+            _, created = PredictedData.objects.get_or_create(
+                timestamp=row[1],
+                xcurrpos=row[2],
+                ycurrpos=row[3],
+                simulation=obj
+            )
+
     obj.finished = True
     obj.save()
     time.sleep(5)

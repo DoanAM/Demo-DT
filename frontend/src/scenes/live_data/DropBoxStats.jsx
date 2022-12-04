@@ -25,10 +25,6 @@ const DropBoxStats = () => {
     console.log(stateRef.boardContentLength);
   };
 
-  useEffect(() => {
-    console.log("Use Effect", boardContent.length);
-  });
-
   const closeStatBox = (e) => {
     setBoardContent(boardContent.filter((content) => content[1] !== e));
     //setShowStatBox(false);

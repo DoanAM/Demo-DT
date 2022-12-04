@@ -1,7 +1,8 @@
 from django.urls import path, re_path
-from .views import SimulationView, GetSimulationsView
+from .views import SimulationView, GetSimulationsView, GetSimulationDataView
 
 urlpatterns = [
     path('upload-simulation', SimulationView.as_view()),
     path('get-simulation', GetSimulationsView.as_view()),
+    re_path(r'^get-simulationData/$', GetSimulationDataView.as_view())
 ]
