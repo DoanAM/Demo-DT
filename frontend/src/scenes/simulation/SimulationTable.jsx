@@ -65,6 +65,9 @@ const SimulationTable = () => {
           sorting: {
             sortModel: [{ field: "sim_ID", sort: "desc" }],
           },
+          pagination: {
+            pageSize: 5,
+          },
         }}
       />
     </Box>

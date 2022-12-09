@@ -18,7 +18,7 @@ const LoadSimulationButton = (props) => {
     const response = await Axios.get(
       "/simulationAPI/get-simulationData/?simulation=" + id
     );
-    const simData = { [id]: response.data };
+    const simData = { ID: id, data: response.data };
     setSimulationData((e) => [...e, simData]);
     console.log(simData);
     return response;
