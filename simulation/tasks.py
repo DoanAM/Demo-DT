@@ -23,6 +23,8 @@ def uploadCsv(path):
                 timestamp=row[1],
                 xcurrpos=row[2],
                 ycurrpos=row[3],
+                zcurrpos=row[4],
+                s1actrev=row[5]
                 # simulation=simulationObj
             )
 
@@ -76,6 +78,8 @@ def runSimulation():
                 timestamp=row[1],
                 xcurrpos=row[2],
                 ycurrpos=row[3],
+                zcurrpos=row[4],
+                s1actrev=row[5],
                 simulation=obj
             )
 

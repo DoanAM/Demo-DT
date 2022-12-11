@@ -1,12 +1,12 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import {
   Box,
-  Button,
+  IconButton,
   useTheme,
   Typography,
   Slider,
@@ -15,6 +15,8 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
+import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
 import pathMachineBedStl from "../../data/MachineBed.stl";
 import pathBridgeStl from "../../data/Bridge.stl";
 import pathXAxisStl from "../../data/X-Axis.stl";
@@ -71,6 +73,11 @@ const View3d = () => {
     SimulationDataContext
   );
   const [simulation, setSimulation] = useState();
+  const [xCoordinate, setXCoordinate] = useState(0);
+  const [yCoordinate, setYCoordinate] = useState(0);
+  const [zCoordinate, setZCoordinate] = useState(0);
+  const [playbackIdx, setPlaybackIdx] = useState(0);
+  const playbackInterval = useRef();
 
   const handleSelectChange = (e) => {
     const id = e.target.value;
@@ -79,7 +86,31 @@ const View3d = () => {
   };
 
   const handleSliderChange = (e, nV) => {
-    //console.log(nV);
+    setPlaybackIdx(nV);
+  };
+
+  const handlePlayback = () => {
+    playbackInterval.current = setInterval(() => {
+      setPlaybackIdx((value) => value + 1);
+    }, 500);
+  };
+
+  useEffect(() => {
+    if (simulation == null || playbackIdx == simulation.length) {
+      clearInterval(playbackInterval.current);
+      playbackInterval.current = null;
+      console.log("no simulation");
+      return;
+    } else {
+      setXCoordinate(simulation[playbackIdx].xcurrpos);
+      setYCoordinate(simulation[playbackIdx].ycurrpos);
+      setZCoordinate(simulation[playbackIdx].zcurrpos);
+    }
+  }, [playbackIdx]);
+
+  const handlePause = () => {
+    clearInterval(playbackInterval.current);
+    playbackInterval.current = null;
   };
 
   return (
@@ -105,7 +136,11 @@ const View3d = () => {
           onChange={handleSelectChange}
         >
           {simulationData.map((item) => {
-            return <MenuItem value={item.ID}>{item.ID}</MenuItem>;
+            return (
+              <MenuItem value={item.ID} key={item.ID}>
+                {item.ID}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>
@@ -116,20 +151,37 @@ const View3d = () => {
         }}
       >
         <React.Suspense fallback={<Loader />}>
+          <axesHelper args={[1000]} />
           <OrbitControls />
           <ambientLight intensitiy={2.2} />
           <pointLight position={[-780, 430, 0]} />
           <MachineBed />
-          <Bridge />
-          <XAxis />
-          <Spindle />
+          <group position={[0, 0, yCoordinate]}>
+            <Bridge />
+            <group position={[xCoordinate, 0, 0]}>
+              <XAxis />
+              <group position={[0, zCoordinate, 0]}>
+                <Spindle />
+              </group>
+            </group>
+          </group>
         </React.Suspense>
       </Canvas>
-      <Slider
-        onChange={handleSliderChange}
-        valueLabelDisplay="auto"
-        max={simulation ? simulation.length - 1 : 100}
-      />
+      <Box display="flex">
+        <Slider
+          onChange={handleSliderChange}
+          valueLabelDisplay="auto"
+          max={simulation ? simulation.length - 1 : 100}
+          width="50%"
+          value={playbackIdx}
+        />
+        <IconButton onClick={handlePlayback}>
+          <PlayArrowOutlinedIcon />
+        </IconButton>
+        <IconButton onClick={handlePause}>
+          <PauseCircleOutlineOutlinedIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };
