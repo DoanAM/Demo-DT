@@ -29,9 +29,15 @@ def uploadCsv(path):
             )
 
 
-def copyDll(pathToFileParent):
-    shutil.copy(r"simulation\machine_learning\Code\SimPy\MwCamSimLib.dll",
-                pathToFileParent)
+def copyDll(filename):
+    os.popen(
+        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\MwCamSimLib.dll')
+    os.popen(
+        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwsimutil.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwsimutil.dll')
+    os.popen(
+        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwSupport.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwSupport.dll')
+    os.popen(
+        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwVerifier.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwVerifier.dll')
 
 
 def getCsvDirectory():
@@ -61,11 +67,12 @@ def runSimulation():
     instanceKey = ''.join(random.choices(
         string.ascii_uppercase + string.digits, k=10))
     print(pathToFileParent)
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib_{instanceKey}.dll')
+    # os.popen(
+    # rf'copy C: \Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{fileName}\MwCamSimLib.dll')
+    copyDll(fileName)
     time.sleep(2)
     mwdll2 = ct.cdll.LoadLibrary(
-        rf"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib_{instanceKey}.dll")
+        rf"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\{pathToFileParent}\MwCamSimLib.dll")
     SimHandler(fileName, mwdll2, instanceKey)
     pathToCsv = r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" + \
         pathToFileParent + "/" + "PredData.csv"
