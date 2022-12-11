@@ -167,21 +167,23 @@ const View3d = () => {
           </group>
         </React.Suspense>
       </Canvas>
-      <Box display="flex">
-        <Slider
-          onChange={handleSliderChange}
-          valueLabelDisplay="auto"
-          max={simulation ? simulation.length - 1 : 100}
-          width="50%"
-          value={playbackIdx}
-        />
-        <IconButton onClick={handlePlayback}>
-          <PlayArrowOutlinedIcon />
-        </IconButton>
-        <IconButton onClick={handlePause}>
-          <PauseCircleOutlineOutlinedIcon />
-        </IconButton>
-      </Box>
+      {simulation != undefined && (
+        <Box display="flex">
+          <Slider
+            onChange={handleSliderChange}
+            valueLabelDisplay="auto"
+            max={simulation.length - 1}
+            width="50%"
+            value={playbackIdx}
+          />
+          <IconButton onClick={handlePlayback}>
+            <PlayArrowOutlinedIcon />
+          </IconButton>
+          <IconButton onClick={handlePause}>
+            <PauseCircleOutlineOutlinedIcon />
+          </IconButton>
+        </Box>
+      )}
     </Box>
   );
 };

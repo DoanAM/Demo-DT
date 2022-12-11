@@ -24,7 +24,7 @@ const LoadSimulationButton = (props) => {
     return response;
   };
 
-  const { status, data, refetch } = useQuery({
+  const { isFetching, data, refetch } = useQuery({
     queryKey: ["newSimulation", sim_id],
     queryFn: ({ queryKey }) => getSimulationData(queryKey[1]),
     refetchOnWindowFocus: false,
@@ -39,10 +39,9 @@ const LoadSimulationButton = (props) => {
     <Button
       onClick={handleClick}
       width="30px"
-      backgroundColor={colors.orangeAccent[300]}
+      sx={{ color: colors.orangeAccent[300] }}
     >
-      {" "}
-      Load
+      {isFetching ? "Fetching" : "Load"}
     </Button>
   );
 };
