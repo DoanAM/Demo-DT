@@ -53,7 +53,8 @@ extern "C" MWCAMSIM_API void DoCut(
 								   int toolid,
 								   int cut_id,
 								   bool isCut, 
-								   bool isTrace);
+								   bool isTrace,
+	char* stlPath);
 extern "C" MWCAMSIM_API void engagement_analysis();
 extern "C" MWCAMSIM_API void visualization(bool isshow_in_this_turn, int show_range); 
 extern "C" MWCAMSIM_API void config();

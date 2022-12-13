@@ -249,7 +249,9 @@ void DoCut(
 	int toolid,
 	int cut_id, 
 	bool isCut,
-	bool isTrace)
+	bool isTrace,
+	char* stlPath
+)
 {
 	verifier->SetMoveID(cut_id);
 	float3d p_start(x_start, y_start, z_start);
@@ -275,6 +277,14 @@ void DoCut(
 		MATH::OrientationToQuaternion<float>(orientation3x_target, 0)
 	);
 	verifier->Cut(from, to);
+
+	if (cut_id % 1000 == 0) {
+		misc::mwstring currentId = std::to_string(cut_id);
+		misc::mwstring path = stlPath;
+		misc::mwstring resultName = path + "\\" + currentId + ".stl";
+		verifier->GetMesh(&resultName);
+		std::cout << "*  The generated mesh file is saved in: " << path << std::endl;
+	}
 }
 
 //@brief: calculate engagement analysis and removal volume. record the result 

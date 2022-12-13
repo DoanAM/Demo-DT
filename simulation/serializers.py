@@ -23,7 +23,11 @@ class SimulationSerializer(serializers.ModelSerializer):
 
 
 class PredictedDataSerializer(serializers.ModelSerializer):
+    stlPath = serializers.SerializerMethodField(source='stlPath')
 
     class Meta:
         model = PredictedData
         fields = '__all__'
+
+    def get_stlPath(self, obj):
+        return obj.stlPath.url

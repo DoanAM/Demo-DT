@@ -12,6 +12,7 @@ import sys
 import shutil
 import ctypes as ct
 from ctypes import *
+from .helper_tasks import copyDll, listStlFiles
 
 
 def uploadCsv(path):
@@ -27,17 +28,6 @@ def uploadCsv(path):
                 s1actrev=row[5]
                 # simulation=simulationObj
             )
-
-
-def copyDll(filename):
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\MwCamSimLib.dll')
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwsimutil.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwsimutil.dll')
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwSupport.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwSupport.dll')
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwVerifier.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwVerifier.dll')
 
 
 def getCsvDirectory():
@@ -74,6 +64,7 @@ def runSimulation():
     mwdll2 = ct.cdll.LoadLibrary(
         rf"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\{pathToFileParent}\MwCamSimLib.dll")
     SimHandler(fileName, mwdll2, instanceKey)
+
     pathToCsv = r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" + \
         pathToFileParent + "/" + "PredData.csv"
 
@@ -87,9 +78,13 @@ def runSimulation():
                 ycurrpos=row[3],
                 zcurrpos=row[4],
                 s1actrev=row[5],
-                simulation=obj
+                simulation=obj,
+                stlPath=None
             )
 
     obj.finished = True
     obj.save()
+
+    listStlFiles(r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" +
+                 pathToFileParent, pathToFileParent)
     time.sleep(5)

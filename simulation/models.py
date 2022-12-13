@@ -70,3 +70,5 @@ class PredictedData(models.Model):
         db_column='PredOriginZActTrq', blank=True, null=True)
     simulation = models.ForeignKey(
         Simulation, on_delete=models.CASCADE, db_column='Simulation',)
+    stlPath = models.FileField(max_length=255,
+                               blank=True, null=True)
