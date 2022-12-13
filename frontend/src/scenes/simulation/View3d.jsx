@@ -63,6 +63,16 @@ const Spindle = () => {
   );
 };
 
+const Workpiece = () => {
+  const geom = useLoader(STLLoader, "/Data/CSV_Dateien/16000_PItII9Z.stl");
+  return (
+    <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
+      <primitive object={geom} attach="geometry" />
+      <meshPhongMaterial attach={"material"} color="rgb(50, 168, 82)" />
+    </mesh>
+  );
+};
+
 const Loader = () => {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
@@ -77,6 +87,7 @@ const View3d = () => {
   const [yCoordinate, setYCoordinate] = useState(0);
   const [zCoordinate, setZCoordinate] = useState(0);
   const [playbackIdx, setPlaybackIdx] = useState(0);
+  //const [stlPath, setStlPath] = useState(0);
   const playbackInterval = useRef();
 
   const handleSelectChange = (e) => {
@@ -165,6 +176,7 @@ const View3d = () => {
               </group>
             </group>
           </group>
+          <Workpiece />
         </React.Suspense>
       </Canvas>
       {simulation != undefined && (
