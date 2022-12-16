@@ -278,7 +278,7 @@ void DoCut(
 	);
 	verifier->Cut(from, to);
 
-	if (cut_id % 1000 == 0) {
+	if (cut_id % 100 == 0) {
 		misc::mwstring currentId = std::to_string(cut_id);
 		misc::mwstring path = stlPath;
 		misc::mwstring resultName = path + "\\" + currentId + ".stl";

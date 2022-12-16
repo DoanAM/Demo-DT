@@ -63,8 +63,8 @@ const Spindle = () => {
   );
 };
 
-const Workpiece = () => {
-  const geom = useLoader(STLLoader, "/Data/CSV_Dateien/16000_PItII9Z.stl");
+const Workpiece = (props) => {
+  const geom = useLoader(STLLoader, props.path);
   return (
     <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
       <primitive object={geom} attach="geometry" />
@@ -87,7 +87,7 @@ const View3d = () => {
   const [yCoordinate, setYCoordinate] = useState(0);
   const [zCoordinate, setZCoordinate] = useState(0);
   const [playbackIdx, setPlaybackIdx] = useState(0);
-  //const [stlPath, setStlPath] = useState(0);
+  const [stlPath, setStlPath] = useState("/Data/CSV_Dateien/7000_NcZqvLM.stl");
   const playbackInterval = useRef();
 
   const handleSelectChange = (e) => {
@@ -110,12 +110,14 @@ const View3d = () => {
     if (simulation == null || playbackIdx == simulation.length) {
       clearInterval(playbackInterval.current);
       playbackInterval.current = null;
-      console.log("no simulation");
       return;
     } else {
       setXCoordinate(simulation[playbackIdx].xcurrpos);
       setYCoordinate(simulation[playbackIdx].ycurrpos);
       setZCoordinate(simulation[playbackIdx].zcurrpos);
+      if (simulation[playbackIdx].stlPath != null) {
+        setStlPath(simulation[playbackIdx].stlPath);
+      }
     }
   }, [playbackIdx]);
 
@@ -176,7 +178,7 @@ const View3d = () => {
               </group>
             </group>
           </group>
-          <Workpiece />
+          {simulation != undefined && <Workpiece path={stlPath} />}
         </React.Suspense>
       </Canvas>
       {simulation != undefined && (

@@ -30,4 +30,7 @@ class PredictedDataSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_stlPath(self, obj):
-        return obj.stlPath.url
+        if obj.stlPath == "":
+            return None
+        else:
+            return obj.stlPath.url
