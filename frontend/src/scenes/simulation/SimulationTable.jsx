@@ -20,7 +20,7 @@ const SimulationTable = () => {
   const {
     isLoading,
     isError,
-    data: AllSimulations,
+    data: allSimulations,
   } = useQuery({
     queryKey: ["currentSimulations"],
     queryFn: fetchData,
@@ -57,19 +57,21 @@ const SimulationTable = () => {
 
   return (
     <Box height="30vh">
-      <DataGrid
-        rows={tableContent}
-        columns={columns}
-        getRowId={(row) => row.sim_ID}
-        initialState={{
-          sorting: {
-            sortModel: [{ field: "sim_ID", sort: "desc" }],
-          },
-          pagination: {
-            pageSize: 5,
-          },
-        }}
-      />
+      {tableContent != undefined && (
+        <DataGrid
+          rows={tableContent}
+          columns={columns}
+          getRowId={(row) => row.sim_ID}
+          initialState={{
+            sorting: {
+              sortModel: [{ field: "sim_ID", sort: "desc" }],
+            },
+            pagination: {
+              pageSize: 5,
+            },
+          }}
+        />
+      )}
     </Box>
   );
 };

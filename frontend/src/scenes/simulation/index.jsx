@@ -5,7 +5,7 @@ import StatBox from "../../components/StatBox.jsx";
 import { useDrop } from "react-dnd";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
-import View3d from "./View3d.jsx";
+import SimulationView3d from "./SimulationView3d.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import SimulationTable from "./SimulationTable.jsx";
 import SimulationDataContext from "./SimulationDataContext.jsx";
@@ -35,7 +35,7 @@ const Simulation = () => {
             <SimulationTable />
           </Box>
         </Box>
-        <View3d />
+        <SimulationView3d />
       </Box>
     </SimulationDataContext.Provider>
   );

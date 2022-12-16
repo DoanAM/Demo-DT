@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 import time
 from django.http import FileResponse
 from .tasks import runSimulation
+from itertools import chain
 
 # Create your views here.
 
@@ -42,13 +43,16 @@ class GetSimulationDataView(APIView):
     def get(self, request, format=None):
         param1 = request.GET.get(self.kwarg1)
         querysetLarge = PredictedData.objects.filter(
-            simulation=param1).all().order_by("timestamp")
+            simulation=param1).filter(stlPath__exact="").all()
         querysetLargeCount = querysetLarge.count()
         querysetReduced = querysetLarge[0: querysetLargeCount:100]
-        # querysetReduced = querysetLarge.exclude(
-        # stlPath__exact="").all()
+        querysetStl = PredictedData.objects.filter(
+            simulation=param1).exclude(
+            stlPath__exact="").all()
+        qs = sorted(chain(querysetReduced, querysetStl),
+                    key=lambda instance: instance.timestamp)
         serializer_class = PredictedDataSerializer
-        data = serializer_class(querysetReduced, many=True,).data
+        data = serializer_class(qs, many=True,).data
 
         return Response(data, status=status.HTTP_200_OK)
 

@@ -1,15 +1,11 @@
 import { Box, Button, useTheme, Typography } from "@mui/material";
-import { useState } from "react";
+
 import { tokens } from "../../theme";
-import StatBox from "../../components/StatBox.jsx";
-import { useDrop } from "react-dnd";
-import DragAndDrop from "../../components/DragAndDrop.jsx";
-import { AuxiliaryList } from "../../data/AuxiliaryList.js";
-import DropBox from "../../components/DropBox.jsx";
+
 import DropBoxStats from "./DropBoxStats.jsx";
-import LineChart from "../../components/LineChart.jsx";
+import LiveView3d from "./LiveView3d.jsx";
+
 import DropBoxGraphs from "./DropBoxGraphs.jsx";
-import Navbar from "../global/Sidebar.jsx";
 
 const Live_Data = () => {
   const theme = useTheme();
@@ -28,20 +24,7 @@ const Live_Data = () => {
         height={"70vh"}
       >
         <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
-        <Box
-          sx={{
-            width: "50%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginLeft: "5px",
-            border: "2px solid #7A410D",
-            borderRadius: "14px",
-            boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
-          }}
-        >
-          <Typography variant="h1">3D Model</Typography>
-        </Box>
+        <LiveView3d />
       </Box>
     </Box>
   );
