@@ -8,16 +8,6 @@ import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import Axios from "axios";
 import SimulationDataContext from "./SimulationDataContext.jsx";
 
-const Workpiece = (props) => {
-  const geom = useLoader(STLLoader, props);
-  return (
-    <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
-      <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach={"material"} color="rgb(50, 168, 82)" />
-    </mesh>
-  );
-};
-
 const LoadSimulationButton = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

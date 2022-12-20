@@ -1,6 +1,6 @@
-import { ColorModeContext, useMode } from "./theme";
+import { ColorModeContext, useMode, RoutingContext } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { render } from "react-dom";
 import Topbar from "./scenes/global/Topbar.jsx";
 import Navbar from "./scenes/global/Sidebar.jsx";
@@ -21,26 +21,29 @@ import {
 const queryClient = new QueryClient();
 function App() {
   const [theme, colorMode] = useMode();
+  const [currentSite, setCurrentSite] = useState("");
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <DndProvider backend={HTML5Backend}>
-            <CssBaseline />
+        <RoutingContext.Provider value={{ currentSite, setCurrentSite }}>
+          <QueryClientProvider client={queryClient}>
+            <DndProvider backend={HTML5Backend}>
+              <CssBaseline />
 
-            <div className="app">
-              <Navbar />
-              <main className="content">
-                <Topbar />
-                <Routes>
-                  <Route path="/home" element={<Live_Data />} />
-                  <Route path="/simulation" element={<Simulation />} />
-                </Routes>
-              </main>
-            </div>
-          </DndProvider>
-        </QueryClientProvider>
+              <div className="app">
+                <Navbar />
+                <main className="content">
+                  <Topbar />
+                  <Routes>
+                    <Route path="/home" element={<Live_Data />} />
+                    <Route path="/simulation" element={<Simulation />} />
+                  </Routes>
+                </main>
+              </div>
+            </DndProvider>
+          </QueryClientProvider>
+        </RoutingContext.Provider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
+import LiveDataContext from "./LiveDataContext.jsx";
 
 import {
   MachineBed,
@@ -31,6 +32,8 @@ const Loader = () => {
 };
 
 const LiveView3d = () => {
+  const { liveData, setLiveData } = useContext(LiveDataContext);
+
   return (
     <Box
       sx={{
@@ -56,11 +59,11 @@ const LiveView3d = () => {
           <ambientLight intensitiy={2.2} />
           <pointLight position={[-780, 430, 0]} />
           <MachineBed />
-          <group position={[0, 0, 0]}>
+          <group position={[0, 0, liveData.ycurrpos / 50000]}>
             <Bridge />
-            <group position={[0, 0, 0]}>
+            <group position={[liveData.xcurrpos / 50000, 0, 0]}>
               <XAxis />
-              <group position={[0, 0, 0]}>
+              <group position={[0, liveData.xcurrpos / 100000, 0]}>
                 <Spindle />
               </group>
             </group>

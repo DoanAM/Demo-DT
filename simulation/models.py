@@ -7,6 +7,7 @@ def upload_path(instance, filename):
     timestamp = str(round(time.time()))
     return '/'.join([timestamp + "_" + os.path.splitext(filename)[0], timestamp + "_" + filename])
 
+
 # Create your models here.
 
 

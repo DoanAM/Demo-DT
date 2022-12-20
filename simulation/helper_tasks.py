@@ -17,7 +17,7 @@ def copyDll(filename):
         rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwVerifier.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwVerifier.dll')
 
 
-def listStlFiles(path, relativePath):
+def listStlFiles(path, fileName):
     pathPredData = Path(path) / "PredData.csv"
     pathSimData = Path(path) / "SimPathData.txt"
     pathMrs = Path(path) / "MRS"
@@ -28,7 +28,7 @@ def listStlFiles(path, relativePath):
     for file in os.listdir(pathMrs):
         if file.endswith(".stl"):
             filepath = Path(pathMrs) / file
-            relativeFilepath = Path(relativePath) / "MRS" / file
+            relativeFilepath = Path(fileName) / "MRS" / file
             line = int(Path(file).stem)
             _df = df.iloc[line]
             timestamp = _df['Timestamp']
@@ -39,5 +39,5 @@ def listStlFiles(path, relativePath):
 
             obj = PredictedData.objects.get(timestamp=actualTimestamp)
             with filepath.open(mode="rb") as f:
-                obj.stlPath = File(f, name=filepath.name)
+                obj.stlPath = File(f, name=relativeFilepath)
                 obj.save()

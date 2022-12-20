@@ -2,11 +2,12 @@ import { useDrop } from "react-dnd";
 import { tokens } from "../../theme";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Box, Button, useTheme } from "@mui/material";
 import StatBox from "../../components/StatBox.jsx";
 import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import LiveDataContext from "./LiveDataContext.jsx";
 
 const DropBoxStats = () => {
   const theme = useTheme();
@@ -14,6 +15,7 @@ const DropBoxStats = () => {
   const [boardContent, setBoardContent] = useState([]);
   const stateRef = useRef();
   stateRef.boardContentLength = boardContent.length;
+  const { liveData, setLiveData } = useContext(LiveDataContext);
 
   const addCardToBoard = (item) => {
     if (stateRef.boardContentLength >= 4) {
@@ -42,6 +44,12 @@ const DropBoxStats = () => {
 
   const fetchData = async () => {
     const response = await Axios.get("/debug/get-all");
+    //console.log(response);
+    setLiveData({
+      xcurrpos: response.data.cnc.xcurrpos,
+      ycurrpos: response.data.cnc.ycurrpos,
+      zcurrpos: response.data.cnc.zcurrpos,
+    });
     return response;
   };
 
@@ -79,6 +87,7 @@ const DropBoxStats = () => {
             category={e[0].category}
             readings={data.data}
             id={e[1]}
+            key={e[1]}
           />
         );
       })}

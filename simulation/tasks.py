@@ -86,5 +86,5 @@ def runSimulation():
     obj.save()
 
     listStlFiles(r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" +
-                 pathToFileParent, pathToFileParent)
+                 pathToFileParent, fileName)
     time.sleep(5)

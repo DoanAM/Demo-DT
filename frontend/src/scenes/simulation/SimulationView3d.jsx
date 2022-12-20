@@ -24,6 +24,7 @@ import {
   XAxis,
   Spindle,
 } from "../../components/MachineParts.jsx";
+import CurrentSimulationContext from "./CurrentSimulationContext.jsx";
 
 const Workpiece = (props) => {
   const geom = useLoader(STLLoader, props.path);
@@ -44,6 +45,9 @@ const SimulationView3d = () => {
   const { simulationData, setSimulationData } = useContext(
     SimulationDataContext
   );
+  const { currentSimulationData, setCurrentSimulationData } = useContext(
+    CurrentSimulationContext
+  );
   const [simulation, setSimulation] = useState();
   const [xCoordinate, setXCoordinate] = useState(0);
   const [yCoordinate, setYCoordinate] = useState(0);
@@ -56,6 +60,7 @@ const SimulationView3d = () => {
     const id = e.target.value;
     const obj = simulationData.find((o) => o.ID === id);
     setSimulation(obj.data);
+    setCurrentSimulationData(obj.data);
   };
 
   const handleSliderChange = (e, nV) => {
@@ -157,7 +162,7 @@ const SimulationView3d = () => {
             onChange={handleSliderChange}
             valueLabelDisplay="auto"
             max={simulation.length - 1}
-            width="50vw"
+            sx={{ width: "30vw" }}
             value={playbackIdx}
           />
           <IconButton onClick={handlePlayback}>

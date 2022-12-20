@@ -1,6 +1,6 @@
 import { Box, Button, useTheme, Typography } from "@mui/material";
-import { useState } from "react";
-import { tokens } from "../../theme";
+import { useState, useContext, useEffect } from "react";
+import { tokens, RoutingContext } from "../../theme";
 import StatBox from "../../components/StatBox.jsx";
 import { useDrop } from "react-dnd";
 import DragAndDrop from "../../components/DragAndDrop.jsx";
@@ -9,24 +9,28 @@ import SimulationView3d from "./SimulationView3d.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import SimulationTable from "./SimulationTable.jsx";
 import SimulationDataContext from "./SimulationDataContext.jsx";
+import CurrentSimulationContext from "./CurrentSimulationContext.jsx";
+import BoxGraphs from "./BoxGraphs.jsx";
+
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
 const Simulation = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [simulationData, setSimulationData] = useState([]);
+  const [currentSimulationData, setCurrentSimulationData] = useState();
+  const { currentSite, setCurrentSite } = useContext(RoutingContext);
 
-  const handleUpload = (e) => {
-    //console.log(e.target.value);
-    console.log(e.target.files);
-  };
+  useEffect(() => {
+    setCurrentSite("simulation");
+  }, []);
 
   return (
     <SimulationDataContext.Provider
       value={{ simulationData, setSimulationData }}
     >
-      <Box>
-        <Box m="20px" display="flex" alignItems={"flex-start"} gap="20px">
+      <Box m="20px">
+        <Box display="flex" alignItems={"flex-start"} gap="20px">
           <Box width={"50%"} height="120px">
             <Typography variant="h3">Simulation Management</Typography>
             <FileUploadBox />
@@ -35,7 +39,14 @@ const Simulation = () => {
             <SimulationTable />
           </Box>
         </Box>
-        <SimulationView3d />
+        <Box display="flex" flexDirection={"row"}>
+          <CurrentSimulationContext.Provider
+            value={{ currentSimulationData, setCurrentSimulationData }}
+          >
+            <SimulationView3d />
+            <BoxGraphs />
+          </CurrentSimulationContext.Provider>
+        </Box>
       </Box>
     </SimulationDataContext.Provider>
   );
