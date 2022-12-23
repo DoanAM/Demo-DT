@@ -1,0 +1,113 @@
+# ********************************
+# 
+#TC_CHANNEL_DESC_3:  Werkzeugdaten 
+# 
+#     Einheit:   0.1 Mikrometer
+# 
+# ********************************
+#
+wz[1].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[1].typ                                             0              ( P-TOOL-00001 : Tool type (0: Milling, 1: Turning, 2: Grinding)
+wz[1].srk_lage                                        0              ( P-TOOL-00002 : Cutter orientation ID, required only for turning tool
+wz[1].mass_einheit                                    0              ( P-TOOL-00008 : Unit of tool data (0: mm, 1: inch)
+wz[1].laenge                                          500000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[1].radius                                          30000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+wz[1].ax_versatz[0]                                   105000         ( P-TOOL-00006 : [0.1um or 0.0001 inch] Tool axis offset of first channel axis        
+wz[1].ax_versatz[1]                                   106000         ( P-TOOL-00006 : [0.1um or 0.0001 inch] Tool axis offset of second channel axis 
+wz[1].ax_versatz[2]                                   0              ( P-TOOL-00006 : [0.1um or 0.0001 inch] Tool axis offset of third channel axis 
+wz[1].kinematic.param[0]                              0              ( P-TOOL-00009 : [0.1um or 0.0001 inch] Tool specific kinematic parameter (tool head offsets)
+wz[1].kinematic.param[1]                              0              ( P-TOOL-00009 : [0.1um or 0.0001 inch] Tool specific kinematic parameter (tool head offsets)
+wz[1].kinematic.param[2]                              0              ( P-TOOL-00009 : [0.1um or 0.0001 inch] Tool specific kinematic parameter (tool head offsets)
+wz[1].kin_id                                          0              ( P-TOOL-00011 : Kinematics transformation to be required for the tool 
+wz[1].tool_fixed                                      0              ( P-TOOL-00010 : Tool orientation relative to the machine-axes coordinate system
+wz[1].param[0]                                        170            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[1]                                        171            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[2]                                        172            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[3]                                        173            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[4]                                        174            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[5]                                        175            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[6]                                        176            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[7]                                        177            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[8]                                        178            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[9]                                        179            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[10]                                       180            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[11]                                       181            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[12]                                       182            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[13]                                       183            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[14]                                       184            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[15]                                       185            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].param[16]                                       186            ( P-TOOL-00007 : Additional tool parameter - example
+wz[1].log_ax_nr_spdl                                  0              ( P-TOOL-00012 : Logical axis number of the spindle (required for tool dynamic data, 0: not assigned)
+wz[1].vb_min                                          60000          ( P-TOOL-00013 : Tool dynamic data, minimum spindle speed
+wz[1].vb_max                                          3000000        ( P-TOOL-00014 : Tool dynamic data, maximum spindle speed
+wz[1].a_max                                           3000           ( P-TOOL-00015 : Tool dynamic data, maximum spindle acceleration
+#wz[1].grinding_disc_type                              285            ( Use in preparation : Type of grinding disc
+wz[1].grinding_wear_const                             10000          ( P-TOOL-00030 : [0.1?m/m] Wear constant, Example 100: 10?m/m wear
+wz[1].grinding_max_infeed                             20000          ( P-TOOL-00031 : [0.1?m] Maximum infeed commanded via PLC
+wz[1].grinding_disc_tilt_angle                        450000         ( P-TOOL-00032 : [0.0001?] Tilt angle of grinding disc
+#wz[1].grinding_disc_min_radius                        110000         ( Use in preparation : [0.1?m] Minimum grinding disc radius
+#wz[1].grinding_disc_min_width                         220000         ( Use in preparation : [0.1?m] Minimum grinding disc width
+
+#
+wz[2].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[2].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[2].radius                                          79900          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius 
+
+#
+wz[36].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[36].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[36].radius                                          40000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius 
+
+#
+wz[55].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[55].laenge                                          00000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[55].radius                                          80000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[52].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[52].laenge                                          00000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[52].radius                                          60000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[23].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[23].laenge                                          00000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[23].radius                                          56000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[4].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[4].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[4].radius                                          20000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[72].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[72].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[72].radius                                          60000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[20].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[20].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[20].radius                                          46500          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[50].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[50].laenge                                          00000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[50].radius                                          40000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[48].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[48].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[48].radius                                          30000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[54].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[54].laenge                                          0000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[54].radius                                          80000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+
+# 
+wz[45].gueltig                                         1              ( P-TOOL-00005 : Validity flag of tool data
+wz[45].laenge                                          00000         ( P-TOOL-00003 : [0.1um or 0.0001 inch] Tool length
+wz[45].radius                                          20000          ( P-TOOL-00004 : [0.1um or 0.0001 inch] Tool radius
+#
+
+
+Ende

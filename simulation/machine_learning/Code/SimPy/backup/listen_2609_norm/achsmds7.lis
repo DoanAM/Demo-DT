@@ -1,0 +1,311 @@
+# ****************************************
+#
+#    Achsmaschinendaten X-Achse
+#
+# ****************************************
+#
+kopf.achs_nr                                          7
+kopf.mds_ident                                        1
+# kopf.res1                                           0
+# kopf.res2                                           0
+kopf.log_achs_name                                    X2_Achse
+#
+kenngr.nocken_laenge                                  0
+kenngr.hub_messtaster                                 20000
+kenngr.vb_messen                                      20000
+kenngr.mess_offset                                    100
+kenngr.messachse                                      0
+kenngr.mess_signal_achs_steuer                        1
+kenngr.mess_signal_sercos                             0
+kenngr.vb_messen                                      50000
+kenngr.mess_offset                                    0
+#kenngr.messachse                                      1
+#kenngr.mess_signal_achs_steuer                        1
+#kenngr.mess_signal_taster                             0
+#kenngr.kasto_achse                                    0 
+#kenngr.bool_frei1                                     0
+#kenngr.mess_signal_sercos                             0
+kenngr.virtuel_rad                                    0  
+kenngr.swe_toleranz                                   0
+kenngr.swe_pos                                        1000000
+kenngr.swe_neg                                        -1000000
+kenngr.sgn32frei1                                     0
+kenngr.sgn32frei2                                     0
+kenngr.sgn32frei3                                     0
+kenngr.sgn32frei4                                     0
+kenngr.max_vb_override                                1000
+kenngr.max_a_override                                 0
+kenngr.vb_prozent                                     0
+kenngr.getriebe_stufe                                 1
+kenngr.achs_mode                                      0x8001
+kenngr.achs_typ                                       1
+kenngr.gantry_ax_nr                                   0
+kenngr.gantry_max_diff_resetable                      0
+kenngr.gantry_max_diff_reset_locked                   0
+kenngr.gantry_offset                                  0
+kenngr.gantry_vb_korr                                 0
+kenngr.coll_check_ax_nr                               0
+kenngr.coll_decelerate_chan                           1
+kenngr.coll_offset                                    0
+kenngr.diff_pos_tracking                              10000  /* 0.1um */
+kenngr.vb_corr_tracking                               1000   /* um/s  */ 
+kenngr.paar_ax_nr                                     0
+kenngr.anzeige                                        1
+kenngr.paar_achse                                     0
+kenngr.paar_ref_richt                                 0
+kenngr.ref_richt                                      1
+kenngr.ref_ohne_nocken                                0
+kenngr.vorz_richtung                                  0
+kenngr.beweg_richt                                    0
+kenngr.ref_ohne_rev                                   0
+kenngr.mod_rechng                                     0
+kenngr.tendenz_pruef                                  0
+kenngr.in_zus_schn                                    1
+kenngr.out_zus_schn                                   0
+kenngr.antr_typ                                       4 /* 1=KONV, 2=SERCOS, 4=SIMU, 8 IMBUS */
+kenngr.def_cax_gear_st                                1 /* Default Getriebestufe */
+kenngr.uns08frei2                                     0
+kenngr.feininterpolation                              0
+kenngr.abs_pos_gueltig                                0
+kenngr.durchm_prog_abs                                0 /* Durchmesserprogrammierung (G51) im G90-Mode aktiv (nur fÅr Plandrehachse)   */
+kenngr.durchm_prog_rel                                0 /* Durchmesserprogrammierung (G51) im G91-Mode aktiv (nur fÅr Plandrehachse)   */
+#
+getriebe[0].nummer                                    1
+# getriebe[0].uns16frei1                                0
+getriebe[0].slope_profil.a_beschl                     1000
+getriebe[0].slope_profil.a_brems                      1000
+getriebe[0].slope_profil.a_grenz                      2000
+getriebe[0].slope_profil.tr_beschl_zu                 30000
+getriebe[0].slope_profil.tr_beschl_ab                 30000
+getriebe[0].slope_profil.tr_brems_zu                  30000
+getriebe[0].slope_profil.tr_brems_ab                  30000
+getriebe[0].slope_profil.tr_grenz                     30000
+getriebe[0].lslope_profil.a_stufe_1                   1000
+getriebe[0].lslope_profil.a_stufe_2                   1000
+getriebe[0].lslope_profil.vb_stufe_1_2                100000
+getriebe[0].lslope_profil.a_grenz_stufe_1             1000
+getriebe[0].lslope_profil.a_grenz_stufe_2             1000
+getriebe[0].lslope_profil.vb_grenz_stufe_1_2          100000
+getriebe[0].dynamik.vb_max                            100000
+getriebe[0].dynamik.a_max                             2000
+getriebe[0].dynamik.tr_min                            5000
+getriebe[0].dynamik.tr_geom                           5000
+getriebe[0].dynamik.a_trans_weight                    1000
+getriebe[0].kv                                        4000
+getriebe[0].beschl_kennlinie.n_grenz                  0
+getriebe[0].beschl_kennlinie.a_konst                  0
+getriebe[0].beschl_kennlinie.typ                      0
+getriebe[0].beschl_kennlinie.a_min                    0
+getriebe[0].beschl_kennlinie.b1                       0
+getriebe[0].beschl_kennlinie.b2                       0
+getriebe[0].beschl_kennlinie.b3                       0 
+getriebe[0].vb_min_null                               0
+getriebe[0].vb_eilgang                                100000
+getriebe[0].vb_refmax                                 20000
+getriebe[0].vb_reflow                                 2000
+getriebe[0].vb_regelgrenze                            3600000
+getriebe[0].multi_gain_z                              2252
+getriebe[0].multi_gain_n                              1
+# getriebe[0].uns32frei1                              0
+# getriebe[0].uns32frei2                              0
+getriebe[0].wegaufz                                   1
+getriebe[0].wegaufn                                   1
+getriebe[0].window                                    2000
+getriebe[0].moduloo                                   1000000000
+getriebe[0].modulou                                   -1000000000
+getriebe[0].pos_refpkt                                200000
+getriebe[0].getr_schalt_pos                           0
+getriebe[0].slep_min                                  120000
+getriebe[0].slep_max                                  2000000
+getriebe[0].achs_position[0]                          0
+getriebe[0].achs_position[1]                          0
+getriebe[0].achs_position[2]                          0
+getriebe[0].wsi_meldung                               0
+# getriebe[0].sgn32frei1                              0
+getriebe[0].modulo_fehler                             0
+getriebe[0].modulo_umdreh                             0
+getriebe[0].slep_ueberw_typ                           0
+
+getriebe[0].slep_dyn                                  1024
+getriebe[0].slep_abw                                  512
+getriebe[0].pos_einschw_zeit                          10000
+
+getriebe[0].lose                                      0
+getriebe[0].reverse                                   0
+getriebe[0].default_lr_hw_nbr                         0
+# getriebe[0].sgn32frei2                              0
+# getriebe[0].bool_frei1                              0
+# getriebe[0].bool_frei2                              0
+#
+lr_param.lr_ueberwach                                 0
+lr_param.pos_einschw_zt                               0
+# lr_param.uns32frei1                                 0
+# lr_param.uns32frei2                                 0
+# lr_param.sgn32frei1                                 0
+# lr_param.sgn32frei2                                 0
+lr_param.anz_driftwerte                               0
+lr_param.slep_toleranz                                0
+# lr_param.uns16frei1                                 0
+# lr_param.sgn16frei2                                 0
+# lr_param.sgn16frei3                                 0
+# lr_param.sgn16frei4                                 0
+# lr_param.sgn16frei5                                 0
+lr_param.anwahl_losekomp                              0
+lr_param.ssfk                                         0
+lr_param.mod_komp                                     0
+# lr_param.bool_frei1                                 0
+# lr_param.bool_frei2                                 0
+# lr_param.bool_frei3                                 0
+# lr_param.bool_frei4                                 0
+# lr_param.bool_frei5                                 0
+# lr_param.bool_frei6                                 0
+#
+lr_hw[0].nummer                                       1
+lr_hw[0].drift_wert                                   0
+lr_hw[0].regel_typ                                    0
+lr_hw[0].vz_stellgr                                   0
+lr_hw[0].vz_istw                                      0
+#
+lr_hw[0].cntr_hw_id_string                            ISG_8ACHS_V2
+lr_hw[0].cntr_channel                                 0
+lr_hw[0].da_hw_id_string                              ISG_8ACHS_V2
+lr_hw[0].da_channel                                   0
+lr_hw[0].cam_direct_access                            1
+lr_hw[0].cam_hw_id_string                             ISG_8ACHS_V2
+lr_hw[0].cam_mask                                     0x0001
+lr_hw[0].cam_level                                    1
+#
+bahnrg.br_p_faktor                                    30
+bahnrg.br_p_nenner                                    100
+bahnrg.br_i_faktor                                    1
+bahnrg.br_i_nenner                                    50
+# bahnrg.sgn32frei1                                   0
+# bahnrg.sgn32frei2                                   0
+# bahnrg.sgn32frei3                                   0
+# bahnrg.uns16frei1                                   0
+bahnrg.bahnregelung                                   1
+bahnrg.bool_frei1                                     0
+#
+vorsteuer.vs_v_faktor                                 1
+vorsteuer.vs_v_nenner                                 1
+vorsteuer.vs_a_faktor                                 1
+vorsteuer.vs_a_nenner                                 1
+vorsteuer.vs_max_sprung                               1
+vorsteuer.vorsteuerung                                7
+# vorsteuer.sgn32frei1                                0
+# vorsteuer.sgn32frei2                                0
+# vorsteuer.uns16frei1                                0
+#
+antr_simu.zeitkonstante_z                             1
+antr_simu.zeitkonstante_n                             100
+antr_simu.daempfung_z                                 6
+antr_simu.daempfung_n                                 10
+antr_simu.eigenfrequenz_z                             100
+antr_simu.eigenfrequenz_n                             1
+antr_simu.totzeit                                     0
+antr_simu.rpf_weg_bis_nip                             10
+antr_simu.ist_gleich_soll                             0
+#
+#
+
+# antr.sercos.at[3].ident_nr                84
+# antr.sercos.at[3].ident_len               2
+# antr.sercos.at[3].nc_ref                  MOMENT_IST_WERT
+# antr.sercos.at[4].ident_nr                40
+# antr.sercos.at[4].ident_len               4
+# antr.sercos.at[4].nc_ref                  VB_IST_WERT
+#
+# antr.sercos.ident[0].nr                   32            # Hauptbetriebsart
+# antr.sercos.ident[0].laenge               2             # 1=Byte 2=Wort 4=LWort
+# antr.sercos.ident[0].mod                  2             # 1=Comp 2=Write, 4=Read, 0=Noop
+# antr.sercos.ident[0].type                 1             # 1=Const 2=Var 4=File Liste 8=Command
+# antr.sercos.ident[0].wert                 3  
+# antr.sercos.ident[0].phase                2             # 0=Phase 2 u. 4 2=Phase 2 4=Phase 3-4
+#
+ 
+#
+#
+handbetrieb.default.operation_mode                    2   # 1 handwheel, 2 continuous, 3 incremental
+handbetrieb.default.control_element                   1   # logical handwheel/key
+#
+handbetrieb.offsetgrenze_pos                          100000
+handbetrieb.offsetgrenze_neg                          -100000
+#
+handbetrieb.hr.aufl[0]                                10
+handbetrieb.hr.aufl[1]                                20
+handbetrieb.hr.aufl[2]                                30
+handbetrieb.hr.filter_zeit                            10
+#
+handbetrieb.tipp.geschw[0]                            30000
+# antr_simu.res1                                      0
+antr_simu.ist_gleich_soll                             0
+# antr_simu.res2                                      0
+#
+#
+        
+#
+ 
+#
+#
+handbetrieb.default.operation_mode                    2   # 1 handwheel, 2 continuous, 3 incremental
+handbetrieb.default.control_element                   1   # logical handwheel/key
+#
+handbetrieb.offsetgrenze_pos                          100000
+handbetrieb.offsetgrenze_neg                          -100000
+#
+handbetrieb.hr.aufl[0]                                10
+handbetrieb.hr.aufl[1]                                20
+handbetrieb.hr.aufl[2]                                30
+handbetrieb.hr.filter_zeit                            10
+#
+handbetrieb.tipp.geschw[0]                            30000
+handbetrieb.tipp.geschw[1]                            30000
+handbetrieb.tipp.geschw[2]                            40000
+handbetrieb.tipp.vb_eilgang                           40000
+#
+handbetrieb.jog.weg[0]                                1000    # Parameter fÅr BA Jogbetrieb
+handbetrieb.jog.weg[1]                                2000
+handbetrieb.jog.weg[2]                                3000
+handbetrieb.jog.geschw[0]                             30000
+handbetrieb.jog.geschw[1]                             30000
+handbetrieb.jog.geschw[2]                             60000
+#
+handbetrieb.ipo.hb_proz_v_max                         30    # Parameter fÅr HB wÑhrend 
+handbetrieb.ipo.hb_proz_a_max                         30    # Interpolation (G201)
+handbetrieb.ipo.ipo_proz_v_max                        70
+handbetrieb.ipo.ipo_proz_a_max                        70
+#
+handbetrieb.hb.vb_max                                 60000    # Parameter f*r HB ohne
+handbetrieb.hb.a_max                                  300    # Interpolation (G200)
+#
+meas_simu.meas_simu_mode                              1      # FIX_POS
+meas_simu.parameter1                                  1000000
+meas_simu.parameter2                                  0
+meas_simu.parameter3                                  0
+meas_simu.parameter4                                  0
+meas_simu.parameter5                                  0
+#
+meas_simu.meas_simu_mode                              1      # FIX_POS
+meas_simu.parameter1                                  1000000
+meas_simu.parameter2                                  0
+meas_simu.parameter3                                  0
+meas_simu.parameter4                                  0
+meas_simu.parameter5                                  0
+#
+filter[0].order                                       4
+filter[0].prototype                                   1
+filter[0].type                                        1
+filter[0].fg_f0                                       10 
+filter[0].guete                                       1
+filter[0].share_percent                               100
+#
+filter[1].order                                       0
+filter[1].prototype                                   1
+filter[1].type                                        1
+filter[1].fg_f0                                       20 
+filter[1].guete                                       1
+filter[1].share_percent                               100
+#
+#
+Ende
+

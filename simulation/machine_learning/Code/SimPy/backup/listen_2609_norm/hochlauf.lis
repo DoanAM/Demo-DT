@@ -1,0 +1,97 @@
+# *****************************************
+#
+#TC_STARTUP_DESC: TwinCAT CNC-Configuration
+#
+# *****************************************
+#
+#fb_storage_size[0]                                   0x200000       # Buffer for Forward / Backward interpolation in byte
+#
+configuration.channel[0].interpolator.function        FCT_LOOK_AHEAD_CUSTOM | FCT_LOOK_AHEAD_OPT
+configuration.channel[0].interpolator.parameter       200  # look ahead blocks (max: 200)
+configuration.channel[0].path_preparation.function    FCT_DEFAULT | FCT_SURFACE
+#
+error_protocol_mode                                   NONE  # ?berl?ufe der COM-Task im Streaming verhindern
+error_text_of_id                                        C:\TwinCAT\3.1\Components\Mc\CNC\Diagnostics\err_text_version.txt 
+error_text_user_of_id                                   C:\TwinCAT\3.1\Components\Mc\CNC\Diagnostics\err_text_version.txt
+#
+# -------------------------------------------------------
+# NC-program path
+# -------------------------------------------------------
+# path[ <channelNr> ].prg[ <Index> ]
+#
+# prg        -> Program path
+# log_nr     -> logical program path number
+# typ        -> Programmpfadtyp ( 0x01 Main program path          )
+#                               ( 0x02 Sub program path           )
+#                               ( 0x03 Main- and sub program path )
+#
+# prioritaet -> priority of the program path, 
+#               (if there are multible program paths with the same type)
+#
+# additional program path, customer
+pfad[0].prg[0]                                        ..\prg
+pfad[0].log_nr[0]                                     1              # logical path number
+pfad[0].typ[0]                                        0x03           # main- and subprogram path
+pfad[0].prioritaet[0]                                 1              # priority
+#
+# program path for sub programs
+pfad[0].prg[1]                                        sub
+pfad[0].log_nr[1]                                     2              # logical path number
+pfad[0].typ[1]                                        0x03           # main- and subprogram path
+pfad[0].prioritaet[1]                                 2              # priority
+#
+# program path for cycles
+pfad[0].prg[2]                                        cycles
+pfad[0].log_nr[2]                                     3              # logical path number
+pfad[0].typ[2]                                        0x03           # main- and subprogram path
+pfad[0].prioritaet[2]                                 3              # priority
+#
+## additional customer specific program path
+#pfad[0].prg[0]                                        prg\customer
+#pfad[0].log_nr[0]                                     1              # logical path number
+#pfad[0].typ[0]                                        0x03           # main- and subprogram path
+#pfad[0].prioritaet[0]                                 3              # priority
+#
+#
+# ------------------------------------------------------------------------------------------------------
+# Do not change data below this line!!!
+# Daten unterhalb dieser Zeile nicht aendern, teilweise werden durch
+# den Systemmanager Aenderungen automatisch durchgefuehrt!!!
+# ------------------------------------------------------------------------------------------------------
+#
+#
+konfiguration                                         EIN_KANAL_KONFIGURIERUNG
+kanal_anzahl                                          1
+sda_mds[0]                                           .\sda_mds1.lis
+nullp_data[0]                                        .\nullp_d1.lis
+werkz_data[0]                                        .\werkz_d1.lis
+pzv_data[0]                                          .\pzv_d1.lis
+ve_var[0]                                            .\ve_d1.lis
+hmi[0].objects                                          default
+channel[0].objects                                      default
+ext_var_max                                           100
+#
+# ----------------------------------------
+# Lists for configuration data
+# ----------------------------------------
+listen                                                ASCII
+#
+default_sda_mds                                       .\default_sda.lis
+#
+hand_mds                                              .\hand_mds.lis
+#
+konf_path                                             .
+#
+default_achs_mds                                      .\default_mds.lis
+zahl_mds                                              6
+achs_mds[0]                                           .\achsmds1.lis
+achs_mds[1]                                           .\achsmds2.lis
+achs_mds[2]                                           .\achsmds3.lis
+achs_mds[3]                                           .\achsmds4.lis
+achs_mds[4]                                           .\achsmds5.lis
+achs_mds[5]                                           .\achsmds6.lis
+#
+zahl_kw                                               0
+#
+Ende
+
