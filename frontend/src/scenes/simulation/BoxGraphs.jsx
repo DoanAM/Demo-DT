@@ -26,6 +26,7 @@ const BoxGraphs = () => {
     <Box
       sx={{
         width: "50%",
+        height: "55vh",
         //border: "2px solid #7A410D",
         borderRadius: "14px",
         //boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
@@ -38,7 +39,7 @@ const BoxGraphs = () => {
       >
         <AddIcon />
       </IconButton>
-      <Box display="flex" flexDirection={"column"}>
+      <Box gap="5px" display="flex" flexDirection={"column"} height="100%">
         {boxContent.map((e) => {
           return (
             <LineChartsimulation onClose={closeStatBox} id={e[1]} key={e[1]} />
