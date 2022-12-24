@@ -4,17 +4,19 @@ import numpy as np
 from pathlib import Path
 from .models import PredictedData
 from django.core.files import File
+import shutil
+from django.conf import settings
 
 
-def copyDll(filename):
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\MwCamSimLib.dll')
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwsimutil.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwsimutil.dll')
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwSupport.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwSupport.dll')
-    os.popen(
-        rf'copy C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\mwVerifier.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{filename}\mwVerifier.dll')
+def copyDll(filename):  # filename
+    shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "MwCamSimLib.dll",
+                Path(settings.MEDIA_ROOT) / filename / "MwCamSimLib.dll")
+    shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "mwsimutil.dll",
+                Path(settings.MEDIA_ROOT) / filename / "mwsimutil.dll")
+    shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "mwSupport.dll",
+                Path(settings.MEDIA_ROOT) / filename / "mwSupport.dll")
+    shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "mwVerifier.dll",
+                Path(settings.MEDIA_ROOT) / filename / "mwVerifier.dll")
 
 
 def listStlFiles(path, fileName):

@@ -13,6 +13,7 @@ import shutil
 import ctypes as ct
 from ctypes import *
 from .helper_tasks import copyDll, listStlFiles
+from django.conf import settings
 
 
 def uploadCsv(path):
@@ -51,22 +52,22 @@ def getName():
 def runSimulation():
     obj = Simulation.objects.last()
     pathToFile = obj.nc_file.url
-    print(pathToFile)
+    print("Path to File is: ", pathToFile)
     pathToFileParent = os.path.split(pathToFile)[0]
     fileName = Path(pathToFile).stem
     instanceKey = ''.join(random.choices(
         string.ascii_uppercase + string.digits, k=10))
-    print(pathToFileParent)
+    print("Path to Fileparent is: ", pathToFileParent)
     # os.popen(
     # rf'copy C: \Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{fileName}\MwCamSimLib.dll')
     copyDll(fileName)
     time.sleep(2)
     mwdll2 = ct.cdll.LoadLibrary(
-        rf"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\{pathToFileParent}\MwCamSimLib.dll")
+        str(Path(settings.MEDIA_ROOT) / fileName / "MwCamSimLib.dll"))
+
     SimHandler(fileName, mwdll2, instanceKey)
 
-    pathToCsv = r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" + \
-        pathToFileParent + "/" + "PredData.csv"
+    pathToCsv = Path(settings.MEDIA_ROOT) / fileName / "PredData.csv"
 
     with open(pathToCsv) as f:
         reader = csv.reader(f)
@@ -82,9 +83,7 @@ def runSimulation():
                 stlPath=None
             )
 
+    listStlFiles(Path(settings.MEDIA_ROOT) / fileName, fileName)
     obj.finished = True
     obj.save()
-
-    listStlFiles(r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" +
-                 pathToFileParent, fileName)
     time.sleep(5)
