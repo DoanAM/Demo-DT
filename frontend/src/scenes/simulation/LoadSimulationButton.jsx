@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import { useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import Axios from "axios";
-import SimulationDataContext from "./SimulationDataContext.jsx";
+import { SimulationDataContext } from "./Context.jsx";
 
 const LoadSimulationButton = (props) => {
   const theme = useTheme();
@@ -25,7 +25,7 @@ const LoadSimulationButton = (props) => {
       console.log(Workpiece(item.stlPath));
       //item.stlPath = Workpiece(item.stlPath);
     }); */
-    console.log(response.data);
+    //console.log(response.data);
     /*     for (const item of response.data) {
       const fileUrl = item.stlPath;
       console.log(fileUrl);
@@ -33,11 +33,15 @@ const LoadSimulationButton = (props) => {
     } */
     //console.log(response.data);
     const simData = { ID: id, data: response.data };
-    setSimulationData((e) => [...e, simData]);
-    return response;
+    if (simulationData.some((item) => item.ID === simData.ID)) {
+      return null;
+    } else {
+      setSimulationData((e) => [...e, simData]);
+      return response;
+    }
   };
 
-  const { isFetching, data, refetch } = useQuery({
+  const { isFetching, refetch } = useQuery({
     queryKey: ["newSimulation", sim_id],
     queryFn: ({ queryKey }) => getSimulationData(queryKey[1]),
     refetchOnWindowFocus: false,

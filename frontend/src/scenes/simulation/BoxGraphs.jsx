@@ -2,7 +2,7 @@ import { Box, Button, useTheme, Typography, IconButton } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import LineChartsimulation from "./LineChartSimulation.jsx";
-import CurrentSimulationContext from "./CurrentSimulationContext.jsx";
+import { CurrentSimulationContext } from "./Context.jsx";
 
 const BoxGraphs = () => {
   const { currentSimulationData, setCurrentSimulationData } = useContext(

@@ -8,8 +8,7 @@ import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import SimulationView3d from "./SimulationView3d.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import SimulationTable from "./SimulationTable.jsx";
-import SimulationDataContext from "./SimulationDataContext.jsx";
-import CurrentSimulationContext from "./CurrentSimulationContext.jsx";
+import { SimulationDataContext, CurrentSimulationContext } from "./Context.jsx";
 import BoxGraphs from "./BoxGraphs.jsx";
 
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";

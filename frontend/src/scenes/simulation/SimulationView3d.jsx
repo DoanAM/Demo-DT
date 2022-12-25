@@ -17,14 +17,13 @@ import {
 } from "@mui/material";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
-import SimulationDataContext from "./SimulationDataContext.jsx";
+import { SimulationDataContext, CurrentSimulationContext } from "./Context.jsx";
 import {
   MachineBed,
   Bridge,
   XAxis,
   Spindle,
 } from "../../components/MachineParts.jsx";
-import CurrentSimulationContext from "./CurrentSimulationContext.jsx";
 
 const Workpiece = (props) => {
   const geom = useLoader(STLLoader, props.path);

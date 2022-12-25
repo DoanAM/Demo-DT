@@ -9,9 +9,9 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import CurrentSimulationContext from "./CurrentSimulationContext.jsx";
+import { CurrentSimulationContext } from "./Context.jsx";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,29 +32,6 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-  /*  {
-    id: "uniqueid5",
-    afterDraw: function (chart, easing) {
-      if (
-        chart.tooltip.getActiveElements() &&
-        chart.tooltip.getActiveElements().length
-      ) {
-        const activePoint = chart.tooltip.getActiveElements()[0];
-        const ctx = chart.ctx;
-        const x = activePoint.element.x;
-        const topY = chart.scales.y.top;
-        const bottomY = chart.scales.y.bottom;
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(x, topY);
-        ctx.lineTo(x, bottomY);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#e23fa9";
-        ctx.stroke();
-        ctx.restore();
-      }
-    },
-  } */
 );
 
 const LineChartsimulation = (props) => {
@@ -62,8 +39,8 @@ const LineChartsimulation = (props) => {
     CurrentSimulationContext
   );
   const [age, setAge] = useState("");
-
   const keys = Object.keys(currentSimulationData[0]);
+  const chartRef = useRef();
 
   const close = () => {
     props.onClose(props.id);
@@ -119,6 +96,33 @@ const LineChartsimulation = (props) => {
     ],
   };
 
+  const triggerTooltip = (chart) => {
+    const tooltip = chart.tooltip;
+    if (tooltip.getActiveElements().length > 0) {
+      tooltip.setActiveElements([], { x: 0, y: 0 });
+    } else {
+      const chartArea = chart.chartArea;
+      tooltip.setActiveElements(
+        [
+          {
+            datasetIndex: 0,
+            index: 2,
+          },
+          {
+            datasetIndex: 1,
+            index: 2,
+          },
+        ],
+        {
+          x: (chartArea.left + chartArea.right) / 2,
+          y: (chartArea.top + chartArea.bottom) / 2,
+        }
+      );
+    }
+
+    chart.update();
+  };
+
   return (
     <Box
       sx={{
@@ -148,7 +152,7 @@ const LineChartsimulation = (props) => {
         </Select>
       </FormControl>
       <Box display={"flex"} height={"100%"}>
-        <Line options={options} data={data} />
+        <Line ref={chartRef} options={options} data={data} />
       </Box>
     </Box>
   );

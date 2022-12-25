@@ -58,8 +58,6 @@ def runSimulation():
     instanceKey = ''.join(random.choices(
         string.ascii_uppercase + string.digits, k=10))
     print("Path to Fileparent is: ", pathToFileParent)
-    # os.popen(
-    # rf'copy C: \Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\SimPy\MwCamSimLib.dll C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\{fileName}\MwCamSimLib.dll')
     copyDll(fileName)
     time.sleep(2)
     mwdll2 = ct.cdll.LoadLibrary(
