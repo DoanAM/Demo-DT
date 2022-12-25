@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState, useContext, useEffect, useRef } from "react";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { CurrentSimulationContext } from "./Context.jsx";
+import { CurrentSimulationContext, PlaybackIdxContext } from "./Context.jsx";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,6 +41,7 @@ const LineChartsimulation = (props) => {
   const [age, setAge] = useState("");
   const keys = Object.keys(currentSimulationData[0]);
   const chartRef = useRef();
+  const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
 
   const close = () => {
     props.onClose(props.id);
@@ -96,7 +97,7 @@ const LineChartsimulation = (props) => {
     ],
   };
 
-  const triggerTooltip = (chart) => {
+  const triggerTooltip = (chart, idx) => {
     const tooltip = chart.tooltip;
     if (tooltip.getActiveElements().length > 0) {
       tooltip.setActiveElements([], { x: 0, y: 0 });
@@ -106,11 +107,7 @@ const LineChartsimulation = (props) => {
         [
           {
             datasetIndex: 0,
-            index: 2,
-          },
-          {
-            datasetIndex: 1,
-            index: 2,
+            index: idx,
           },
         ],
         {
@@ -122,6 +119,12 @@ const LineChartsimulation = (props) => {
 
     chart.update();
   };
+
+  useEffect(() => {
+    if (chartRef.current != null) {
+      triggerTooltip(chartRef.current, playbackIdx);
+    }
+  }, [playbackIdx]);
 
   return (
     <Box

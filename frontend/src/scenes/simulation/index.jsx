@@ -8,7 +8,11 @@ import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import SimulationView3d from "./SimulationView3d.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import SimulationTable from "./SimulationTable.jsx";
-import { SimulationDataContext, CurrentSimulationContext } from "./Context.jsx";
+import {
+  SimulationDataContext,
+  CurrentSimulationContext,
+  PlaybackIdxContext,
+} from "./Context.jsx";
 import BoxGraphs from "./BoxGraphs.jsx";
 
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
@@ -19,6 +23,7 @@ const Simulation = () => {
   const [simulationData, setSimulationData] = useState([]);
   const [currentSimulationData, setCurrentSimulationData] = useState();
   const { currentSite, setCurrentSite } = useContext(RoutingContext);
+  const [playbackIdx, setPlaybackIdx] = useState(0);
 
   useEffect(() => {
     setCurrentSite("simulation");
@@ -42,8 +47,12 @@ const Simulation = () => {
           <CurrentSimulationContext.Provider
             value={{ currentSimulationData, setCurrentSimulationData }}
           >
-            <SimulationView3d />
-            <BoxGraphs />
+            <PlaybackIdxContext.Provider
+              value={{ playbackIdx, setPlaybackIdx }}
+            >
+              <SimulationView3d />
+              <BoxGraphs />
+            </PlaybackIdxContext.Provider>
           </CurrentSimulationContext.Provider>
         </Box>
       </Box>

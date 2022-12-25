@@ -17,7 +17,11 @@ import {
 } from "@mui/material";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
-import { SimulationDataContext, CurrentSimulationContext } from "./Context.jsx";
+import {
+  SimulationDataContext,
+  CurrentSimulationContext,
+  PlaybackIdxContext,
+} from "./Context.jsx";
 import {
   MachineBed,
   Bridge,
@@ -51,8 +55,9 @@ const SimulationView3d = () => {
   const [xCoordinate, setXCoordinate] = useState(0);
   const [yCoordinate, setYCoordinate] = useState(0);
   const [zCoordinate, setZCoordinate] = useState(0);
-  const [playbackIdx, setPlaybackIdx] = useState(0);
+  //const [playbackIdx, setPlaybackIdx] = useState(0);
   const [stlPath, setStlPath] = useState(null);
+  const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
 
   const handleSelectChange = (e) => {
