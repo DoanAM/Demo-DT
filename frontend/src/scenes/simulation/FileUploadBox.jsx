@@ -50,7 +50,7 @@ const FileUploadBox = () => {
       <Box display="flex" justifyContent={"flex-start"}>
         <Button variant="contained" component="label">
           Select File
-          <input type="file" onChange={setFile} />
+          <input type="file" accept=".nc" onChange={setFile} />
         </Button>
         <Button variant="contained" component="label" onClick={handleUpload}>
           Upload
