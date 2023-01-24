@@ -33,6 +33,12 @@ const Live_Data = () => {
           <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
           <LiveView3d />
         </Box>
+        <Box
+          component="img"
+          width="1000px"
+          height="562px"
+          src="http://10.42.3.15:44347/mjpg/video.mjpg?camera=1"
+        ></Box>
       </Box>
     </LiveDataContext.Provider>
   );

@@ -59,11 +59,11 @@ const LiveView3d = () => {
           <ambientLight intensitiy={2.2} />
           <pointLight position={[-780, 430, 0]} />
           <MachineBed />
-          <group position={[0, 0, liveData.ycurrpos / 50000]}>
+          <group position={[0, 0, 0]}>
             <Bridge />
-            <group position={[liveData.xcurrpos / 50000, 0, 0]}>
+            <group position={[0, 0, 0]}>
               <XAxis />
-              <group position={[0, liveData.xcurrpos / 100000, 0]}>
+              <group position={[0, 0, 0]}>
                 <Spindle />
               </group>
             </group>
@@ -75,3 +75,5 @@ const LiveView3d = () => {
 };
 
 export default LiveView3d;
+
+//liveData.ycurrpos / 10000, liveData.xcurrpos / 10000, liveData.zcurrpos / 10000

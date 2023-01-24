@@ -81,9 +81,9 @@ WSGI_APPLICATION = 'digital_twin.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'TimeScale Example',
+        'NAME': 'AICoM_DB',
         'USER': 'postgres',
-        'PASSWORD': 'minh95',
+        'PASSWORD': 'Aicom2022!',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
