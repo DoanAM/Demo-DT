@@ -102,6 +102,7 @@ const LineChart = (props) => {
   const fetchOldData = async (m, f, t) => {
     const response = await Axios.get(
       "/debug/get-timedData/" + "?model=" + m + "&field=" + f + "&timespan=" + t
+      //"/debug/get-timedData/?model=cnc&field=xcurrpos&timespan=30min"
     );
     setGraphPoints((e) => response.data);
     //console.log(response);
@@ -117,9 +118,10 @@ const LineChart = (props) => {
   const fetchData = async (m, f) => {
     const response = await Axios.get(
       "/debug/get-cur/" + "?model=" + m + "&field=" + f
+      //"/debug/get-cur/?model=cnc&field=xcurrpos"
     );
     setGraphPoints((e) => [...e, response.data]);
-    //console.log("GraphPoints Are:", graphPoints);
+    console.log("GraphPoints Are:", graphPoints);
     return response;
   };
 
@@ -140,9 +142,8 @@ const LineChart = (props) => {
     //console.log(e.target.value);
     setTimeFrame(e.target.value);
   };
-  /* useEffect(() => {
-    console.log("Field is: ", field);
-    console.log("Model is: ", model);
+  /*   useEffect(() => {
+    console.log("GraphPoints are: ", graphPoints);
   }); */
 
   return (

@@ -34,6 +34,7 @@ const Live_Data = () => {
           <LiveView3d />
         </Box>
         <Box
+          mt="50px"
           component="img"
           width="1000px"
           height="562px"

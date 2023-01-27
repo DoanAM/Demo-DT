@@ -1,6 +1,10 @@
 from django.db import models
 
 
+def upload_path(instance, filename):
+    return '/'.join("img"+filename)
+
+
 class Auxiliary(models.Model):
     timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True)
@@ -240,3 +244,18 @@ class Wcs(models.Model):
     class Meta:
         managed = False
         db_table = 'wcs'
+
+
+class Images(models.Model):
+    timestamp = models.BigIntegerField(
+        db_column='Timestamp', primary_key=True, )
+    img = models.ImageField(upload_to="images/")
+    programname = models.CharField(
+        db_column='Programname', max_length=81, blank=True, null=True)
+
+
+""" class Videos(models.Model):
+    id = models.AutoField(primary_key=True)
+    programname = models.CharField(
+        db_column='Programname', max_length=81, blank=True, null=True)
+    video_file = models.FileField(blank=True, null=True) """

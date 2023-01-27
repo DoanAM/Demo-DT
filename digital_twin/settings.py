@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from celery.schedules import crontab
+from datetime import datetime
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,10 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-_$9^@ry*=063i+y6d-@rnjt(!qvgov9t6r7k5+)d^9ha#n4hv$'
 
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["10.42.12.37"]
 
 
 # Application definition
@@ -159,5 +163,12 @@ LOGGING = {
     },
 }
 
-MEDIA_ROOT = Path(BASE_DIR, 'Data', 'CSV_Dateien')
-MEDIA_URL = '/Data/CSV_Dateien/'
+# Path(BASE_DIR, 'Data', 'CSV_Dateien')
+MEDIA_ROOT = Path(BASE_DIR, 'Data')
+MEDIA_URL = '/Data/'  # '/Data/CSV_Dateien/'
+
+CELERY_BEAT_SCHEDULE = {  # scheduler configuration
+    'Task_one_schedule': {  # whatever the name you want
+        'task': 'live_data.tasks.task_one',  # name of task with path
+        'schedule': 1,
+    }}

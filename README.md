@@ -10,6 +10,9 @@
 6. In AICOM-DT use `python manage.py runserver`to start server
 7. Run Celery: `celery -A digital_twin worker -l info --pool=solo`
 8. Run Celery Monitor: `celery -A digital_twin flower`
+9. Run Celery Beat: `celery -A digital_twin beat -l info`
+10. To Run Server Locally `py manage.py runserver 0.0.0.0:8000`
+11. Access to Website `http://10.42.12.37:8000/home`
 
 ## To Fix
 

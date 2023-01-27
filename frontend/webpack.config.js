@@ -22,7 +22,11 @@ module.exports = {
         test: /\.stl/,
         type: "asset/inline",
       },
-    ],
+      {
+        test: /\.svg$/,
+        type: "asset/inline",
+      },
+    ], 
   },
   optimization: {
     minimize: true,
