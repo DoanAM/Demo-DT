@@ -5,6 +5,7 @@ import DropBoxStats from "./DropBoxStats.jsx";
 import LiveView3d from "./LiveView3d.jsx";
 import DropBoxGraphs from "./DropBoxGraphs.jsx";
 import LiveDataContext from "./LiveDataContext.jsx";
+import CameraView from "./CameraView.jsx";
 
 const Live_Data = () => {
   const theme = useTheme();
@@ -33,13 +34,7 @@ const Live_Data = () => {
           <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
           <LiveView3d />
         </Box>
-        <Box
-          mt="50px"
-          component="img"
-          width="1000px"
-          height="562px"
-          src="http://10.42.3.15:44347/mjpg/video.mjpg?camera=1"
-        ></Box>
+        <CameraView />
       </Box>
     </LiveDataContext.Provider>
   );
