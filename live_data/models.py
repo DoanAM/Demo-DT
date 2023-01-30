@@ -161,11 +161,12 @@ class Prog(models.Model):
     timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True, )
 
+    # Field name made lowercase.
     programname = models.CharField(
         db_column='Programname', max_length=81, blank=True, null=True)
 
     materialnnumber = models.IntegerField(
-        db_column='Materialnnumber', blank=True, null=True)
+        db_column='Materialnumber', blank=True, null=True)
 
     serialnumber = models.IntegerField(
         db_column='Serialnumber', blank=True, null=True)
@@ -219,7 +220,27 @@ class Wcs(models.Model):
     alpha = models.FloatField(blank=True, null=True)
     beta = models.FloatField(blank=True, null=True)
     gamma = models.FloatField(blank=True, null=True)
+    # Field name made lowercase.
+    minedgex = models.FloatField(db_column='MinEdgeX', blank=True, null=True)
+    # Field name made lowercase.
+    minedgey = models.FloatField(db_column='MinEdgeY', blank=True, null=True)
+    # Field name made lowercase.
+    minedgez = models.FloatField(db_column='MinEdgeZ', blank=True, null=True)
+    # Field name made lowercase.
+    maxedgex = models.FloatField(db_column='MaxEdgeX', blank=True, null=True)
+    # Field name made lowercase.
+    maxedgey = models.FloatField(db_column='MaxEdgeY', blank=True, null=True)
+    # Field name made lowercase.
+    maxedgez = models.FloatField(db_column='MaxEdgeZ', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'wcs'
+
+
+class StlFile(models.Model):
+    timestamp = models.BigIntegerField(
+        db_column='Timestamp', primary_key=True, )
+    StlFile = models.FileField(blank=True, null=True)
+    programname = models.CharField(
+        db_column='Programname', max_length=81, blank=True, null=True)
