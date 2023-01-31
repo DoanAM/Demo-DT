@@ -18,3 +18,7 @@
 
 1. Only certain length for file name allowed
 2. Leave Data Folder in Root Directory
+
+## Infos
+
+To Shut Down Celery Workers: `celery -A digital_twin control shutdown`

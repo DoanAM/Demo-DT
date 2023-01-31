@@ -1,7 +1,7 @@
 from django.db import models
 
 
-def upload_path(instance, filename):
+def uploadPathImage(instance, filename):
     return '/'.join("img"+filename)
 
 
@@ -252,6 +252,18 @@ class Images(models.Model):
     img = models.ImageField(upload_to="images/")
     programname = models.CharField(
         db_column='Programname', max_length=81, blank=True, null=True)
+
+
+class LiveMrs(models.Model):
+    timestamp = models.BigIntegerField(
+        db_column='Timestamp', primary_key=True, )
+    stlFile = models.FileField(upload_to="liveMrs/")
+    programname = models.CharField(
+        db_column='Programname', max_length=81, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = "liveMrs"
 
 
 """ class Videos(models.Model):

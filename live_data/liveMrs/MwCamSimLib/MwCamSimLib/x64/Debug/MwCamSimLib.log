@@ -1,36 +1,41 @@
-﻿  MwCamSimlib.cpp
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(18,1): warning C4273: 'init': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(35,30): message : see previous definition of 'init'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(27,1): warning C4273: 'load_file': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(36,30): message : see previous definition of 'load_file'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(47,1): warning C4273: 'set_precision': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(37,30): message : see previous definition of 'set_precision'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(63,1): warning C4273: 'set_stock': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(38,30): message : see previous definition of 'set_stock'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(73,1): warning C4273: 'new_stock': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(39,30): message : see previous definition of 'new_stock'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(92,1): warning C4273: 'set_tool': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(40,30): message : see previous definition of 'set_tool'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(144,1): warning C4273: 'set_tool_chamfer': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(41,30): message : see previous definition of 'set_tool_chamfer'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(192,1): warning C4273: 'set_current_tool': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(42,30): message : see previous definition of 'set_current_tool'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(209,1): warning C4273: 'set_visualization': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(43,30): message : see previous definition of 'set_visualization'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(217,1): warning C4273: 'config': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(71,30): message : see previous definition of 'config'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(267,1): warning C4273: 'DoCut': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(45,30): message : see previous definition of 'DoCut'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(306,1): warning C4273: 'engagement_analysis': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(69,30): message : see previous definition of 'engagement_analysis'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(355,1): warning C4273: 'visualization': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(70,30): message : see previous definition of 'visualization'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(395,1): warning C4273: 'export_mesh': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(44,30): message : see previous definition of 'export_mesh'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(460,1): warning C4273: 'window_close': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(72,30): message : see previous definition of 'window_close'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(501,1): warning C4273: 'createTool': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(67,30): message : see previous definition of 'createTool'
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(518,1): warning C4273: 'cut': inconsistent dll linkage
-C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(61,30): message : see previous definition of 'cut'
-  MwCamSimLib.vcxproj -> C:\Users\Minh\OneDrive\MasterThesis\Skripts\LiveMRS\MwCamSimLib\x64\Debug\MwCamSimLib.dll
+﻿  pch.cpp
+  dllmain.cpp
+  MwCamSimlib.cpp
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(17,6): warning C4273: "init": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(35,30): message : Siehe vorherige Definition von "init"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(26,6): warning C4273: "load_file": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(36,30): message : Siehe vorherige Definition von "load_file"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(46,6): warning C4273: "set_precision": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(37,30): message : Siehe vorherige Definition von "set_precision"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(62,6): warning C4273: "set_stock": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(38,30): message : Siehe vorherige Definition von "set_stock"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(72,6): warning C4273: "new_stock": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(39,30): message : Siehe vorherige Definition von "new_stock"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(91,6): warning C4273: "set_tool": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(40,30): message : Siehe vorherige Definition von "set_tool"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(143,6): warning C4273: "set_tool_chamfer": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(41,30): message : Siehe vorherige Definition von "set_tool_chamfer"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(191,6): warning C4273: "set_current_tool": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(42,30): message : Siehe vorherige Definition von "set_current_tool"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(208,6): warning C4273: "set_visualization": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(43,30): message : Siehe vorherige Definition von "set_visualization"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(216,6): warning C4273: "config": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(71,30): message : Siehe vorherige Definition von "config"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(251,6): warning C4273: "DoCut": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(45,30): message : Siehe vorherige Definition von "DoCut"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(305,6): warning C4273: "engagement_analysis": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(69,30): message : Siehe vorherige Definition von "engagement_analysis"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(354,6): warning C4273: "visualization": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(70,30): message : Siehe vorherige Definition von "visualization"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(394,6): warning C4273: "export_mesh": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(44,30): message : Siehe vorherige Definition von "export_mesh"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(459,6): warning C4273: "window_close": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(72,30): message : Siehe vorherige Definition von "window_close"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(500,6): warning C4273: "createTool": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(67,30): message : Siehe vorherige Definition von "createTool"
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(512,6): warning C4273: "cut": Inkonsistente DLL-Bindung.
+C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(61,30): message : Siehe vorherige Definition von "cut"
+  Code wird generiert...
+     Bibliothek "C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\x64\Debug\MwCamSimLib.lib" und Objekt "C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\x64\Debug\MwCamSimLib.exp" werden erstellt.
+LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
+  MwCamSimLib.vcxproj -> C:\Users\Administrator\Desktop\AICoM-DT\live_data\liveMrs\MwCamSimLib\x64\Debug\MwCamSimLib.dll

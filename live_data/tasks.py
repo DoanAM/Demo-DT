@@ -7,6 +7,7 @@ from .models import Prog, Images
 from django.conf import settings
 from pathlib import Path
 from django.core.files.images import ImageFile
+from live_data.liveMrs.mrsHelper import doCut
 
 
 @shared_task
@@ -49,5 +50,10 @@ def task_one():
         return "failure"
 
 
-if __name__ == "__main__":
-    task_one()
+@shared_task
+def task_two():
+    try:
+        doCut()
+        return "success"
+    except:
+        return "doCut Failed"
