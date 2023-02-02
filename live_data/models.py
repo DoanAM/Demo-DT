@@ -171,8 +171,8 @@ class Prog(models.Model):
     serialnumber = models.IntegerField(
         db_column='Serialnumber', blank=True, null=True)
 
-    operation = models.IntegerField(
-        db_column='Operation', blank=True, null=True)
+    operation = models.CharField(
+        db_column='Operation', max_length=81, blank=True, null=True)
 
     class Meta:
         managed = False

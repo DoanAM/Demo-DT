@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
+import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
+import { useLoader, useThree } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import {
   Box,
@@ -31,8 +32,42 @@ const Loader = () => {
   return <Html center>{progress} % loaded</Html>;
 };
 
+const Line = (props) => {
+  //points.push(new THREE.Vector3(-10000, 0, 0));
+  //points.push(new THREE.Vector3(0, 10000, 0));
+  //points.push(new THREE.Vector3(10000, 0, 0));
+  const lineGeometry = new THREE.BufferGeometry().setFromPoints(props.data);
+  return (
+    <line geometry={lineGeometry}>
+      <lineBasicMaterial
+        attach="material"
+        color={"#eb3434"}
+        linewidth={1}
+        linecap={"round"}
+        linejoin={"round"}
+      />
+    </line>
+  );
+};
+
 const LiveView3d = () => {
   const { liveData, setLiveData } = useContext(LiveDataContext);
+  const { points, setPoints } = useState([]);
+
+  useEffect(() => {
+    vec = new THREE.Vector3(
+      liveData.xcurrpos,
+      liveData.zcurrpos,
+      liveData.ycurrpos
+    );
+    setPoints((e) => [...e, vec]);
+  }, [LiveDataContext]);
+
+  /* const points = [
+    new THREE.Vector3(-10000, 0, 0),
+    new THREE.Vector3(10000, 0, 0),
+  ]; */
+  //new THREE.Vector3(10000, 0, 0),
 
   return (
     <Box
@@ -58,12 +93,13 @@ const LiveView3d = () => {
           <OrbitControls />
           <ambientLight intensitiy={2.2} />
           <pointLight position={[-780, 430, 0]} />
+          {points && <Line data={points} />}
           <MachineBed />
-          <group position={[0, 0, liveData.ycurrpos / 50000]}>
+          <group position={[0, 0, 0]}>
             <Bridge />
-            <group position={[liveData.xcurrpos / 50000, 0, 0]}>
+            <group position={[0, 0, 0]}>
               <XAxis />
-              <group position={[0, liveData.xcurrpos / 100000, 0]}>
+              <group position={[0, 0, 0]}>
                 <Spindle />
               </group>
             </group>
@@ -75,3 +111,15 @@ const LiveView3d = () => {
 };
 
 export default LiveView3d;
+
+{
+  /* <group position={[0, 0, liveData.ycurrpos / 50000]}>
+            <Bridge />
+            <group position={[liveData.xcurrpos / 50000, 0, 0]}>
+              <XAxis />
+              <group position={[0, liveData.zcurrpos / 100000, 0]}>
+                <Spindle />
+              </group>
+            </group>
+          </group> */
+}

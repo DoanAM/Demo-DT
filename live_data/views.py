@@ -92,3 +92,37 @@ class GetWholeData(APIView):
                          "prog": prog.data,
                          "tool": tool.data,
                          "wcs": wcs.data})
+
+
+class GetLive3dPoints(APIView):
+    def get(self, request, *args, **kwargs):
+        latestTimestamp = Cnc.objects.last().timestamp
+        latestPosVector = Cnc.objects.values(
+            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").last()
+        secLatestTimestamp = Cnc.objects.last().timestamp - 500
+        seclatestPosVector = Cnc.objects.values(
+            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=secLatestTimestamp).order_by("timestamp").first()
+        latestProg = Prog.objects.last().programname
+        if latestProg == "none":
+            line = False
+            latestWcs = None
+        else:
+            latestWcs = Wcs.objects.values(
+                "x", "y", "z", "minedgex", "minedgey", "minedgez", "maxedgex", "maxedgey", "maxedgez", "timestamp").last()
+            xMin = latestWcs["x"]+latestWcs["minedgex"]
+            yMin = latestWcs["y"]+latestWcs["minedgey"]
+            zMin = latestWcs["z"]+latestWcs["minedgez"]
+            xMax = latestWcs["x"]+latestWcs["maxedgex"]
+            yMax = latestWcs["y"]+latestWcs["maxedgey"]
+            zMax = latestWcs["z"]+latestWcs["maxedgez"]
+            if (seclatestPosVector["xcurrpos"] < xMin or
+                seclatestPosVector["xcurrpos"] > xMax or
+                seclatestPosVector["ycurrpos"] < yMin or
+                seclatestPosVector["ycurrpos"] > yMax or
+                seclatestPosVector["zcurrpos"] < zMin or
+                    seclatestPosVector["zcurrpos"] > zMax):
+                line = False
+            else:
+                line = True
+
+        return Response({"latestPoint": latestPosVector, "secondLatestPoint": seclatestPosVector, "timestamp": secLatestTimestamp, "lastProg": latestProg, "line": line, "latestWcs": latestWcs}, status=status.HTTP_200_OK)
