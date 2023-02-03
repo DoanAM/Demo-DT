@@ -75,13 +75,25 @@ const LiveView3d = () => {
 
   useEffect(() => {
     if (data != undefined) {
-      //console.log(data);
-      PositionMachine.current = data.data.secondLatestPoint;
-      setTimeout(() => {
-        PositionMachine.current = data.data.latestPoint;
-      }, 500);
-      PositionMachine.current = data.data.latestPoint;
-      //console.log("PositionMachine is: ", PositionMachine.current);
+      let index = 0;
+      function setMachineCoordinates() {
+        let arr = data.data.posVectorList;
+        //console.log(arr[index]);
+        PositionMachine.current = arr[index];
+        index++;
+        if (index < arr.length) {
+          setTimeout(setMachineCoordinates, 80);
+        }
+      }
+      setMachineCoordinates();
+
+      // //console.log(data);
+      // PositionMachine.current = data.data.secondLatestPoint;
+      // setTimeout(() => {
+      //   PositionMachine.current = data.data.latestPoint;
+      // }, 500);
+      // PositionMachine.current = data.data.latestPoint;
+      // //console.log("PositionMachine is: ", PositionMachine.current);
     }
   }, [data]);
 
@@ -90,17 +102,20 @@ const LiveView3d = () => {
       if (data.data.line == true) {
         if (lastPoint.current == undefined) {
           startVector = new THREE.Vector3(
-            data.data.secondLatestPoint.xcurrpos / 10000,
-            data.data.secondLatestPoint.zcurrpos / 10000,
-            data.data.secondLatestPoint.ycurrpos / 10000
+            data.data.posVectorList[data.data.posVectorList.length - 1]
+              .xcurrpos / 10000,
+            data.data.posVectorList[data.data.posVectorList.length - 1]
+              .zcurrpos / 10000,
+            data.data.posVectorList[data.data.posVectorList.length - 1]
+              .ycurrpos / 10000
           );
         } else {
           startVector = lastPoint.current;
         }
         endVector = new THREE.Vector3(
-          data.data.latestPoint.xcurrpos / 10000,
-          data.data.latestPoint.zcurrpos / 10000,
-          data.data.latestPoint.ycurrpos / 10000
+          data.data.posVectorList[0].xcurrpos / 10000,
+          data.data.posVectorList[0].zcurrpos / 10000,
+          data.data.posVectorList[0].ycurrpos / 10000
         );
         const newLine = [startVector, endVector];
         setLineArray((e) => [...e, newLine]);
