@@ -56,7 +56,7 @@ const DropBoxStats = () => {
   const { status, data } = useQuery({
     queryKey: ["currentData"],
     queryFn: fetchData,
-    refetchInterval: 100,
+    refetchInterval: 1000,
   });
 
   if (status === "loading") {

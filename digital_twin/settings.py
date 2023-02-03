@@ -167,8 +167,12 @@ LOGGING = {
 MEDIA_ROOT = Path(BASE_DIR, 'Data')
 MEDIA_URL = '/Data/'  # '/Data/CSV_Dateien/'
 
-""" CELERY_BEAT_SCHEDULE = {  # scheduler configuration
-    'Task_one_schedule': {  # whatever the name you want
+CELERY_BEAT_SCHEDULE = {  # scheduler configuration
+    """ 'Task_one_schedule': {  # whatever the name you want
         'task': 'live_data.tasks.task_one',  # name of task with path
         'schedule': 1,
-    }} """
+    }, """
+    'Task_two_schedule': {  # whatever the name you want
+        'task': 'live_data.tasks.task_two',  # name of task with path
+        'schedule': 3,
+    }, }
