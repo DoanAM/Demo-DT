@@ -95,13 +95,23 @@ class GetWholeData(APIView):
 
 
 class GetLive3dPoints(APIView):
+    def is_between(num, a, b):
+        return a <= num <= b
+
     def get(self, request, *args, **kwargs):
+        pointAmount = 10
+        timeIntervalBetweenPoints = int(1000/10)
         latestTimestamp = Cnc.objects.last().timestamp
+        posVectorList = []
         latestPosVector = Cnc.objects.values(
             "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").last()
-        secLatestTimestamp = Cnc.objects.last().timestamp - 500
-        seclatestPosVector = Cnc.objects.values(
-            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=secLatestTimestamp).order_by("timestamp").first()
+        firstTimestamp = latestTimestamp - 1000
+        timestampList = list(
+            range(firstTimestamp, latestTimestamp, timeIntervalBetweenPoints))
+        for time in timestampList:
+            posVector = Cnc.objects.values(
+                "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=time).order_by("timestamp").first()
+            posVectorList.append(posVector)
         latestProg = Prog.objects.last().programname
         if latestProg == "none":
             line = False
@@ -115,14 +125,49 @@ class GetLive3dPoints(APIView):
             xMax = latestWcs["x"]+latestWcs["maxedgex"]
             yMax = latestWcs["y"]+latestWcs["maxedgey"]
             zMax = latestWcs["z"]+latestWcs["maxedgez"]
-            if (seclatestPosVector["xcurrpos"] < xMin or
-                seclatestPosVector["xcurrpos"] > xMax or
-                seclatestPosVector["ycurrpos"] < yMin or
-                seclatestPosVector["ycurrpos"] > yMax or
-                seclatestPosVector["zcurrpos"] < zMin or
-                    seclatestPosVector["zcurrpos"] > zMax):
-                line = False
-            else:
-                line = True
+            for vector in posVectorList:
+                if all([xMin < vector["xcurrpos"]/10000 < xMax,
+                       yMin < vector["ycurrpos"]/10000 < yMax,
+                       zMin < vector["zcurrpos"]/10000 < zMax]):
+                    line = True
+                else:
+                    line = False
+                    break
 
-        return Response({"latestPoint": latestPosVector, "secondLatestPoint": seclatestPosVector, "timestamp": secLatestTimestamp, "lastProg": latestProg, "line": line, "latestWcs": latestWcs}, status=status.HTTP_200_OK)
+        #####################################
+        latestTimestamp = Cnc.objects.last().timestamp
+        latestPosVector = Cnc.objects.values(
+            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").last()
+        secLatestTimestamp = Cnc.objects.last().timestamp - 500
+        seclatestPosVector = Cnc.objects.values(
+            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=secLatestTimestamp).order_by("timestamp").first()
+        #latestProg = Prog.objects.last().programname
+        # if latestProg == "none":
+        #     line = False
+        #     latestWcs = None
+        # else:
+        #     latestWcs = Wcs.objects.values(
+        #         "x", "y", "z", "minedgex", "minedgey", "minedgez", "maxedgex", "maxedgey", "maxedgez", "timestamp").last()
+        #     xMin = latestWcs["x"]+latestWcs["minedgex"]
+        #     yMin = latestWcs["y"]+latestWcs["minedgey"]
+        #     zMin = latestWcs["z"]+latestWcs["minedgez"]
+        #     xMax = latestWcs["x"]+latestWcs["maxedgex"]
+        #     yMax = latestWcs["y"]+latestWcs["maxedgey"]
+        #     zMax = latestWcs["z"]+latestWcs["maxedgez"]
+        #     if (seclatestPosVector["xcurrpos"]/10000 < xMin or
+        #         seclatestPosVector["xcurrpos"]/10000 > xMax or
+        #         seclatestPosVector["ycurrpos"]/10000 < yMin or
+        #         seclatestPosVector["ycurrpos"]/10000 > yMax or
+        #         seclatestPosVector["zcurrpos"]/10000 < zMin or
+        #             seclatestPosVector["zcurrpos"]/10000 > zMax):
+        #         line = False
+        #     else:
+        #         line = True
+
+        return Response({"latestPoint": latestPosVector,
+                         "secondLatestPoint": seclatestPosVector,
+                         "timestamp": secLatestTimestamp,
+                         "lastProg": latestProg, "line": line,
+                         "latestWcs": latestWcs,
+                         "posVectorList": posVectorList,
+                         "pointAmount": pointAmount}, status=status.HTTP_200_OK)
