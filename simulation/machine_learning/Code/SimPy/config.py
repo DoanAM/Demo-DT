@@ -2,17 +2,17 @@
 #    User Config      #
 #######################
 import os
+import json
+from django.conf import settings
+from pathlib import Path
 """
 Following configuration should be defined by user in the specific application context
 """
 absolute_data_path = r"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien"
 
-work_path = "C:\\Users\\Minh\\Documents\\Uni\\MasterThesis\\Project\\aicom-dt"
-
+work_path = settings.BASE_DIR
 # data root folder both for VNCK data and Real machine data:
 data_rootpath = os.path.relpath(absolute_data_path, work_path)
-
-# print(data_rootpath)
 
 # "c:\\Users\\Minh\\OneDrive\\MasterThesis\\Input\\aicom-cl-main\\Data\\CSV_Dateien"
 #os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "Data", "CSV_Dateien")
@@ -77,23 +77,15 @@ pred_filename = 'PredData.csv'
 statistics_json_filename = 'statistic.json'
 
 # machine learning model save path
-model_rootpath = os.path.join(os.path.dirname(
-    __file__), "model", "save")  # "./model/save"
+model_rootpath = "./model/save"
 
 # tool_dict for Versuchsteil Quadrant. Keys are the tool number. Values are diameter and shaft length of the tool
-ToolDict = {
-    # specific definition for chamfer tool
-    '4': [2, 4, 8, 45],
-    '20': [4.65, 33],
-    '23': [5.6, 40],
-    '45': [2, 10],
-    '48': [3, 15],
-    '50': [4, 10],
-    '52': [6, 20],
-    '54': [8, 17],
-    '55': [8, 19],
-    '72': [6, 12],
-}
+toolJsonPath = os.path.join(os.path.dirname(
+    __file__), "tools.json")
+with open(toolJsonPath, 'r') as f:
+    toolsJson = json.load(f)
+
+ToolDict = toolsJson
 
 bounds = {'x_init': 0, 'y_init': 0, 'z_init': -30,
           'x_end': 90, 'y_end': 95, 'z_end': 0}
@@ -155,12 +147,11 @@ startupfile = os.path.join(os.path.dirname(
 
 
 # precision of stock in mw cam:
-precision_default = 5  # 0.1
+precision_default = 5
 
 # dll path for mw cam
-mwcamlib_path = os.path.join(
-    os.path.dirname(
-        __file__), "MwCamSimLib.dll")  # ".\\MwCamSimLib.dll"
+mwcamlib_path = os.path.join(os.path.dirname(
+    __file__), "MwCamSimLib.dll")  # ".\\MwCamSimLib.dll"
 
 # cycle time in millisecond in mw cam:
 cycleTime_mw = 10
