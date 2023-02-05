@@ -72,7 +72,6 @@ class mwCamSim:
             os.makedirs(self.root, exist_ok=True)
 
         # need to encode in byte string
-        open(self.simfile, 'w')
         mwwrapper.load_file(self.mw_dll, self.simfile.encode())
 
     def load_toolset(self):
@@ -82,20 +81,86 @@ class mwCamSim:
         """
         for key, value in ToolDict.items():
             # if current item only has two parameters, it is an end milling tool
-            if len(value) == 2:
-                fDiameter = value[0]
-                fHeight = value[1]
+            if value['type'] == 'end_mill':
+                # required values for endmill
+                tool_type = value['type']
+                diameter = value['dia']
+                flute_length = value['flute_len']
+                shoulder_length = 1.5*flute_length
                 fid = int(key)
-                self._set_tool(fDiameter, fHeight, fid)
-            # if current item has four parameters, it is a chamfer tool
-            elif len(value) == 4:
-                cDiameter = value[0]
-                cHeight = value[1]
+
+                mwwrapper.set_tool_endmill(
+                    self.mw_dll, self.tool_id, diameter, flute_length, shoulder_length)
+                self.toolset[str(self.tool_id)] = (diameter, flute_length, fid)
+
+            elif value['type'] == 'face_mill':
+                # required values for camfer
+                tool_type = value['type']
+                diameter = value['dia']
+                flute_length = value['flute_len']
+                shoulder_length = 1.5*flute_length
+                corner_radius = value['corner_rad']
+                outside_diameter = value['outside_dia']
+                taper_angle = value['taper_ang']
                 fid = int(key)
-                cDiameterOut = value[2]
-                taperangle = value[3]
-                self._set_tool(cDiameter, cHeight, fid,
-                               cDiameterOut=cDiameterOut, taperangle=taperangle)
+
+                mwwrapper.set_tool_facemill(self.mw_dll, self.tool_id, diameter, flute_length,
+                                            shoulder_length, corner_radius, outside_diameter, taper_angle)
+                self.toolset[str(self.tool_id)] = (diameter, flute_length, fid)
+
+            elif value['type'] == 'chamfer_mill':
+                # required values for camfer
+                tool_type = value['type']
+                diameter = value['dia']
+                flute_length = value['flute_len']
+                shoulder_length = 1.5*flute_length
+                corner_radius = value['corner_rad']
+                taper_angle = value['taper_ang']
+                outside_diameter = value['outside_dia']
+                fid = int(key)
+                mwwrapper.set_tool_chamfer(self.mw_dll, self.tool_id, diameter, flute_length,
+                                           shoulder_length, corner_radius, taper_angle, outside_diameter)
+                self.toolset[str(self.tool_id)] = (diameter, flute_length, fid)
+
+            elif value['type'] == 'drill_mill':
+                tool_type = value['type']
+                diameter = value['dia']
+                flute_length = value['flute_len']
+                shoulder_length = 1.5*flute_length
+                tip_angle = value['tip_ang']
+                fid = int(key)
+
+                mwwrapper.set_tool_drillmill(
+                    self.mw_dll, self.tool_id, diameter, flute_length, shoulder_length, tip_angle)
+                self.toolset[str(self.tool_id)] = (diameter, flute_length, fid)
+
+            elif value['type'] == 'ball_mill':
+                tool_type = value['type']
+                diameter = value['dia']
+                flute_length = value['flute_len']
+                shoulder_length = 1.5*flute_length
+                fid = int(key)
+
+                mwwrapper.set_tool_ballmill(
+                    self.mw_dll, self.tool_id, diameter, flute_length, shoulder_length)
+                self.toolset[str(self.tool_id)] = (diameter, flute_length, fid)
+
+            elif value['type'] == 'barrel_mill':
+                tool_type = value['type']
+                upper_diameter = value['upper_dia']
+                max_diameter = value['max_dia']
+                flute_length = value['flute_len']
+                shoulder_length = 1.5*flute_length
+                corner_radius = value['corner_rad']
+                profile_radius = value['profile_rad']
+                fid = int(key)
+
+                mwwrapper.set_tool_barrelmill(self.mw_dll, self.tool_id, upper_diameter,
+                                              max_diameter, flute_length, shoulder_length, corner_radius, profile_radius)
+                self.toolset[str(self.tool_id)] = (
+                    max_diameter, flute_length, fid)
+
+            self.tool_id += 1
 
     def set_stock(self, bounds):
         """
@@ -212,9 +277,9 @@ class mwCamSim:
                     else:
                         mwwrapper.visualization(
                             self.mw_dll, False, self.viewrange)
-                """ print(f"[]  CAM Simulation running {current_line_idx}/{num_lines}, current position: {x_end}, {y_end}, "
+                print(f"[]  CAM Simulation running {current_line_idx}/{num_lines}, current position: {x_end}, {y_end}, "
                       f"{z_end}, current tool: (diameter, length, id): {self.toolset.get(str(curr_tool_id))} "
-                      f"nc block: {block_nr}", end="\r") """
+                      f"nc block: {block_nr}", end="\r")
                 x_start = x_end
                 y_start = y_end
                 z_start = z_end
@@ -235,32 +300,33 @@ class mwCamSim:
             f"[\033[1;32mOK\033[0m]  Save the simulated mesh file in \033[1;34m{self.stlfile}\033[0m")
 
     # private functions:
-    def _set_tool(self, fDiameter, fHeight, machine_tool_id, **kwargs):
-        """
-        set each tool in simulation environment with give dimension
-        :param fDiameter: float, cutter diameter
-        :param fHeight: float, cutter shaft length
-        :param machine_tool_id: string, tool number defined by NC program
-        :param kwargs: additional parameter of chamfer tool
-        :return: None
-        """
-        fDiameterTop = fDiameter
-        fShoulderHeight = int(1.5 * fHeight)
 
-        if 'cDiameterOut' in kwargs and 'taperangle' in kwargs:
-            cDiameterOut = kwargs['cDiameterOut']
-            taperangle = kwargs['taperangle']
-            mwwrapper.set_tool_chamfer(self.mw_dll, fDiameter, cDiameterOut,
-                                       fDiameterTop, fShoulderHeight, fHeight, taperangle, self.tool_id)
-            self.toolset[str(self.tool_id)] = (
-                fDiameter, fHeight, machine_tool_id, cDiameterOut, taperangle)
-        else:
-            mwwrapper.set_tool(self.mw_dll, fDiameter, fDiameterTop,
-                               fShoulderHeight, fHeight, self.tool_id)
-            self.toolset[str(self.tool_id)] = (
-                fDiameter, fHeight, machine_tool_id)
+    # def _set_tool(self, fDiameter, fHeight, machine_tool_id, **kwargs):
+    #     """
+    #     set each tool in simulation environment with give dimension
+    #     :param fDiameter: float, cutter diameter
+    #     :param fHeight: float, cutter shaft length
+    #     :param machine_tool_id: string, tool number defined by NC program
+    #     :param kwargs: additional parameter of chamfer tool
+    #     :return: None
+    #     """
+    #     fDiameterTop = fDiameter
+    #     fShoulderHeight = int(1.5 * fHeight)
 
-        self.tool_id += 1
+    #     if 'cDiameterOut' in kwargs and 'taperangle' in kwargs:
+    #         cDiameterOut = kwargs['cDiameterOut']
+    #         taperangle = kwargs['taperangle']
+    #         mwwrapper.set_tool_chamfer(self.mw_dll, fDiameter, cDiameterOut,
+    #                                    fDiameterTop, fShoulderHeight, fHeight, taperangle, self.tool_id)
+    #         self.toolset[str(self.tool_id)] = (
+    #             fDiameter, fHeight, machine_tool_id, cDiameterOut, taperangle)
+    #     else:
+    #         mwwrapper.set_tool(self.mw_dll, fDiameter, fDiameterTop,
+    #                            fShoulderHeight, fHeight, self.tool_id)
+    #         self.toolset[str(self.tool_id)] = (
+    #             fDiameter, fHeight, machine_tool_id)
+
+    #     self.tool_id += 1
 
     def _find_tool_id(self, machine_tool_id):
         """

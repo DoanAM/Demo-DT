@@ -50,8 +50,9 @@ def getName():
 
 @shared_task
 def runSimulation():
-    obj = Simulation.objects.last()
-    pathToFile = obj.nc_file.url
+    #obj = Simulation.objects.last()
+    #pathToFile = obj.nc_file.url
+    pathToFile = r"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\Versuchsteil_Quadrant_7\Versuchsteil_Quadrant_7.NC"
     print("Path to File is: ", pathToFile)
     pathToFileParent = os.path.split(pathToFile)[0]
     fileName = Path(pathToFile).stem
@@ -65,23 +66,23 @@ def runSimulation():
 
     SimHandler(fileName, mwdll2, instanceKey)
 
-    pathToCsv = Path(settings.MEDIA_ROOT) / fileName / "PredData.csv"
+    # pathToCsv = Path(settings.MEDIA_ROOT) / fileName / "PredData.csv"
 
-    with open(pathToCsv) as f:
-        reader = csv.reader(f)
-        next(reader)
-        for row in reader:
-            _, created = PredictedData.objects.get_or_create(
-                timestamp=row[1],
-                xcurrpos=row[2],
-                ycurrpos=row[3],
-                zcurrpos=row[4],
-                s1actrev=row[5],
-                simulation=obj,
-                stlPath=None
-            )
+    # with open(pathToCsv) as f:
+    #     reader = csv.reader(f)
+    #     next(reader)
+    #     for row in reader:
+    #         _, created = PredictedData.objects.get_or_create(
+    #             timestamp=row[1],
+    #             xcurrpos=row[2],
+    #             ycurrpos=row[3],
+    #             zcurrpos=row[4],
+    #             s1actrev=row[5],
+    #             simulation=obj,
+    #             stlPath=None
+    #         )
 
-    listStlFiles(Path(settings.MEDIA_ROOT) / fileName, fileName)
-    obj.finished = True
-    obj.save()
-    time.sleep(5)
+    # listStlFiles(Path(settings.MEDIA_ROOT) / fileName, fileName)
+    # obj.finished = True
+    # obj.save()
+    # time.sleep(5)

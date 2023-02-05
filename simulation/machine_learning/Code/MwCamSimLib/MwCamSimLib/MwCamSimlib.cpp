@@ -6,33 +6,43 @@ static std::ifstream tool_path_file;
 static std::ofstream feature_file;
 static bool isvisual = false;
 static float precision_mw;
-static GLFWwindow* sim_window;
+static GLFWwindow *sim_window;
 static VerifierUtil::SetToolsParameters m_tools;
-// record the number of tools 
+// record the number of tools
 static int num_tool = 0;
 
-//@brief: init a object of moduleworks machine simulation 
+//@brief: init a object of moduleworks machine simulation
 //@param: void
-//@ret: void 
+//@ret: void
 void init()
 {
 	verifier = mwMachSimVerifier::Create();
 	std::wcout << L"[\033[1;32mOK\033[0m]  MWCam startup" << std::endl;
 }
 
-//@brief: load the tool path file 
-//@param: inputfile: file path of tool path 
-//@ret: void 
-void load_file(char* inputfile)
+//@brief: load the tool path file
+//@param: inputfile: file path of tool path
+//@ret: void
+void load_file(char *inputfile)
 {
-	
+
 	feature_file.open(inputfile);
-	// check if file exists under the input path 
+	// check if file exists under the input path
 	if (feature_file.good())
 	{
 		std::cout << "[\033[1;32mOK\033[0m]  Create a feature file" << std::endl;
-		feature_file << "Timestamp;" << "XCurrPos;" << "YCurrPos;" << "ZCurrPos;" << "S1Actrev;" << "Actfeed;" << "ToolID;" << "Area;" << "Depth;" << "Width;"
-			<< "Removal_Volume;" << "Angles" << std::endl;
+		feature_file << "Timestamp;"
+					 << "XCurrPos;"
+					 << "YCurrPos;"
+					 << "ZCurrPos;"
+					 << "S1Actrev;"
+					 << "Actfeed;"
+					 << "ToolID;"
+					 << "Area;"
+					 << "Depth;"
+					 << "Width;"
+					 << "Removal_Volume;"
+					 << "Angles" << std::endl;
 	}
 	else
 	{
@@ -40,9 +50,9 @@ void load_file(char* inputfile)
 	}
 }
 
-//@brief: set simulation precision 
+//@brief: set simulation precision
 //@param: precision: desired precision (mm)
-//@ret: void 
+//@ret: void
 void set_precision(float precision)
 {
 	precision_mw = precision;
@@ -51,109 +61,50 @@ void set_precision(float precision)
 	std::cout << "[\033[1;32mOK\033[0m]  Set work piece precision: " << precision << std::endl;
 }
 
-//@brief: creat a raw workpiece model in simulation environment  
+//@brief: creat a raw workpiece model in simulation environment
 //@param: init_x: x coordinate of lower corner of workpiece
 //@param: init_y: y coordinate of lower corner of workpiece
 //@param: init_z: z coordinate of lower corner of workpiece
 //@param: end_x: x coordinate of upper corner of workpiece
 //@param: end_y: y coordinate of upper corner of workpiece
 //@param: end_z: z coordinate of upper corner of workpiece
-//@ret: void 
+//@ret: void
 void set_stock(float init_x, float init_y, float init_z, float end_x, float end_y, float end_z)
 {
-	float3d lowercorner(init_x, init_y, init_z); 
-	float3d uppercorner(end_x, end_y, end_z); 
+	float3d lowercorner(init_x, init_y, init_z);
+	float3d uppercorner(end_x, end_y, end_z);
 	std::cout << "[  ]  Configuring the work stock cube(it may takes serveral minutes)...\r";
 	verifier->SetStockCube(lowercorner, uppercorner);
 	std::cout << "[\033[1;32mOK\033[0m]  Configuring the work stock cube(it may takes serveral minutes)    " << std::endl;
-	
 }
 
-//@brief: set end milling tool 
-//@param: fDiameter: cutter diameter (mm) 
+//@brief: set end milling tool
+//@param: fDiameter: cutter diameter (mm)
 //@param: fDiameterTop: shaft diameter (mm)
 //@param: fShoulderHeight: shaft length (mm)
 //@param: fHeight: cutter length (mm)
 //@param: tool_id: tool id in simulation
-//@ret: void 
-void set_tool(float fDiameter, float fDiameterTop, float fShoulderHeight, float fHeight, int tool_id)
+//@ret: void
+void set_tool_endmill(int tool_id, float diameter, float flute_length, float shoulder_length)
 {
-
-	// set tool holder 
+	// set tool holder
 	cadcam::mwHolderDefinition<double> holderDefinition =
 		cadcam::ToolHelper::CreateHolderAsCylinder(
-			fDiameterTop * 2.0, fDiameterTop * 4.0, measures::mwUnitsFactory::METRIC);
+			diameter * 2.0, diameter * 4.0, measures::mwUnitsFactory::METRIC);
 
 	// set tool arbor
 	cadcam::mwArborDefinition<double> arborDefinition =
 		cadcam::ToolHelper::CreateArborAsCylinder(
-			fDiameterTop, fDiameterTop, measures::mwUnitsFactory::METRIC
-		);
+			diameter, diameter, measures::mwUnitsFactory::METRIC);
 
-	// create end milling tool 
+	// create end milling tool
 	cadcam::mwToolPtr pMill = new cadcam::mwEndMill(
-		fDiameter,
+		diameter,
 		holderDefinition,
-		fShoulderHeight,
-		fHeight,
+		shoulder_length,
+		flute_length,
 		arborDefinition,
-		measures::mwUnitsFactory::METRIC
-	);
-
-	// if current tool is the first tool, create a toolset and insert this tool 
-	if (tool_id == 0)
-	{
-		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
-		verifier->SetTools(m_tools);
-		++num_tool;
-		
-	}
-	else
-	{
-		verifier->AddTool(pMill, tool_id);
-		++num_tool;
-		
-	}
-	
-	std::cout << "[\033[1;32mOK\033[0m]  Define a Flat Tool with ID: " << tool_id << " Diameter: \033[1;35m"<< fDiameter << "\033[0m Height: \033[1;35m" << fHeight << "\033[0m"  << std::endl;
-
-}
-
-//@brief: set chamfer milling tool 
-//@param: cDiameter: cutter diameter (mm) 
-//@param: cDiameterOut: cutter outside diameter (mm) 
-//@param: cDiameterTop: shaft diameter (mm)
-//@param: cShoulderHeight: shaft length (mm)
-//@param: cHeight: cutter length (mm)
-//@param: taperangle: taper angle (degree)
-//@param: tool_id: tool id in simulation 
-//@ret: void 
-void set_tool_chamfer(float cDiameter, float cDiameterOut, float cDiameterTop, float cShoulderHeight, float cHeight, float taperangle, int tool_id)
-{
-	// set tool holder 
-	cadcam::mwHolderDefinition<double> holderDefinition =
-		cadcam::ToolHelper::CreateHolderAsCylinder(
-			cDiameterTop * 2.0, cDiameterTop * 4.0, measures::mwUnitsFactory::METRIC);
-
-	// set tool arbor
-	cadcam::mwArborDefinition<double> arborDefinition =
-		cadcam::ToolHelper::CreateArborAsCylinder(
-			cDiameterTop, cDiameterTop, measures::mwUnitsFactory::METRIC
-		);
-	cadcam::mwTypedRevolvedTool::cornerRadiusType cornerDefiniton = cadcam::mwTypedRevolvedTool::cornerRadiusType::none;
-	// create end milling tool 
-	cadcam::mwToolPtr pMill = new cadcam::mwChamferMill(
-		cDiameter,
-		holderDefinition,
-		cShoulderHeight,
-		cHeight,
-		arborDefinition,
-		0.1, 
-		taperangle,
-		cDiameterOut,
-		cornerDefiniton,
-		measures::mwUnitsFactory::METRIC
-	);
+		measures::mwUnitsFactory::METRIC);
 
 	// if current tool is the first tool, create a toolset and insert this tool
 	if (tool_id == 0)
@@ -161,20 +112,228 @@ void set_tool_chamfer(float cDiameter, float cDiameterOut, float cDiameterTop, f
 		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
 		verifier->SetTools(m_tools);
 		++num_tool;
-
 	}
 	else
 	{
 		verifier->AddTool(pMill, tool_id);
 		++num_tool;
-
 	}
 
-	std::cout << "[\033[1;32mOK\033[0m]  Define Chamfer Tool with ID: " << tool_id << "\033[0m Diameter: \033[1;35m" << cDiameter << "\033[0m Height: \033[1;35m" << cHeight << "\033[0m Taperangle: \033[1;35m" << taperangle<< "\033[0m" << std::endl;
+	std::cout << "[\033[1;32mOK\033[0m]  Define a flat/endmill tool with ID: " << tool_id << " Diameter: \033[1;35m" << diameter << "\033[0m Height: \033[1;35m" << flute_length << "\033[0m" << std::endl;
 }
 
-//@brief: set using tool in the current simulation step 
-//@param: tool_id_current: tool id indicates the tool that will be used in current step 
+void set_tool_facemill(int tool_id, float diameter, float flute_length, float shoulder_length, float corner_radius, float outside_diameter, float taper_angle)
+{
+	// set tool holder
+	cadcam::mwHolderDefinition<double> holderDefinition =
+		cadcam::ToolHelper::CreateHolderAsCylinder(
+			diameter * 2.0, diameter * 4.0, measures::mwUnitsFactory::METRIC);
+
+	// set tool arbor
+	cadcam::mwArborDefinition<double> arborDefinition =
+		cadcam::ToolHelper::CreateArborAsCylinder(
+			diameter, diameter, measures::mwUnitsFactory::METRIC);
+
+	cadcam::mwTypedRevolvedTool::cornerRadiusType cornerDefiniton = cadcam::mwTypedRevolvedTool::cornerRadiusType::none;
+
+	// create end milling tool
+	cadcam::mwToolPtr pMill = new cadcam::mwFaceMill(
+		diameter,
+		holderDefinition,
+		shoulder_length,
+		flute_length,
+		arborDefinition,
+		corner_radius,
+		outside_diameter,
+		taper_angle,
+		cornerDefiniton,
+		measures::mwUnitsFactory::METRIC);
+
+	// if current tool is the first tool, create a toolset and insert this tool
+	if (tool_id == 0)
+	{
+		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
+		verifier->SetTools(m_tools);
+		++num_tool;
+	}
+	else
+	{
+		verifier->AddTool(pMill, tool_id);
+		++num_tool;
+	}
+
+	std::cout << "[\033[1;32mOK\033[0m]  Define a face mill tool with ID: " << tool_id << " Diameter: \033[1;35m" << diameter << "\033[0m Height: \033[1;35m" << flute_length << "\033[0m" << std::endl;
+}
+
+//@brief: set chamfer milling tool
+//@param: cDiameter: cutter diameter (mm)
+//@param: cDiameterOut: cutter outside diameter (mm)
+//@param: cDiameterTop: shaft diameter (mm)
+//@param: cShoulderHeight: shaft length (mm)
+//@param: cHeight: cutter length (mm)
+//@param: taperangle: taper angle (degree)
+//@param: tool_id: tool id in simulation
+//@ret: void
+void set_tool_chamfer(int tool_id, float diameter, float flute_length, float shoulder_length, float corner_radius, float taper_angle, float outside_diameter)
+{
+	// set tool holder
+	cadcam::mwHolderDefinition<double> holderDefinition =
+		cadcam::ToolHelper::CreateHolderAsCylinder(
+			diameter * 2.0, diameter * 4.0, measures::mwUnitsFactory::METRIC);
+
+	// set tool arbor
+	cadcam::mwArborDefinition<double> arborDefinition =
+		cadcam::ToolHelper::CreateArborAsCylinder(
+			diameter, diameter, measures::mwUnitsFactory::METRIC);
+	cadcam::mwTypedRevolvedTool::cornerRadiusType cornerDefiniton = cadcam::mwTypedRevolvedTool::cornerRadiusType::none;
+	// create end milling tool
+	cadcam::mwToolPtr pMill = new cadcam::mwChamferMill(
+		diameter,
+		holderDefinition,
+		shoulder_length,
+		flute_length,
+		arborDefinition,
+		corner_radius,
+		taper_angle,
+		outside_diameter,
+		cornerDefiniton,
+		measures::mwUnitsFactory::METRIC);
+
+	// if current tool is the first tool, create a toolset and insert this tool
+	if (tool_id == 0)
+	{
+		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
+		verifier->SetTools(m_tools);
+		++num_tool;
+	}
+	else
+	{
+		verifier->AddTool(pMill, tool_id);
+		++num_tool;
+	}
+
+	std::cout << "[\033[1;32mOK\033[0m]  Define chamfer mill tool with ID: " << tool_id << "\033[0m Diameter: \033[1;35m" << diameter << "\033[0m Height: \033[1;35m" << flute_length << "\033[0m Taperangle: \033[1;35m" << taper_angle << "\033[0m" << std::endl;
+}
+
+void set_tool_drillmill(int tool_id, float diameter, float flute_length, float shoulder_length, float tip_angle)
+{
+	// set tool holder
+	cadcam::mwHolderDefinition<double> holderDefinition =
+		cadcam::ToolHelper::CreateHolderAsCylinder(
+			diameter * 2.0, diameter * 4.0, measures::mwUnitsFactory::METRIC);
+
+	// set tool arbor
+	cadcam::mwArborDefinition<double> arborDefinition =
+		cadcam::ToolHelper::CreateArborAsCylinder(
+			diameter, diameter, measures::mwUnitsFactory::METRIC);
+
+	// create end milling tool
+	cadcam::mwToolPtr pMill = new cadcam::mwDrill(
+		diameter,
+		holderDefinition,
+		shoulder_length,
+		flute_length,
+		arborDefinition,
+		tip_angle,
+		measures::mwUnitsFactory::METRIC);
+
+	// if current tool is the first tool, create a toolset and insert this tool
+	if (tool_id == 0)
+	{
+		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
+		verifier->SetTools(m_tools);
+		++num_tool;
+	}
+	else
+	{
+		verifier->AddTool(pMill, tool_id);
+		++num_tool;
+	}
+
+	std::cout << "[\033[1;32mOK\033[0m]  Define a drill mill tool with ID: " << tool_id << " Diameter: \033[1;35m" << diameter << "\033[0m Height: \033[1;35m" << flute_length << "\033[0m" << std::endl;
+}
+
+void set_tool_barrelmill(int tool_id, float upper_diameter, float max_diameter, float flute_length, float shoulder_length, float corner_radius, float profile_radius)
+{
+
+	// set tool holder
+	cadcam::mwHolderDefinition<double> holderDefinition =
+		cadcam::ToolHelper::CreateHolderAsCylinder(
+			upper_diameter * 2.0, upper_diameter * 4.0, measures::mwUnitsFactory::METRIC);
+
+	// set tool arbor
+	cadcam::mwArborDefinition<double> arborDefinition =
+		cadcam::ToolHelper::CreateArborAsCylinder(
+			upper_diameter, upper_diameter, measures::mwUnitsFactory::METRIC);
+
+	// create end milling tool
+	cadcam::mwToolPtr pMill = new cadcam::mwBarrelMill(
+		upper_diameter,
+		max_diameter,
+		holderDefinition,
+		shoulder_length,
+		flute_length,
+		arborDefinition,
+		corner_radius,
+		profile_radius,
+		measures::mwUnitsFactory::METRIC);
+
+	// if current tool is the first tool, create a toolset and insert this tool
+	if (tool_id == 0)
+	{
+		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
+		verifier->SetTools(m_tools);
+		++num_tool;
+	}
+	else
+	{
+		verifier->AddTool(pMill, tool_id);
+		++num_tool;
+	}
+
+	std::cout << "[\033[1;32mOK\033[0m]  Define a barrel mill tool with ID: " << tool_id << " Diameter: \033[1;35m" << upper_diameter << "\033[0m Height: \033[1;35m" << flute_length << "\033[0m" << std::endl;
+}
+
+void set_tool_ballmill(int tool_id, float diameter, float flute_length, float shoulder_length)
+{
+
+	// set tool holder
+	cadcam::mwHolderDefinition<double> holderDefinition =
+		cadcam::ToolHelper::CreateHolderAsCylinder(
+			diameter * 2.0, diameter * 4.0, measures::mwUnitsFactory::METRIC);
+
+	// set tool arbor
+	cadcam::mwArborDefinition<double> arborDefinition =
+		cadcam::ToolHelper::CreateArborAsCylinder(
+			diameter, diameter, measures::mwUnitsFactory::METRIC);
+
+	// create end milling tool
+	cadcam::mwToolPtr pMill = new cadcam::mwSphereMill(
+		diameter,
+		holderDefinition,
+		shoulder_length,
+		flute_length,
+		arborDefinition,
+		measures::mwUnitsFactory::METRIC);
+
+	// if current tool is the first tool, create a toolset and insert this tool
+	if (tool_id == 0)
+	{
+		m_tools.push_back(VerifierUtil::SetToolParameters(pMill, tool_id));
+		verifier->SetTools(m_tools);
+		++num_tool;
+	}
+	else
+	{
+		verifier->AddTool(pMill, tool_id);
+		++num_tool;
+	}
+
+	std::cout << "[\033[1;32mOK\033[0m]  Define a ball mill tool with ID: " << tool_id << " Diameter: \033[1;35m" << diameter << "\033[0m Height: \033[1;35m" << flute_length << "\033[0m" << std::endl;
+}
+
+//@brief: set using tool in the current simulation step
+//@param: tool_id_current: tool id indicates the tool that will be used in current step
 //@ret: void
 void set_current_tool(int tool_id_current)
 {
@@ -187,11 +346,10 @@ void set_current_tool(int tool_id_current)
 	}
 
 	verifier->SetCurrentCutTool(tool_idx);
-
 }
 
-//@brief: set if show the animation 
-//@param: visual_mode: flag, if show the animation  
+//@brief: set if show the animation
+//@param: visual_mode: flag, if show the animation
 //@ret: void
 void set_visualization(bool visual_mode)
 {
@@ -199,21 +357,20 @@ void set_visualization(bool visual_mode)
 }
 
 //@brief: configurate the simualtion
-//@param: void  
+//@param: void
 //@ret: void
 void config()
 {
-	// enable engagement analysis 
+	// enable engagement analysis
 	verifier->EnableEngagementTracking(true);
-	// enable material removal simulation 
+	// enable material removal simulation
 	verifier->EnableVolumeTracking(true);
-	// use precise algorithm 
+	// use precise algorithm
 	VerifierUtil::EngagementOptions engagementOptions;
 	engagementOptions.SetAlgorithm(VerifierUtil::EngagementOptions::ContourBased);
 	verifier->SetEngagementOptions(engagementOptions);
-	
-	
-	// if animation is turned on, configurate the opengl before showing animation 
+
+	// if animation is turned on, configurate the opengl before showing animation
 	if (isvisual)
 	{
 		opengl_config();
@@ -222,36 +379,35 @@ void config()
 	std::wcout << L"[\033[1;32mOK\033[0m]  Configuring MW CAM simulation   " << std::endl;
 }
 
-//@brief: execute a single-step cutting simulation 
-//@param: x_start: TCP start x position  
-//@param: y_start: TCP start y position  
-//@param: z_start: TCP start z position  
+//@brief: execute a single-step cutting simulation
+//@param: x_start: TCP start x position
+//@param: y_start: TCP start y position
+//@param: z_start: TCP start z position
 //@param: x_end: TCP target x position
 //@param: y_end: TCP target y position
-//@param: z_end: TCP target z position 
+//@param: z_end: TCP target z position
 //@param: s1actrev: target spindle motor velocity
 //@param: actfeed: target spindle feed rate
-//@param: timestamp: timestamp for current movement 
+//@param: timestamp: timestamp for current movement
 //@param: toolid: id of current used tool
-//@param: cut_id: simulation step index 
-//@param: isCut: if execute a real cutting process in current step 
+//@param: cut_id: simulation step index
+//@param: isCut: if execute a real cutting process in current step
 //@ret: void
 void DoCut(
-	float x_start, 
-	float y_start, 
-	float z_start, 
-	float x_end, 
-	float y_end, 
+	float x_start,
+	float y_start,
+	float z_start,
+	float x_end,
+	float y_end,
 	float z_end,
 	float s1actrev,
 	float actfeed,
 	long long timestamp,
 	int toolid,
-	int cut_id, 
+	int cut_id,
 	bool isCut,
 	bool isTrace,
-	char* stlPath
-)
+	char *stlPath)
 {
 	verifier->SetMoveID(cut_id);
 	float3d p_start(x_start, y_start, z_start);
@@ -261,24 +417,22 @@ void DoCut(
 	verifier->SetRapidMode(!isCut);
 	orientation3x_start.Normalize();
 	orientation3x_target.Normalize();
-	
+
 	if (isTrace)
 	{
-		feature_file << timestamp << ";" << p_target.x() << ";" << p_target.y() << ";" << p_target.z() << ";" << s1actrev<< ";" << actfeed << ";" << toolid << ";";
+		feature_file << timestamp << ";" << p_target.x() << ";" << p_target.y() << ";" << p_target.z() << ";" << s1actrev << ";" << actfeed << ";" << toolid << ";";
 	}
-	
 
 	mwMachSimVerifier::Frame from(
 		p_start,
-		MATH::OrientationToQuaternion<float>(orientation3x_start, 0)
-	);
+		MATH::OrientationToQuaternion<float>(orientation3x_start, 0));
 	mwMachSimVerifier::Frame to(
 		p_target,
-		MATH::OrientationToQuaternion<float>(orientation3x_target, 0)
-	);
+		MATH::OrientationToQuaternion<float>(orientation3x_target, 0));
 	verifier->Cut(from, to);
 
-	if (cut_id % 100 == 0) {
+	if (cut_id % 100 == 0)
+	{
 		misc::mwstring currentId = std::to_string(cut_id);
 		misc::mwstring path = stlPath;
 		misc::mwstring resultName = path + "\\" + currentId + ".stl";
@@ -287,8 +441,8 @@ void DoCut(
 	}
 }
 
-//@brief: calculate engagement analysis and removal volume. record the result 
-//@param: void  
+//@brief: calculate engagement analysis and removal volume. record the result
+//@param: void
 //@ret: void
 void engagement_analysis()
 {
@@ -335,9 +489,9 @@ void engagement_analysis()
 	feature_file << std::endl;
 }
 
-//@brief: show and update the animation  
-//@param: isshow_in_this_turn: if update the frame in current step 
-//@param: show_range: camera view range (mm) 
+//@brief: show and update the animation
+//@param: isshow_in_this_turn: if update the frame in current step
+//@param: show_range: camera view range (mm)
 //@ret: void
 void visualization(bool isshow_in_this_turn, int show_range)
 {
@@ -352,34 +506,33 @@ void visualization(bool isshow_in_this_turn, int show_range)
 		// set view point in window
 		glViewport(0, 0, win_width, win_height);
 
-		//clear and set color buffer
+		// clear and set color buffer
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// set matrix mode 
+		// set matrix mode
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		// ToDo: find better view perspective 
+		// ToDo: find better view perspective
 		glOrtho(-show_range * ratio, show_range * ratio, -show_range, show_range, -show_range, show_range);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		gluLookAt(-1, -1, 1, 0, 0, 0, 0, 0, 1);
 		verifier->Draw();
 		glfwSwapBuffers(sim_window);
-		
-
 	}
-	else if (glfwWindowShouldClose(sim_window)) {
+	else if (glfwWindowShouldClose(sim_window))
+	{
 		glfwDestroyWindow(sim_window);
 		glfwTerminate();
 	}
 	glfwPollEvents();
 }
 
-//@brief: save the generated mesh model 
-//@param: void  
+//@brief: save the generated mesh model
+//@param: void
 //@ret: void
-void export_mesh(char* stlfile)
+void export_mesh(char *stlfile)
 {
 	std::wcout << L"[  ]  Cam simulation finish, save result mesh as stl file...\r";
 	misc::mwstring fileName(stlfile);
@@ -388,9 +541,8 @@ void export_mesh(char* stlfile)
 	std::cout << "*  The generated mesh file is saved in: " << stlfile << std::endl;
 }
 
-
-//@brief: configurate the animation scene  
-//@param: void  
+//@brief: configurate the animation scene
+//@param: void
 //@ret: void
 void opengl_config()
 {
@@ -402,20 +554,20 @@ void opengl_config()
 	verifier->SetDrawMode(mwMachSimVerifier::WDM_TOOL_PATH_SEGMENT_LENGTH);
 	verifier->SetMeshColor(0.5f, 0.5f, 0.5f);
 	verifier->SetToolVisibility(true);
-	verifier->SetToolColor(0, 0, 0, 0.5); 
+	verifier->SetToolColor(0, 0, 0, 0.5);
 	verifier->SetToolColor(tool_color_cut, tool_color_uncut, tool_color_abor, tool_color_holder, 0.2);
 
-	//  check if the intialization is successful 
+	//  check if the intialization is successful
 	if (!glfwInit())
 	{
 		std::cout << "[\033[1;31mERROR\033[0m]  Intialization failed" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
-	// creata a window in OpenGL context 
+	// creata a window in OpenGL context
 	sim_window = glfwCreateWindow(WIDTH, WIDTH, "Cutting Simulation", NULL, NULL);
 
-	// check if window is created successfully 
+	// check if window is created successfully
 	if (!sim_window)
 	{
 		std::cout << "[\033[1;31mERROR\033[0m]  Window Initialization failed, please check if OpenGL or GLFW works correctly" << std::endl;
@@ -429,10 +581,9 @@ void opengl_config()
 	// to avoid screen tearing, set swap interval to 1
 	glfwSwapInterval(1);
 
-	// set lighting ambient 
-	static const GLfloat shad_ambient[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	// set lighting ambient
+	static const GLfloat shad_ambient[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, shad_ambient);
-
 
 	// set which material tracking the current color
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -442,7 +593,7 @@ void opengl_config()
 }
 
 //@brief: close the animation window
-//@param: void  
+//@param: void
 //@ret: void
 void window_close()
 {

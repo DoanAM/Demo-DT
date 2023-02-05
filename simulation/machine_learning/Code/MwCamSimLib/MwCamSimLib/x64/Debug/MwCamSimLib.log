@@ -1,30 +1,40 @@
 ﻿  MwCamSimlib.cpp
 C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(18,1): warning C4273: 'init': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(34,30): message : see previous definition of 'init'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(38,30): message : see previous definition of 'init'
 C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(27,1): warning C4273: 'load_file': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(35,30): message : see previous definition of 'load_file'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(47,1): warning C4273: 'set_precision': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(36,30): message : see previous definition of 'set_precision'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(63,1): warning C4273: 'set_stock': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(37,30): message : see previous definition of 'set_stock'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(80,1): warning C4273: 'set_tool': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(38,30): message : see previous definition of 'set_tool'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(132,1): warning C4273: 'set_tool_chamfer': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(39,30): message : see previous definition of 'set_tool_chamfer'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(180,1): warning C4273: 'set_current_tool': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(40,30): message : see previous definition of 'set_current_tool'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(197,1): warning C4273: 'set_visualization': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(41,30): message : see previous definition of 'set_visualization'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(205,1): warning C4273: 'config': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(60,30): message : see previous definition of 'config'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(255,1): warning C4273: 'DoCut': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(43,30): message : see previous definition of 'DoCut'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(294,1): warning C4273: 'engagement_analysis': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(58,30): message : see previous definition of 'engagement_analysis'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(343,1): warning C4273: 'visualization': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(59,30): message : see previous definition of 'visualization'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(383,1): warning C4273: 'export_mesh': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(42,30): message : see previous definition of 'export_mesh'
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(448,1): warning C4273: 'window_close': inconsistent dll linkage
-C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(61,30): message : see previous definition of 'window_close'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(39,30): message : see previous definition of 'load_file'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(57,1): warning C4273: 'set_precision': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(40,30): message : see previous definition of 'set_precision'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(73,1): warning C4273: 'set_stock': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(41,30): message : see previous definition of 'set_stock'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(89,1): warning C4273: 'set_tool_endmill': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(43,30): message : see previous definition of 'set_tool_endmill'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(126,1): warning C4273: 'set_tool_facemill': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(44,30): message : see previous definition of 'set_tool_facemill'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(178,1): warning C4273: 'set_tool_chamfer': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(45,30): message : see previous definition of 'set_tool_chamfer'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(219,1): warning C4273: 'set_tool_drillmill': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(46,30): message : see previous definition of 'set_tool_drillmill'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(257,1): warning C4273: 'set_tool_barrelmill': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(47,30): message : see previous definition of 'set_tool_barrelmill'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(298,1): warning C4273: 'set_tool_ballmill': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(48,30): message : see previous definition of 'set_tool_ballmill'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(339,1): warning C4273: 'set_current_tool': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(49,30): message : see previous definition of 'set_current_tool'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(355,1): warning C4273: 'set_visualization': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(50,30): message : see previous definition of 'set_visualization'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(363,1): warning C4273: 'config': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(69,30): message : see previous definition of 'config'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(411,1): warning C4273: 'DoCut': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(52,30): message : see previous definition of 'DoCut'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(448,1): warning C4273: 'engagement_analysis': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(67,30): message : see previous definition of 'engagement_analysis'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(497,1): warning C4273: 'visualization': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(68,30): message : see previous definition of 'visualization'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(536,1): warning C4273: 'export_mesh': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(51,30): message : see previous definition of 'export_mesh'
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimlib.cpp(599,1): warning C4273: 'window_close': inconsistent dll linkage
+C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\MwCamSimLib\MwCamSimLib.h(70,30): message : see previous definition of 'window_close'
+     Creating library C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\x64\Debug\MwCamSimLib.lib and object C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\x64\Debug\MwCamSimLib.exp
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   MwCamSimLib.vcxproj -> C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\simulation\machine_learning\Code\MwCamSimLib\x64\Debug\MwCamSimLib.dll

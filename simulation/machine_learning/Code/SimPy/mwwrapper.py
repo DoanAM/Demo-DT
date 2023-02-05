@@ -59,27 +59,30 @@ def set_stock(mwdll, init_x, init_y, init_z, end_x, end_y, end_z):
     mwdll.set_stock(init_x_c, init_y_c, init_z_c, end_x_c, end_y_c, end_z_c)
 
 
-def set_tool(mwdll, fDiameter, fDiameterTop, fShoulderHeight, fHeight, tool_id):
-    """
-    create end milling tool in mw cam simulation
-    :param mwdll: dll file
-    :param fDiameter: cutter diameter
-    :param fDiameterTop: holder diameter
-    :param fShoulderHeight: whole shaft length
-    :param fHeight: cutter shaft length
-    :param tool_id: tool id in mw cam
-    :return: None
-    """
-    fDiameter_c = ct.c_float(fDiameter)
-    fDiameterTop_c = ct.c_float(fDiameterTop)
-    fShoulderHeight_c = ct.c_float(fShoulderHeight)
-    fHeight_c = ct.c_float(fHeight)
+def set_tool_endmill(mwdll, tool_id, diameter, flute_length, shoulder_length):
+    diameter_c = ct.c_float(diameter)
+    flute_length_c = ct.c_float(flute_length)
+    shoulder_length_c = ct.c_float(shoulder_length)
     tool_id_c = ct.c_int(tool_id)
-    mwdll.set_tool(fDiameter_c, fDiameterTop_c,
-                   fShoulderHeight_c, fHeight_c, tool_id_c)
+    mwdll.set_tool_endmill(tool_id_c, diameter_c,
+                           flute_length_c, shoulder_length_c)
 
 
-def set_tool_chamfer(mwdll, cDiameter, cDiameterOut, cDiameterTop, cShoulderHeight, cHeight, taperangle, tool_id):
+def set_tool_facemill(mwdll, tool_id, diameter, flute_length, shoulder_length, corner_radius, outside_diameter,
+                      taper_angle):
+    diameter_c = ct.c_float(diameter)
+    flute_length_c = ct.c_float(flute_length)
+    shoulder_length_c = ct.c_float(shoulder_length)
+    corner_radius_c = ct.c_float(corner_radius)
+    outside_diameter_c = ct.c_float(outside_diameter)
+    taper_angle_c = ct.c_float(taper_angle)
+    tool_id_c = ct.c_int(tool_id)
+    mwdll.set_tool_facemill(tool_id_c, diameter_c, flute_length_c, shoulder_length_c, corner_radius_c,
+                            outside_diameter_c, taper_angle_c)
+
+
+def set_tool_chamfer(mwdll, tool_id, diameter, flute_length, shoulder_length, corner_radius, taper_angle,
+                     outside_diameter):
     """
     create chamfer tool in mw cam simulation
     :param mwdll: dll
@@ -92,15 +95,48 @@ def set_tool_chamfer(mwdll, cDiameter, cDiameterOut, cDiameterTop, cShoulderHeig
     :param tool_id: tool id in mw cam
     :return: None
     """
-    cDiameter_c = ct.c_float(cDiameter)
-    cDiameterOut_c = ct.c_float(cDiameterOut)
-    cDiameterTop_c = ct.c_float(cDiameterTop)
-    cShoulderHeight_c = ct.c_float(cShoulderHeight)
-    cHeight_c = ct.c_float(cHeight)
-    taperangle_c = ct.c_float(taperangle)
+    diameter_c = ct.c_float(diameter)
+    flute_length_c = ct.c_float(flute_length)
+    shoulder_length_c = ct.c_float(shoulder_length)
+    corner_radius_c = ct.c_float(corner_radius)
+    taper_angle_c = ct.c_float(taper_angle)
+    outside_diameter_c = ct.c_float(outside_diameter)
     tool_id_c = ct.c_int(tool_id)
-    mwdll.set_tool_chamfer(cDiameter_c, cDiameterOut_c, cDiameterTop_c,
-                           cShoulderHeight_c, cHeight_c, taperangle_c, tool_id_c)
+    mwdll.set_tool_chamfer(tool_id_c, diameter_c, flute_length_c, shoulder_length_c, corner_radius_c, taper_angle_c,
+                           outside_diameter_c)
+
+
+def set_tool_drillmill(mwdll, tool_id, diameter, flute_length, shoulder_length, tip_angle):
+    diameter_c = ct.c_float(diameter)
+    flute_length_c = ct.c_float(flute_length)
+    shoulder_length_c = ct.c_float(shoulder_length)
+    tip_angle_c = ct.c_float(tip_angle)
+    tool_id_c = ct.c_int(tool_id)
+    mwdll.set_tool_drillmill(tool_id_c, diameter_c,
+                             flute_length_c, shoulder_length_c, tip_angle_c)
+
+
+def set_tool_ballmill(mwdll, tool_id, diameter, flute_length, shoulder_length):
+    diameter_c = ct.c_float(diameter)
+    shoulder_length_c = ct.c_float(shoulder_length)
+    flute_length_c = ct.c_float(flute_length)
+    tool_id_c = ct.c_int(tool_id)
+    mwdll.set_tool_ballmill(tool_id_c, diameter_c,
+                            flute_length_c, shoulder_length_c)
+
+
+# (self.mw_dll, shaftDiameter,shaftHeight, fluteDiameter,fluteHeight,cornerRadius,profileRadius,self.tool_id)
+def set_tool_barrelmill(mwdll, tool_id, upper_diameter, max_diameter, flute_length, shoulder_length, corner_radius,
+                        profile_radius):
+    upper_diameter_c = ct.c_float(upper_diameter)
+    max_diameter_c = ct.c_float(max_diameter)
+    flute_length_c = ct.c_float(flute_length)
+    shoulder_length_c = ct.c_float(shoulder_length)
+    corner_radius_c = ct.c_float(corner_radius)
+    profile_radius_c = ct.c_float(profile_radius)
+    tool_id_c = ct.c_int(tool_id)
+    mwdll.set_tool_barrelmill(tool_id_c, upper_diameter_c, max_diameter_c, flute_length_c, shoulder_length_c,
+                              corner_radius_c, profile_radius_c)
 
 
 def set_current_tool(mwdll, tool_id):
@@ -232,6 +268,7 @@ def window_close(mwdll):
 
 
 def unloadMwDll(mwdll):
-    kernel32 = ct.WinDLL('kernel32', use_last_error=True)
+    print("Removing MW DLL")
+    kernel32 = ct.WinDLL('kernel32')
     kernel32.FreeLibrary.argtypes = [ct.wintypes.HMODULE]
     kernel32.FreeLibrary(mwdll._handle)
