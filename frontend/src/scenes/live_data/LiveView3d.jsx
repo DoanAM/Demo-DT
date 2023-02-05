@@ -86,14 +86,6 @@ const LiveView3d = () => {
         }
       }
       setMachineCoordinates();
-
-      // //console.log(data);
-      // PositionMachine.current = data.data.secondLatestPoint;
-      // setTimeout(() => {
-      //   PositionMachine.current = data.data.latestPoint;
-      // }, 500);
-      // PositionMachine.current = data.data.latestPoint;
-      // //console.log("PositionMachine is: ", PositionMachine.current);
     }
   }, [data]);
 

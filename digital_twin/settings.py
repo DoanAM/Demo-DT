@@ -159,5 +159,5 @@ LOGGING = {
     },
 }
 
-MEDIA_ROOT = Path(BASE_DIR, 'Data', 'CSV_Dateien')
-MEDIA_URL = '/Data/CSV_Dateien/'
+MEDIA_ROOT = Path(BASE_DIR, 'Data')
+MEDIA_URL = '/Data/'
