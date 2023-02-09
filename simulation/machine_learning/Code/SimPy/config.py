@@ -5,10 +5,12 @@ import os
 import json
 from django.conf import settings
 from pathlib import Path
+from ....models import Simulation
 """
 Following configuration should be defined by user in the specific application context
 """
-absolute_data_path = r"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien"
+absolute_data_path = Path(
+    settings.MEDIA_ROOT, "CSV_Dateien")
 
 work_path = settings.BASE_DIR
 # data root folder both for VNCK data and Real machine data:
@@ -147,7 +149,7 @@ startupfile = os.path.join(os.path.dirname(
 
 
 # precision of stock in mw cam:
-precision_default = 5
+precision_default = Simulation.objects.last().precision
 
 # dll path for mw cam
 mwcamlib_path = os.path.join(os.path.dirname(

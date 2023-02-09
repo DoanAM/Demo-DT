@@ -1,11 +1,14 @@
 from django.db import models
 import time
 import os
+from pathlib import Path
 
 
 def upload_path(instance, filename):
     timestamp = str(round(time.time()))
-    return '/'.join([timestamp + "_" + os.path.splitext(filename)[0], timestamp + "_" + filename])
+    path = Path("CSV_Dateien", timestamp + "_" +
+                os.path.splitext(filename)[0], timestamp + "_" + filename)
+    return "CSV_Dateien/"+'/'.join([timestamp + "_" + os.path.splitext(filename)[0], timestamp + "_" + filename])
 
 
 # Create your models here.
@@ -17,6 +20,7 @@ class Simulation(models.Model):
         db_column='Timestamp')
     nc_file = models.FileField(blank=True, null=True, upload_to=upload_path)
     csv_file = models.FileField(blank=True, null=True)
+    precision = models.FloatField(blank=True, null=True)
     finished = models.BooleanField(default=False)
 
     def __str__(self):

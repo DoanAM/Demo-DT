@@ -131,7 +131,8 @@ class GetLive3dPoints(APIView):
                        zMin < vector["zcurrpos"]/10000 < zMax]):
                     line = True
                 else:
-                    line = False
+                    #line = False
+                    line = True  # for debug purposes
                     break
 
         #####################################

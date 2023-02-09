@@ -27,29 +27,30 @@ import {
   XAxis,
   Spindle,
 } from "../../components/MachineParts.jsx";
+import Line from "../../components/Line.jsx";
 
 const Loader = () => {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
 };
 
-const Line = (props) => {
-  //points.push(new THREE.Vector3(-10000, 0, 0));
-  //points.push(new THREE.Vector3(0, 10000, 0));
-  //points.push(new THREE.Vector3(10000, 0, 0));
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(props.points);
-  return (
-    <line geometry={lineGeometry}>
-      <lineBasicMaterial
-        attach="material"
-        color={"#eb3434"}
-        linewidth={1}
-        linecap={"round"}
-        linejoin={"round"}
-      />
-    </line>
-  );
-};
+// const Line = (props) => {
+//   //points.push(new THREE.Vector3(-10000, 0, 0));
+//   //points.push(new THREE.Vector3(0, 10000, 0));
+//   //points.push(new THREE.Vector3(10000, 0, 0));
+//   const lineGeometry = new THREE.BufferGeometry().setFromPoints(props.points);
+//   return (
+//     <line geometry={lineGeometry}>
+//       <lineBasicMaterial
+//         attach="material"
+//         color={"#FFFFFF"}
+//         linewidth={1}
+//         linecap={"round"}
+//         linejoin={"round"}
+//       />
+//     </line>
+//   );
+// };
 
 const LiveView3d = () => {
   const { liveData, setLiveData } = useContext(LiveDataContext);
@@ -59,6 +60,7 @@ const LiveView3d = () => {
   const [lineArray, setLineArray] = useState([]);
   let startVector = null;
   let endVector = null;
+  const axisOffsets = [-516, 530, 681];
 
   const fetchData = async () => {
     const response = await Axios.get("debug/live3dPoints");
@@ -95,19 +97,25 @@ const LiveView3d = () => {
         if (lastPoint.current == undefined) {
           startVector = new THREE.Vector3(
             data.data.posVectorList[data.data.posVectorList.length - 1]
-              .xcurrpos / 10000,
+              .xcurrpos /
+              10000 +
+              axisOffsets[0],
             data.data.posVectorList[data.data.posVectorList.length - 1]
-              .zcurrpos / 10000,
+              .zcurrpos /
+              10000 +
+              axisOffsets[1],
             data.data.posVectorList[data.data.posVectorList.length - 1]
-              .ycurrpos / 10000
+              .ycurrpos /
+              10000 +
+              axisOffsets[2]
           );
         } else {
           startVector = lastPoint.current;
         }
         endVector = new THREE.Vector3(
-          data.data.posVectorList[0].xcurrpos / 10000,
-          data.data.posVectorList[0].zcurrpos / 10000,
-          data.data.posVectorList[0].ycurrpos / 10000
+          data.data.posVectorList[0].xcurrpos / 10000 + axisOffsets[0],
+          data.data.posVectorList[0].zcurrpos / 10000 + axisOffsets[1],
+          data.data.posVectorList[0].ycurrpos / 10000 + axisOffsets[2]
         );
         const newLine = [startVector, endVector];
         setLineArray((e) => [...e, newLine]);
@@ -144,12 +152,17 @@ const LiveView3d = () => {
         <React.Suspense fallback={<Loader />}>
           <axesHelper args={[1000]} />
           <OrbitControls />
-          <ambientLight intensitiy={2.2} />
-          <pointLight position={[-780, 430, 0]} />
+          <hemisphereLight
+            color="rgb(242,247,253)"
+            groundColor={"rgb(191,191,191)"}
+            intensity={1.1}
+          />
+          <directionalLight position={[5, 575, 2265]} />
+          <pointLight position={[0, 756, -2243]} />
           {lineArray.map((e) => {
             return <Line points={e} />;
           })}
-          <MachineBed />
+          <MachineBed visible={true} />
           <group position={[0, 0, PositionMachine.current.ycurrpos / 10000]}>
             <Bridge />
             <group position={[PositionMachine.current.xcurrpos / 10000, 0, 0]}>

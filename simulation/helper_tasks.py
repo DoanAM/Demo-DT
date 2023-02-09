@@ -10,13 +10,13 @@ from django.conf import settings
 
 def copyDll(filename):  # filename
     shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "MwCamSimLib.dll",
-                Path(settings.MEDIA_ROOT) / filename / "MwCamSimLib.dll")
+                Path(settings.MEDIA_ROOT) / "CSV_Dateien" / filename / "MwCamSimLib.dll")
     shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "mwsimutil.dll",
-                Path(settings.MEDIA_ROOT) / filename / "mwsimutil.dll")
+                Path(settings.MEDIA_ROOT) / "CSV_Dateien" / filename / "mwsimutil.dll")
     shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "mwSupport.dll",
-                Path(settings.MEDIA_ROOT) / filename / "mwSupport.dll")
+                Path(settings.MEDIA_ROOT) / "CSV_Dateien" / filename / "mwSupport.dll")
     shutil.copy(Path(settings.BASE_DIR) / "simulation" / "machine_learning" / "Code" / "SimPy" / "mwVerifier.dll",
-                Path(settings.MEDIA_ROOT) / filename / "mwVerifier.dll")
+                Path(settings.MEDIA_ROOT) / "CSV_Dateien" / filename / "mwVerifier.dll")
 
 
 def listStlFiles(path, fileName):

@@ -17,13 +17,16 @@ from itertools import chain
 class SimulationView(APIView):
     queryset = Simulation.objects.all()
     serializer_class = SimulationSerializer
+    kwarg1 = "precision"
 
     def post(self, request, *args, **kwargs):
         nc_file = request.data['nc_file']
         timestamp = round(time.time() * 1000)
-        Simulation.objects.create(timestamp=timestamp, nc_file=nc_file)
+        precision = request.GET.get(self.kwarg1)
+        Simulation.objects.create(
+            timestamp=timestamp, nc_file=nc_file, precision=precision)
         runSimulation.delay()  # this is a race condition. pass object as arg into runSimulation()
-        return Response({"Message: Simulation created"}, status=200)
+        return Response({"Message: Simulation created"}, status=status.HTTP_201_CREATED)
 
 
 class GetSimulationsView(APIView):
@@ -42,17 +45,20 @@ class GetSimulationDataView(APIView):
 
     def get(self, request, format=None):
         param1 = request.GET.get(self.kwarg1)
+        # querysetLarge = PredictedData.objects.filter(
+        #     simulation=param1).filter(stlPath__exact="").all()
         querysetLarge = PredictedData.objects.filter(
-            simulation=param1).filter(stlPath__exact="").all()
-        querysetLargeCount = querysetLarge.count()
-        querysetReduced = querysetLarge[0: querysetLargeCount:100]
-        querysetStl = PredictedData.objects.filter(
-            simulation=param1).exclude(
-            stlPath__exact="").all()
-        qs = sorted(chain(querysetReduced, querysetStl),
-                    key=lambda instance: instance.timestamp)
+            simulation=param1).exclude(stlPath__exact="").order_by("timestamp").all()
+        # querysetLargeCount = querysetLarge.count()
+        # querysetReduced = querysetLarge[0: querysetLargeCount:100]
+        # querysetStl = PredictedData.objects.filter(
+        #     simulation=param1).exclude(
+        #     stlPath__exact="").all()
+        # qs = sorted(chain(querysetReduced, querysetStl),
+        #             key=lambda instance: instance.timestamp)
         serializer_class = PredictedDataSerializer
-        data = serializer_class(qs, many=True,).data
+        # data = serializer_class(qs, many=True,).data
+        data = serializer_class(querysetLarge, many=True,).data
 
         return Response(data, status=status.HTTP_200_OK)
 

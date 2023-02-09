@@ -14,4 +14,4 @@ simulation/machine_learning/Code/SimPy/log
 
 #Simulation Files
 media
-Data/CSV_Dateien/*
+Data/*

@@ -7,6 +7,7 @@ import { useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import Axios from "axios";
 import { SimulationDataContext } from "./Context.jsx";
+import Workpiece from "../../components/Workpiece.jsx";
 
 const LoadSimulationButton = (props) => {
   const theme = useTheme();
@@ -18,21 +19,21 @@ const LoadSimulationButton = (props) => {
 
   const getSimulationData = async (id) => {
     const response = await Axios.get(
-      "/simulationAPI/get-simulationData/?simulation=" + id
+      `/simulationAPI/get-simulationData/?simulation=${id}`
     );
-
-    /*     response.data.forEach((item, idx) => {
-      console.log(Workpiece(item.stlPath));
-      //item.stlPath = Workpiece(item.stlPath);
-    }); */
-    //console.log(response.data);
-    /*     for (const item of response.data) {
-      const fileUrl = item.stlPath;
-      console.log(fileUrl);
-      console.log(Workpiece(fileUrl));
-    } */
-    //console.log(response.data);
-    const simData = { ID: id, data: response.data };
+    console.log(response.data);
+    const updatedData = response.data.map((item) => {
+      return {
+        ...item,
+        workpiece: <Workpiece key={item.stlPath} path={item.stlPath} />,
+        //geometry: useLoader(STLLoader, item.stlPath),
+      };
+    });
+    // const geometryArray = response.data.map((item) =>
+    //   useLoader(STLLoader, item.stlPath)
+    // );
+    // console.log("Geometry Array is: ", geometryArray);
+    const simData = { ID: id, data: updatedData };
     if (simulationData.some((item) => item.ID === simData.ID)) {
       return null;
     } else {

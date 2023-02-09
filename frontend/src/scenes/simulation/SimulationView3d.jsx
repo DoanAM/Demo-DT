@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
@@ -28,16 +29,18 @@ import {
   XAxis,
   Spindle,
 } from "../../components/MachineParts.jsx";
+import Line from "../../components/Line.jsx";
+import Workpiece from "../../components/Workpiece.jsx";
 
-const Workpiece = (props) => {
-  const geom = useLoader(STLLoader, props.path);
-  return (
-    <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
-      <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach={"material"} color="rgb(50, 168, 82)" />
-    </mesh>
-  );
-};
+// const Workpiece = (props) => {
+//   const geom = useLoader(STLLoader, props.path);
+//   return (
+//     <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
+//       <primitive object={geom} attach="geometry" />
+//       <meshPhongMaterial attach={"material"} color="rgb(50, 168, 82)" />
+//     </mesh>
+//   );
+// };
 
 const Loader = () => {
   const { progress } = useProgress();
@@ -51,10 +54,13 @@ const SimulationView3d = () => {
   const { currentSimulationData, setCurrentSimulationData } = useContext(
     CurrentSimulationContext
   );
+  const axisOffsets = [-516, 530, 681];
+
   const [simulation, setSimulation] = useState();
   const [xCoordinate, setXCoordinate] = useState(0);
   const [yCoordinate, setYCoordinate] = useState(0);
   const [zCoordinate, setZCoordinate] = useState(0);
+  const [vectorArray, setVectorArray] = useState();
   //const [playbackIdx, setPlaybackIdx] = useState(0);
   const [stlPath, setStlPath] = useState(null);
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
@@ -92,6 +98,21 @@ const SimulationView3d = () => {
       }
     }
   }, [playbackIdx]);
+
+  useEffect(() => {
+    if (simulation != null) {
+      setVectorArray(
+        simulation.map(function (item) {
+          return new THREE.Vector3(
+            item.xcurrpos,
+            item.zcurrpos + 230, //+ 230
+            -item.ycurrpos //+ 260
+          );
+        })
+      );
+      console.log(vectorArray);
+    }
+  }, [simulation]);
 
   const handlePause = () => {
     clearInterval(playbackInterval.current);
@@ -143,21 +164,40 @@ const SimulationView3d = () => {
         <React.Suspense fallback={<Loader />}>
           <axesHelper args={[1000]} />
           <OrbitControls />
-          <ambientLight intensitiy={2.2} />
-          <pointLight position={[-780, 430, 0]} />
-          <MachineBed />
-          <group position={[0, 0, yCoordinate]}>
+          <hemisphereLight
+            color="rgb(242,247,253)"
+            groundColor={"rgb(191,191,191)"}
+            intensity={1.1}
+          />
+          <directionalLight position={[5, 575, 2265]} />
+          <pointLight position={[0, 756, -2243]} />
+          {vectorArray != undefined && <Line points={vectorArray} />}
+          <MachineBed visible={true} />
+          <group position={[0, 0, yCoordinate - 450]}>
             <Bridge />
-            <group position={[xCoordinate, 0, 0]}>
+            <group position={[xCoordinate + 550, 0, 0]}>
               <XAxis />
-              <group position={[0, zCoordinate, 0]}>
+              <group position={[0, zCoordinate - 250, 0]}>
                 <Spindle />
               </group>
             </group>
           </group>
-          {simulation != undefined && stlPath != null && (
+          {/* {simulation != undefined && stlPath != null && (
             <Workpiece path={stlPath} />
-          )}
+          )} */}
+          {/* {simulation != undefined &&
+            simulation[playbackIdx].stlPath != null &&
+            simulation[playbackIdx].workpiece} */}
+          {simulation != undefined &&
+            simulation.map((item, index) => {
+              return (
+                <Workpiece
+                  path={item.stlPath}
+                  key={index}
+                  visible={index === playbackIdx}
+                />
+              );
+            })}
         </React.Suspense>
       </Canvas>
       {simulation != undefined && (

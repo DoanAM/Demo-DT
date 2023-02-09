@@ -16,7 +16,7 @@ const FileUploadBox = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selectedFile, setSelectedFile] = useState();
-  const [quality, setQuality] = useState(50);
+  const [quality, setQuality] = useState(0.5);
 
   const setFile = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -31,7 +31,7 @@ const FileUploadBox = () => {
 
     axios({
       method: "POST",
-      url: "/simulationAPI/upload-simulation",
+      url: `/simulationAPI/upload-simulation/?precision=${quality}`,
       data: fd,
       xsrfHeaderName: "X-CSRFToken",
       xsrfCookieName: "csrftoken",
@@ -41,9 +41,9 @@ const FileUploadBox = () => {
     setSelectedFile(null);
   };
 
-  /*   const handleQualityUpdate = (e, val) => {
+  const handleQualityUpdate = (e, val) => {
     setQuality(val);
-  }; */
+  };
 
   return (
     <Box>
@@ -57,15 +57,16 @@ const FileUploadBox = () => {
         </Button>
       </Box>
       <Slider
-        aria-label="Temperature"
-        defaultValue={quality}
+        //key={`slider-${quality}`}
+        aria-label="Precision"
+        value={quality}
         valueLabelDisplay="auto"
-        step={10}
+        step={0.1}
         marks
-        min={10}
-        max={110}
+        min={0.1}
+        max={1}
         color="secondary"
-        //onChange={handleQualityUpdate}
+        onChange={handleQualityUpdate}
       />
     </Box>
   );

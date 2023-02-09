@@ -5,14 +5,21 @@ import pathSpindleStl from "../data/Spindle.stl";
 import { useLoader } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 
-export const MachineBed = () => {
+export const MachineBed = (props) => {
   const geom = useLoader(STLLoader, pathMachineBedStl);
-  return (
-    <mesh>
-      <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach="material" color="rgb(77,78,102)" />
-    </mesh>
-  );
+  if (!props.visible) return;
+  else {
+    return (
+      <mesh>
+        <primitive object={geom} attach="geometry" />
+        <meshPhongMaterial
+          attach="material"
+          color="rgb(77,78,102)"
+          shininess={10}
+        />
+      </mesh>
+    );
+  }
 };
 
 export const Bridge = () => {
@@ -20,7 +27,11 @@ export const Bridge = () => {
   return (
     <mesh>
       <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach={"material"} color="rgb(26, 71, 50)" />
+      <meshPhongMaterial
+        attach={"material"}
+        color="rgb(26, 71, 50)"
+        shininess={10}
+      />
     </mesh>
   );
 };
@@ -30,7 +41,11 @@ export const XAxis = () => {
   return (
     <mesh>
       <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach={"material"} color="rgb(47, 103, 193)" />
+      <meshPhongMaterial
+        attach={"material"}
+        color="rgb(47, 103, 193)"
+        shininess={10}
+      />
     </mesh>
   );
 };
@@ -40,7 +55,11 @@ export const Spindle = () => {
   return (
     <mesh>
       <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach={"material"} color="rgb(228, 123, 37)" />
+      <meshPhongMaterial
+        attach={"material"}
+        color="rgb(228, 123, 37)"
+        shininess={10}
+      />
     </mesh>
   );
 };
