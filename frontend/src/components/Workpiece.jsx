@@ -9,7 +9,12 @@ const Workpiece = (props) => {
   return (
     <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
       <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial attach={"material"} color="rgb(100, 100, 100)" />
+      <meshPhongMaterial
+        attach={"material"}
+        color="rgb(100, 100, 100)"
+        opacity={"0.8"}
+        transparent={true}
+      />
     </mesh>
   );
 };

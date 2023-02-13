@@ -29,6 +29,10 @@ import {
 } from "../../components/MachineParts.jsx";
 import Line from "../../components/Line.jsx";
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 const Loader = () => {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
@@ -64,7 +68,7 @@ const LiveView3d = () => {
 
   const fetchData = async () => {
     const response = await Axios.get("debug/live3dPoints");
-    //console.log(response);
+    console.log(response);
     //setPoints(response.data);
     return response;
   };
@@ -77,14 +81,30 @@ const LiveView3d = () => {
 
   useEffect(() => {
     if (data != undefined) {
-      let index = 0;
-      function setMachineCoordinates() {
+      async function setMachineCoordinates() {
+        // let arr = data.data.posVectorList;
+        // //console.log(arr[index]);
+        // PositionMachine.current = arr[index];
+        // index++;
+        // if (index < arr.length) {
+        //   setTimeout(setMachineCoordinates, 16);
+        //   console.log(
+        //     "Effect",
+        //     Date.now(),
+        //     arr[index].xcurrpos,
+        //     arr[index].xcurrpos / 10000
+        //   );
+        // }
         let arr = data.data.posVectorList;
-        //console.log(arr[index]);
-        PositionMachine.current = arr[index];
-        index++;
-        if (index < arr.length) {
-          setTimeout(setMachineCoordinates, 80);
+        for (let index = 0; index < arr.length; index++) {
+          PositionMachine.current = arr[index];
+          console.log(
+            "Effect",
+            Date.now(),
+            arr[index].xcurrpos,
+            arr[index].xcurrpos / 10000
+          );
+          await sleep(16);
         }
       }
       setMachineCoordinates();

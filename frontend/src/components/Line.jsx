@@ -11,7 +11,7 @@ const Line = (props) => {
     <line geometry={lineGeometry}>
       <lineBasicMaterial
         attach="material"
-        color={"#FFFFFF"}
+        color={0xffffff}
         linewidth={1}
         linecap={"round"}
         linejoin={"round"}

@@ -64,7 +64,7 @@ const FileUploadBox = () => {
         step={0.1}
         marks
         min={0.1}
-        max={1}
+        max={5}
         color="secondary"
         onChange={handleQualityUpdate}
       />

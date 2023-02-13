@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
@@ -31,6 +31,8 @@ import {
 } from "../../components/MachineParts.jsx";
 import Line from "../../components/Line.jsx";
 import Workpiece from "../../components/Workpiece.jsx";
+import Tool from "../../components/Tool.jsx";
+import { red } from "@mui/material/colors";
 
 // const Workpiece = (props) => {
 //   const geom = useLoader(STLLoader, props.path);
@@ -61,7 +63,8 @@ const SimulationView3d = () => {
   const [yCoordinate, setYCoordinate] = useState(0);
   const [zCoordinate, setZCoordinate] = useState(0);
   const [vectorArray, setVectorArray] = useState();
-  //const [playbackIdx, setPlaybackIdx] = useState(0);
+  const [color, setColor] = useState();
+
   const [stlPath, setStlPath] = useState(null);
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
@@ -106,7 +109,7 @@ const SimulationView3d = () => {
           return new THREE.Vector3(
             item.xcurrpos,
             item.zcurrpos + 230, //+ 230
-            -item.ycurrpos //+ 260
+            -item.ycurrpos + 260 //+ 260
           );
         })
       );
@@ -173,12 +176,13 @@ const SimulationView3d = () => {
           <pointLight position={[0, 756, -2243]} />
           {vectorArray != undefined && <Line points={vectorArray} />}
           <MachineBed visible={true} />
-          <group position={[0, 0, yCoordinate - 450]}>
+          <group position={[0, 0, -yCoordinate - 419]}>
             <Bridge />
-            <group position={[xCoordinate + 550, 0, 0]}>
+            <group position={[xCoordinate + 518, 0, 0]}>
               <XAxis />
-              <group position={[0, zCoordinate - 250, 0]}>
+              <group position={[0, zCoordinate - 285, 0]}>
                 <Spindle />
+                <Tool position={[-518, 527, 680]} />
               </group>
             </group>
           </group>

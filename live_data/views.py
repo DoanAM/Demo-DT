@@ -99,8 +99,8 @@ class GetLive3dPoints(APIView):
         return a <= num <= b
 
     def get(self, request, *args, **kwargs):
-        pointAmount = 10
-        timeIntervalBetweenPoints = int(1000/10)
+        pointAmount = 60
+        timeIntervalBetweenPoints = int(1000/pointAmount)
         latestTimestamp = Cnc.objects.last().timestamp
         posVectorList = []
         latestPosVector = Cnc.objects.values(

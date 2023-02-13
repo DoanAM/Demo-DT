@@ -32,12 +32,18 @@ def listStlFiles(path, fileName):
             filepath = Path(pathMrs) / file
             relativeFilepath = Path(fileName) / "MRS" / file
             line = int(Path(file).stem)
-            _df = df.iloc[line]
+            _df = df.iloc[line*10]
             timestamp = _df['Timestamp']
 
-            pred_timestamp = pred_data.loc[:, 'Timestamp']
-            timestampIdx = np.searchsorted(pred_timestamp, timestamp)
-            actualTimestamp = pred_timestamp.iloc[timestampIdx]
+            # pred_timestamp = pred_data.loc[:, 'Timestamp']
+            # timestampIdx = np.searchsorted(pred_timestamp, timestamp)
+            # print("timestampIdx is ", timestampIdx)
+            # actualTimestamp = pred_timestamp.iloc[timestampIdx]
+
+            diff = np.abs(pred_data["Timestamp"] - timestamp)
+            timestampIdx = diff.idxmin()
+            print("timestampIdx is ", timestampIdx)
+            actualTimestamp = pred_data.loc[timestampIdx, "Timestamp"]
 
             obj = PredictedData.objects.get(timestamp=actualTimestamp)
             with filepath.open(mode="rb") as f:
