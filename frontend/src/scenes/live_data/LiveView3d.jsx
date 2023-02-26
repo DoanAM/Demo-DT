@@ -59,7 +59,7 @@ const Loader = () => {
 const LiveView3d = () => {
   const { liveData, setLiveData } = useContext(LiveDataContext);
   const { points, setPoints } = useState([]);
-  const PositionMachine = useRef({ xcurrpos: 0, ycurrpos: 0, zcurrpos: 0 });
+  const PositionMachine = useRef({ xcurrpos: 0, ycurrpos: 0, zcurrpos: 0 }); //useState instead
   const lastPoint = useRef();
   const [lineArray, setLineArray] = useState([]);
   let startVector = null;

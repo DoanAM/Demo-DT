@@ -34,15 +34,16 @@ import Workpiece from "../../components/Workpiece.jsx";
 import Tool from "../../components/Tool.jsx";
 import { red } from "@mui/material/colors";
 
-// const Workpiece = (props) => {
-//   const geom = useLoader(STLLoader, props.path);
-//   return (
-//     <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
-//       <primitive object={geom} attach="geometry" />
-//       <meshPhongMaterial attach={"material"} color="rgb(50, 168, 82)" />
-//     </mesh>
-//   );
-// };
+function normalize(value, min, max, newMin, newMax) {
+  return Math.round(((value - min) / (max - min)) * (newMax - newMin) + newMin);
+}
+
+function rgbToHex(r, g, b) {
+  const rHex = r.toString(16).padStart(2, "0");
+  const gHex = g.toString(16).padStart(2, "0");
+  const bHex = b.toString(16).padStart(2, "0");
+  return "#" + rHex + gHex + bHex;
+}
 
 const Loader = () => {
   const { progress } = useProgress();
@@ -64,10 +65,10 @@ const SimulationView3d = () => {
   const [zCoordinate, setZCoordinate] = useState(0);
   const [vectorArray, setVectorArray] = useState();
   const [color, setColor] = useState();
-
   const [stlPath, setStlPath] = useState(null);
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
+  const keys = Object.keys(currentSimulationData[0]);
 
   const handleSelectChange = (e) => {
     const id = e.target.value;
@@ -102,17 +103,44 @@ const SimulationView3d = () => {
     }
   }, [playbackIdx]);
 
+  // useEffect(() => {
+  //   if (simulation != null) {
+  //     setVectorArray(
+  //       simulation.map(function (item) {
+  //         return new THREE.Vector3(
+  //           item.xcurrpos,
+  //           item.zcurrpos + 230, //+ 230
+  //           -item.ycurrpos + 260 //+ 260
+  //         );
+  //       })
+  //     );
+  //     console.log(vectorArray);
+  //   }
+  // }, [simulation]);
+
   useEffect(() => {
     if (simulation != null) {
-      setVectorArray(
-        simulation.map(function (item) {
-          return new THREE.Vector3(
-            item.xcurrpos,
-            item.zcurrpos + 230, //+ 230
-            -item.ycurrpos + 260 //+ 260
-          );
-        })
-      );
+      let pointPairs = [];
+      for (let i = 0; i < simulation.length - 1; i++) {
+        const startPoint = new THREE.Vector3(
+          simulation[i].xcurrpos,
+          simulation[i].zcurrpos + 230,
+          -simulation[i].ycurrpos + 260
+        );
+        const endPoint = new THREE.Vector3(
+          simulation[i + 1].xcurrpos,
+          simulation[i + 1].zcurrpos + 230,
+          -simulation[i + 1].ycurrpos + 260
+        );
+        const red = normalize(simulation[i].xcurrpos, 0, 100, 0, 255);
+        const green = 255 - normalize(simulation[i].xcurrpos, 0, 100, 0, 255);
+        let lineColor = rgbToHex(red, green, 0);
+        pointPairs.push({
+          points: [startPoint, endPoint],
+          lineColor: lineColor,
+        });
+      }
+      setVectorArray(pointPairs);
       console.log(vectorArray);
     }
   }, [simulation]);
@@ -158,6 +186,20 @@ const SimulationView3d = () => {
           })}
         </Select>
       </FormControl>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={""}
+          label="Value"
+          onChange={handleChange}
+        >
+          {keys.map((e) => {
+            return <MenuItem value={e}> {e} </MenuItem>;
+          })}
+        </Select>
+      </FormControl>
       <Canvas
         camera={{
           position: [0, 1300, 1500],
@@ -174,7 +216,13 @@ const SimulationView3d = () => {
           />
           <directionalLight position={[5, 575, 2265]} />
           <pointLight position={[0, 756, -2243]} />
-          {vectorArray != undefined && <Line points={vectorArray} />}
+          {vectorArray != undefined &&
+            vectorArray.map((item, index) => {
+              return (
+                <Line points={item.points} color={item.lineColor} key={index} />
+              );
+            })}
+          {/* {vectorArray != undefined && <Line points={vectorArray} />} */}
           <MachineBed visible={true} />
           <group position={[0, 0, -yCoordinate - 419]}>
             <Bridge />
@@ -186,12 +234,6 @@ const SimulationView3d = () => {
               </group>
             </group>
           </group>
-          {/* {simulation != undefined && stlPath != null && (
-            <Workpiece path={stlPath} />
-          )} */}
-          {/* {simulation != undefined &&
-            simulation[playbackIdx].stlPath != null &&
-            simulation[playbackIdx].workpiece} */}
           {simulation != undefined &&
             simulation.map((item, index) => {
               return (

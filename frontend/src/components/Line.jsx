@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext, useRef } from "react";
 import * as THREE from "three";
+import { GradientTexture } from "@react-three/drei";
 
 const Line = (props) => {
   //points.push(new THREE.Vector3(-10000, 0, 0));
@@ -11,7 +12,7 @@ const Line = (props) => {
     <line geometry={lineGeometry}>
       <lineBasicMaterial
         attach="material"
-        color={0xffffff}
+        color={props.color}
         linewidth={1}
         linecap={"round"}
         linejoin={"round"}
