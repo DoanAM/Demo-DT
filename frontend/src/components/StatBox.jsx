@@ -1,19 +1,38 @@
-import { Box, Typography, useTheme, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  useTheme,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import { tokens } from "../theme";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import datalist from "../data/datalist.json";
 
 const StatBox = (props) => {
   /* const requestString = props.name.toLowerCase(); */
-  const title = props.name.toLowerCase();
-  const type = props.category;
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  //console.log(title);
-  const [value, setValue] = useState("loading");
-  const close = () => {
-    props.onClose(props.id);
+  const [title, setTitle] = useState("cnc");
+  const [type, setType] = useState([]);
+  const [text, setText] = useState("");
+
+  const handleGroupChange = (e) => {
+    setTitle(e.target.value);
   };
+
+  const handleTypeChange = (e) => {
+    setText(e.target.value);
+  };
+
+  useEffect(() => {
+    const table = datalist.find((obj) => obj.tablename === title);
+    const tableKeys = Object.keys(table["columnnames"]);
+    setType(tableKeys);
+  }, [title]);
 
   return (
     <Box
@@ -23,19 +42,54 @@ const StatBox = (props) => {
       borderRadius={"15px"}
       padding="20px"
     >
-      <Box display="flex" justifyContent="space-between">
-        <Box>
-          <Typography variant="h5" sx={{ color: colors.black[100] }}>
-            {props.name}
-          </Typography>
-        </Box>
-        <Box mr="5px">
-          <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
-        </Box>
+      <Box display="flex" flexDirection={"row"} justifyContent="space-between">
+        <FormControl>
+          <InputLabel id="test-select-label">Group</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            defaultValue={title}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleGroupChange}
+          >
+            {datalist.map((item, index) => {
+              return (
+                <MenuItem value={item.tablename} key={index}>
+                  {item.tablename}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+
+        <FormControl>
+          <InputLabel id="test-select-label">Type</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            defaultValue={type}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleTypeChange}
+          >
+            {type.map((item, index) => {
+              return (
+                <MenuItem value={item} key={index}>
+                  {item}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </Box>
       <Box display="flex">
         <Typography variant="h1" sx={{ color: colors.primary[500] }}>
-          {String(props.readings[type][title])}
+          {String(props.readings[title][text.toLowerCase()])}
         </Typography>
       </Box>
     </Box>

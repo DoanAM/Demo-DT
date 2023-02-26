@@ -98,12 +98,12 @@ const LiveView3d = () => {
         let arr = data.data.posVectorList;
         for (let index = 0; index < arr.length; index++) {
           PositionMachine.current = arr[index];
-          console.log(
-            "Effect",
-            Date.now(),
-            arr[index].xcurrpos,
-            arr[index].xcurrpos / 10000
-          );
+          // console.log(
+          //   "Effect",
+          //   Date.now(),
+          //   arr[index].xcurrpos,
+          //   arr[index].xcurrpos / 10000
+          // );
           await sleep(16);
         }
       }

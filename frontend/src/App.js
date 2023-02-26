@@ -32,7 +32,6 @@ function App() {
               <CssBaseline />
 
               <div className="app">
-                <Navbar />
                 <main className="content">
                   <Topbar />
                   <Routes>

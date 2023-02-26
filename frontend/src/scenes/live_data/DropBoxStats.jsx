@@ -17,30 +17,7 @@ const DropBoxStats = () => {
   stateRef.boardContentLength = boardContent.length;
   const { liveData, setLiveData } = useContext(LiveDataContext);
 
-  const addCardToBoard = (item) => {
-    if (stateRef.boardContentLength >= 4) {
-      return;
-    }
-    item = [...item, generateRandomKey()];
-    setBoardContent((boardContent) => [...boardContent, item]);
-
-    console.log(stateRef.boardContentLength);
-  };
-
-  const closeStatBox = (e) => {
-    setBoardContent(boardContent.filter((content) => content[1] !== e));
-    //setShowStatBox(false);
-  };
-
   const generateRandomKey = () => Math.random().toString(16).slice(2);
-
-  const [, drop] = useDrop(() => ({
-    accept: "drag",
-    drop: (item) => addCardToBoard(item),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
 
   const fetchData = async () => {
     const response = await Axios.get("/debug/get-all");
@@ -71,7 +48,6 @@ const DropBoxStats = () => {
     <Box
       width="100%"
       height="100%"
-      ref={drop}
       //backgroundColor={colors.indigoAccent[800]}
       display="grid"
       gridTemplateColumns="repeat(12, 1fr)"
@@ -79,7 +55,7 @@ const DropBoxStats = () => {
       //boxShadow="inset 20px 20px 23px #1f2433, inset -20px -20px 23px #2b3045"
       borderRadius={"20px"}
     >
-      {boardContent.map((e) => {
+      {/* {boardContent.map((e) => {
         return (
           <StatBox
             name={e[0].name}
@@ -90,7 +66,11 @@ const DropBoxStats = () => {
             key={e[1]}
           />
         );
-      })}
+      })} */}
+      <StatBox readings={data.data} />
+      <StatBox readings={data.data} />
+      <StatBox readings={data.data} />
+      <StatBox readings={data.data} />
     </Box>
   );
 };
