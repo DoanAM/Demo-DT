@@ -43,17 +43,17 @@ const StatBox = (props) => {
       padding="20px"
     >
       <Box display="flex" flexDirection={"row"} justifyContent="space-between">
-        <FormControl>
+        <FormControl size="small">
           <InputLabel id="test-select-label">Group</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
             defaultValue={title}
+            onChange={handleGroupChange}
             sx={{
-              width: 200,
+              // width: 200,
               height: 30,
             }}
-            onChange={handleGroupChange}
           >
             {datalist.map((item, index) => {
               return (
@@ -65,14 +65,14 @@ const StatBox = (props) => {
           </Select>
         </FormControl>
 
-        <FormControl>
+        <FormControl size="small">
           <InputLabel id="test-select-label">Type</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
             defaultValue={text}
             sx={{
-              width: 200,
+              // width: 200,
               height: 30,
             }}
             onChange={handleTypeChange}

@@ -148,7 +148,7 @@ const LineChart = (props) => {
       }}
     >
       <Box width={"100%"} display="flex" justifyContent={"space-between"}>
-        <FormControl>
+        <FormControl size="small">
           <InputLabel id="test-select-label">Time</InputLabel>
           <Select
             labelId="test-select-label"
@@ -156,7 +156,7 @@ const LineChart = (props) => {
             defaultValue={timeFrame}
             //defaultValue={"1day"}
             sx={{
-              width: 200,
+              //width: 200,
               height: 30,
             }}
             onChange={handleTimeframeChange}
@@ -169,14 +169,14 @@ const LineChart = (props) => {
             <MenuItem value="1month">1month</MenuItem>
           </Select>
         </FormControl>
-        <FormControl>
+        <FormControl size="small">
           <InputLabel id="test-select-label">Group</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
             defaultValue={title}
             sx={{
-              width: 200,
+              //width: 200,
               height: 30,
             }}
             onChange={handleGroupChange}
@@ -191,14 +191,14 @@ const LineChart = (props) => {
           </Select>
         </FormControl>
 
-        <FormControl>
+        <FormControl size="small">
           <InputLabel id="test-select-label">Type</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
             defaultValue={type}
             sx={{
-              width: 200,
+              //width: 200,
               height: 30,
             }}
             onChange={handleTypeChange}
