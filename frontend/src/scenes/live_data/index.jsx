@@ -30,7 +30,7 @@ const Live_Data = () => {
           display="flex"
           height={"70vh"}
         >
-          <DropBoxGraphs height={"60vh"}></DropBoxGraphs>
+          <DropBoxGraphs></DropBoxGraphs>
           <LiveView3d />
         </Box>
       </Box>

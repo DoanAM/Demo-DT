@@ -27,7 +27,7 @@ const Topbar = () => {
           )}
         </IconButton>
       </Box>
-      <Typography variant="h4">Save View</Typography>
+      {/* <Typography variant="h4">Save View</Typography> */}
       <Button
         variant="text"
         to="/home"
@@ -52,7 +52,7 @@ const Topbar = () => {
       >
         Simulation
       </Button>
-      <Button
+      {/* <Button
         variant="text"
         sx={{
           fontSize: "20px",
@@ -61,7 +61,7 @@ const Topbar = () => {
         }}
       >
         My Account
-      </Button>
+      </Button> */}
     </Box>
   );
 };

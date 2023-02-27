@@ -38,7 +38,6 @@ const FileUploadBox = () => {
     }).then((res) => {
       console.log(res);
     });
-    setSelectedFile(null);
   };
 
   const handleQualityUpdate = (e, val) => {

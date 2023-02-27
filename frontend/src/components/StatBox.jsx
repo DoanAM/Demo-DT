@@ -17,8 +17,8 @@ const StatBox = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState("cnc");
-  const [type, setType] = useState([]);
-  const [text, setText] = useState("");
+  const [type, setType] = useState(["XCurrPos"]);
+  const [text, setText] = useState("XCurrPos");
 
   const handleGroupChange = (e) => {
     setTitle(e.target.value);
@@ -70,7 +70,7 @@ const StatBox = (props) => {
           <Select
             labelId="test-select-label"
             label="Time"
-            defaultValue={type}
+            defaultValue={text}
             sx={{
               width: 200,
               height: 30,

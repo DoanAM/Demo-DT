@@ -64,7 +64,7 @@ class GetTimedData(APIView):
         currentTime = round(time.time() * 1000)
 
         queryset = model.objects.filter(
-            timestamp__gt=currentTime-timespan).all()
+            timestamp__gt=currentTime-timespan).all() #slice this
         serializer_class = getGenericSerializer(model, field)
         data = serializer_class(queryset, many=True,).data
 

@@ -38,7 +38,7 @@ const LineChart = (props) => {
   const [graphPoints, setGraphPoints] = useState([]);
   const [timeFrame, setTimeFrame] = useState("1hr");
   const [title, setTitle] = useState("cnc");
-  const [type, setType] = useState([]);
+  const [type, setType] = useState(["XCurrPos"]);
   const [text, setText] = useState("xcurrpos");
 
   const data = {
@@ -64,6 +64,7 @@ const LineChart = (props) => {
     queryKey: ["OtherData", title, text, timeFrame],
     queryFn: ({ queryKey }) =>
       fetchOldData(queryKey[1], queryKey[2], queryKey[3]),
+    refetchOnWindowFocus: false,
   });
 
   const fetchData = async (m, f) => {
@@ -82,6 +83,7 @@ const LineChart = (props) => {
     queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
     enabled: !!checkData,
     refetchInterval: 3000,
+    refetchOnWindowFocus: false,
   });
 
   const handleTimeframeChange = (e) => {
@@ -211,7 +213,9 @@ const LineChart = (props) => {
           </Select>
         </FormControl>
       </Box>
-      <Line data={data} options={options} />
+      <Box display={"flex"}>
+        <Line data={data} options={options} />
+      </Box>
     </Box>
   );
 };

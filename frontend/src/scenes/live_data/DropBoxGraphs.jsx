@@ -40,14 +40,15 @@ const DropBoxGraphs = () => {
 
   return (
     <Box
-      width="60%"
+      width="50%"
       height="100%"
       marginRight="5px"
       ref={drop}
       backgroundColor={colors.indigoAccent[900]}
       gap="5px"
-      display="grid"
-      gridTemplateRows="repeat(12, 1fr)"
+      display="flex"
+      flexDirection={"column"}
+      justifyContent={"space-between"}
     >
       {/* {boardContent.map((e) => {
         return (
