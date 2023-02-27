@@ -1,4 +1,3 @@
-import { ResponsiveLine } from "@nivo/line";
 import { IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import Axios from "axios";
@@ -9,95 +8,48 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { padding } from "@mui/system";
+import datalist from "../data/datalist.json";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
-const graphData = [
-  {
-    id: "japan",
-    color: "hsl(238, 70%, 50%)",
-    data: [
-      {
-        x: "2022-11-19T17:32:33",
-        y: 97,
-      },
-      {
-        x: "2022-11-19T17:32:35",
-        y: 62,
-      },
-      {
-        x: "2022-11-19T17:32:37",
-        y: 34,
-      },
-      {
-        x: "2022-11-19T17:32:39",
-        y: 3,
-      },
-      {
-        x: "2022-11-19T17:32:41",
-        y: 67,
-      },
-      {
-        x: "2022-11-19T17:32:43",
-        y: 29,
-      },
-      {
-        x: "2022-11-19T17:32:45",
-        y: 71,
-      },
-      {
-        x: "2022-11-19T17:32:47",
-        y: 92,
-      },
-      {
-        x: "2022-11-19T17:32:49",
-        y: 64,
-      },
-      {
-        x: "2022-11-19T17:32:51",
-        y: 53,
-      },
-      {
-        x: "2022-11-19T17:32:53",
-        y: 84,
-      },
-      {
-        x: "2022-11-19T17:32:55",
-        y: 93,
-      },
-      {
-        x: "2022-11-19T17:32:57",
-        y: 82,
-      },
-      {
-        x: "2022-11-19T17:32:59",
-        y: 69,
-      },
-      {
-        x: "2022-11-19T17:33:01",
-        y: 34,
-      },
-      {
-        x: "2022-11-19T17:33:03",
-        y: 7,
-      },
-      {
-        x: "2022-11-19T17:33:05",
-        y: 45,
-      },
-    ],
-  },
-];
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const LineChart = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const field = props.name.toLowerCase();
-  const model = props.category.toLowerCase();
   const [graphPoints, setGraphPoints] = useState([]);
   const [timeFrame, setTimeFrame] = useState("1hr");
+  const [title, setTitle] = useState("cnc");
+  const [type, setType] = useState([]);
+  const [text, setText] = useState("xcurrpos");
 
-  //const [oldData, setOldData] = useState([]);
+  const data = {
+    datasets: [
+      {
+        data: graphPoints,
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
 
   const fetchOldData = async (m, f, t) => {
     const response = await Axios.get(
@@ -109,7 +61,7 @@ const LineChart = (props) => {
   };
 
   const { status, data: oldData } = useQuery({
-    queryKey: ["OtherData", model, field, timeFrame],
+    queryKey: ["OtherData", title, text, timeFrame],
     queryFn: ({ queryKey }) =>
       fetchOldData(queryKey[1], queryKey[2], queryKey[3]),
   });
@@ -126,30 +78,63 @@ const LineChart = (props) => {
   const checkData = oldData?.data;
 
   const { data: newData } = useQuery({
-    queryKey: ["graphData", model, field, checkData],
+    queryKey: ["graphData", title, text, checkData],
     queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
     enabled: !!checkData,
     refetchInterval: 3000,
   });
 
-  const close = () => {
-    props.onClose(props.id);
-  };
-
-  const handleChange = (e) => {
+  const handleTimeframeChange = (e) => {
     //console.log(e.target.value);
     setTimeFrame(e.target.value);
   };
-  /* useEffect(() => {
-    console.log("Field is: ", field);
-    console.log("Model is: ", model);
-  }); */
+
+  const handleGroupChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleTypeChange = (e) => {
+    const lowerCaseText = e.target.value.toLowerCase();
+    setText(lowerCaseText);
+  };
+
+  useEffect(() => {
+    const table = datalist.find((obj) => obj.tablename === title);
+    const tableKeys = Object.keys(table["columnnames"]);
+    setType(tableKeys);
+  }, [title]);
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    layout: {
+      padding: 0,
+    },
+    elements: {
+      point: {
+        pointStyle: false,
+      },
+    },
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
+    tooltips: {
+      enabled: true,
+      mode: "index",
+      intersect: false,
+    },
+  };
 
   return (
     <Box
       sx={{
         gridRow: "span 4",
-        //backgroundColor: colors.black[700],
         paddingBottom: "0px",
         paddingTop: "15px",
         paddingLeft: "20px",
@@ -161,125 +146,72 @@ const LineChart = (props) => {
       }}
     >
       <Box width={"100%"} display="flex" justifyContent={"space-between"}>
-        <Box>
-          <FormControl fullWidth>
-            <InputLabel id="test-select-label">Time</InputLabel>
-            <Select
-              labelId="test-select-label"
-              label="Time"
-              defaultValue={timeFrame}
-              //defaultValue={"1day"}
-              sx={{
-                width: 200,
-                height: 30,
-              }}
-              onChange={handleChange}
-            >
-              <MenuItem value="30min">
-                <Typography variant="h6">30min</Typography>
-              </MenuItem>
-              <MenuItem value="1hr">1hr</MenuItem>
-              <MenuItem value="1day">1day</MenuItem>
-              <MenuItem value="1month">1month</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box>
-          <Typography variant="h4">{props.name}</Typography>
-        </Box>
-        <IconButton>
-          <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
-        </IconButton>
+        <FormControl>
+          <InputLabel id="test-select-label">Time</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            defaultValue={timeFrame}
+            //defaultValue={"1day"}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleTimeframeChange}
+          >
+            <MenuItem value="30min">
+              <Typography variant="h6">30min</Typography>
+            </MenuItem>
+            <MenuItem value="1hr">1hr</MenuItem>
+            <MenuItem value="1day">1day</MenuItem>
+            <MenuItem value="1month">1month</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="test-select-label">Group</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            defaultValue={title}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleGroupChange}
+          >
+            {datalist.map((item, index) => {
+              return (
+                <MenuItem value={item.tablename} key={index}>
+                  {item.tablename}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+
+        <FormControl>
+          <InputLabel id="test-select-label">Type</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            defaultValue={type}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleTypeChange}
+          >
+            {type.map((item, index) => {
+              return (
+                <MenuItem value={item} key={index}>
+                  {item}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </Box>
-      <ResponsiveLine
-        //data={[{ id: "xenc1vel", data: oldData.data }]}
-        data={[{ id: "xenc1vel", data: graphPoints }]}
-        //data={graphData}
-        theme={{
-          axis: {
-            domain: {
-              line: {
-                stroke: colors.black[100],
-              },
-            },
-            legend: {
-              text: {
-                fill: colors.black[100],
-              },
-            },
-            ticks: {
-              line: {
-                stroke: colors.black[100],
-                strokeWidth: 1,
-              },
-              text: {
-                fill: colors.black[100],
-              },
-            },
-          },
-          legends: {
-            text: {
-              fill: colors.black[100],
-            },
-          },
-          tooltip: {
-            container: {
-              color: colors.primary[500],
-            },
-          },
-        }}
-        margin={{ top: 15, right: 5, bottom: 75, left: 35 }}
-        /* xScale={{
-          type: "point",
-        }} */
-        xScale={{
-          type: "time",
-          format: "%Y-%m-%d %H:%M:%S",
-          //precision: "minute",
-        }}
-        //xFormat="time:%Y-%m-%d %H:%M:%S"
-        yScale={{
-          type: "linear",
-          min: "auto",
-          max: "auto",
-          stacked: true,
-          reverse: false,
-        }}
-        yFormat=" >-.2f"
-        curve="linear"
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          format: "%H:%M:%S",
-          orient: "bottom",
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "time",
-          legendOffset: 30,
-          legendPosition: "middle",
-          tickValues:
-            timeFrame === "1day" ? "every 20 minute" : "every 5 minute",
-        }}
-        axisLeft={{
-          orient: "left",
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: props.name,
-          legendOffset: -30,
-          legendPosition: "middle",
-        }}
-        enableGridX={false}
-        enablePoints={false}
-        colors={{ scheme: "category10" }}
-        pointSize={10}
-        pointColor={{ theme: "background" }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: "serieColor" }}
-        pointLabelYOffset={-12}
-        useMesh={true}
-      />
+      <Line data={data} options={options} />
     </Box>
   );
 };

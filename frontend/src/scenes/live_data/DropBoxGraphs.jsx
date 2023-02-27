@@ -49,7 +49,7 @@ const DropBoxGraphs = () => {
       display="grid"
       gridTemplateRows="repeat(12, 1fr)"
     >
-      {boardContent.map((e) => {
+      {/* {boardContent.map((e) => {
         return (
           <LineChart
             onClose={closeStatBox}
@@ -58,7 +58,10 @@ const DropBoxGraphs = () => {
             name={e[0].name}
           />
         );
-      })}
+      })} */}
+      <LineChart />
+      <LineChart />
+      <LineChart />
     </Box>
   );
 };

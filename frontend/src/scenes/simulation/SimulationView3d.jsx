@@ -68,7 +68,6 @@ const SimulationView3d = () => {
   const [stlPath, setStlPath] = useState(null);
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
-  const keys = Object.keys(currentSimulationData[0]);
 
   const handleSelectChange = (e) => {
     const id = e.target.value;
@@ -183,20 +182,6 @@ const SimulationView3d = () => {
                 {item.ID}
               </MenuItem>
             );
-          })}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={""}
-          label="Value"
-          onChange={handleChange}
-        >
-          {keys.map((e) => {
-            return <MenuItem value={e}> {e} </MenuItem>;
           })}
         </Select>
       </FormControl>
