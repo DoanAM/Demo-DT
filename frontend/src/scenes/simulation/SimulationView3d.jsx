@@ -164,7 +164,7 @@ const SimulationView3d = () => {
         boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
       }}
     >
-      <FormControl fullWidth>
+      <FormControl>
         <InputLabel id="test-select-label">Simulation</InputLabel>
         <Select
           labelId="test-select-label"

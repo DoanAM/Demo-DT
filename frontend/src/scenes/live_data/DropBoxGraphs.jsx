@@ -1,11 +1,8 @@
 import { useDrop } from "react-dnd";
 import { tokens } from "../../theme";
-import DragAndDrop from "../../components/DragAndDrop.jsx";
-import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import { useState, useEffect, useRef } from "react";
 import { Box, Button, useTheme } from "@mui/material";
-import StatBox from "../../components/StatBox.jsx";
-import LineChart from "../../components/LineChart.jsx";
+import LineChart from "./LineChart.jsx";
 
 const DropBoxGraphs = () => {
   const theme = useTheme();

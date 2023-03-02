@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import AICom_Logo_2021 from "../../data/AICom_Logo_2021.png";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -12,6 +13,7 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
   return (
     <Box
+      width={"100vw"}
       display="flex"
       justifyContent="flex-end"
       p={2}
@@ -52,6 +54,7 @@ const Topbar = () => {
       >
         Simulation
       </Button>
+      <Box height={"50px"} component="img" alt="Logo" src={AICom_Logo_2021} />
       {/* <Button
         variant="text"
         sx={{

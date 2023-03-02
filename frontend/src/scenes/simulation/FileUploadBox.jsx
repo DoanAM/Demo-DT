@@ -1,16 +1,7 @@
 import { Box, Button, useTheme, Typography, Slider } from "@mui/material";
 import { useState } from "react";
 import { tokens } from "../../theme";
-import StatBox from "../../components/StatBox.jsx";
-import { useDrop } from "react-dnd";
-import DragAndDrop from "../../components/DragAndDrop.jsx";
-import { AuxiliaryList } from "../../data/AuxiliaryList.js";
-import DropBox from "../../components/DropBox.jsx";
-//import DropBoxStats from "./DropBoxStats.jsx";
-import LineChart from "../../components/LineChart.jsx";
-//import DropBoxGraphs from "./DropBoxGraphs.jsx";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const FileUploadBox = () => {
   const theme = useTheme();

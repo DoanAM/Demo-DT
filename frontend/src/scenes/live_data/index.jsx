@@ -12,10 +12,10 @@ const Live_Data = () => {
   const [liveData, setLiveData] = useState([]);
   const { currentSite, setCurrentSite } = useContext(RoutingContext);
 
-  useEffect(() => {
-    setCurrentSite("live_data");
-    console.log("Live_data is set");
-  }, []);
+  // useEffect(() => {
+  //   setCurrentSite("live_data");
+  //   console.log("Live_data is set");
+  // }, []);
 
   return (
     <LiveDataContext.Provider value={{ liveData, setLiveData }}>

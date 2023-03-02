@@ -17,17 +17,14 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  useForkRef,
 } from "@mui/material";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
 import LiveDataContext from "./LiveDataContext.jsx";
-import {
-  MachineBed,
-  Bridge,
-  XAxis,
-  Spindle,
-} from "../../components/MachineParts.jsx";
+import MxCube from "../../components/MxCube.jsx";
 import Line from "../../components/Line.jsx";
+import cncfakedata from "../../data/cncfakedata.json";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -38,37 +35,27 @@ const Loader = () => {
   return <Html center>{progress} % loaded</Html>;
 };
 
-// const Line = (props) => {
-//   //points.push(new THREE.Vector3(-10000, 0, 0));
-//   //points.push(new THREE.Vector3(0, 10000, 0));
-//   //points.push(new THREE.Vector3(10000, 0, 0));
-//   const lineGeometry = new THREE.BufferGeometry().setFromPoints(props.points);
-//   return (
-//     <line geometry={lineGeometry}>
-//       <lineBasicMaterial
-//         attach="material"
-//         color={"#FFFFFF"}
-//         linewidth={1}
-//         linecap={"round"}
-//         linejoin={"round"}
-//       />
-//     </line>
-//   );
-// };
-
 const LiveView3d = () => {
-  const { liveData, setLiveData } = useContext(LiveDataContext);
-  const { points, setPoints } = useState([]);
-  const PositionMachine = useRef({ xcurrpos: 0, ycurrpos: 0, zcurrpos: 0 }); //useState instead
+  // const positionMachine = useRef({
+  //   xcurrpos: 0,
+  //   ycurrpos: 0,
+  //   zcurrpos: 0,
+  // });
+  const [positionMachine, setPositionMachine] = useState({
+    xcurrpos: 0,
+    ycurrpos: 0,
+    zcurrpos: 0,
+  });
   const lastPoint = useRef();
   const [lineArray, setLineArray] = useState([]);
   let startVector = null;
   let endVector = null;
   const axisOffsets = [-516, 530, 681];
+  //const data = cncfakedata;
 
   const fetchData = async () => {
     const response = await Axios.get("debug/live3dPoints");
-    console.log(response);
+    console.log("Data is: ", response);
     //setPoints(response.data);
     return response;
   };
@@ -79,34 +66,17 @@ const LiveView3d = () => {
     refetchInterval: 1000,
   });
 
+  async function setMachineCoordinates() {
+    let arr = data.data.posVectorList;
+    for (let index = 0; index < arr.length; index++) {
+      setPositionMachine(arr[index]);
+      //console.log("Effect", Date.now(), positionMachine.current);
+      await sleep(20);
+    }
+  }
+
   useEffect(() => {
     if (data != undefined) {
-      async function setMachineCoordinates() {
-        // let arr = data.data.posVectorList;
-        // //console.log(arr[index]);
-        // PositionMachine.current = arr[index];
-        // index++;
-        // if (index < arr.length) {
-        //   setTimeout(setMachineCoordinates, 16);
-        //   console.log(
-        //     "Effect",
-        //     Date.now(),
-        //     arr[index].xcurrpos,
-        //     arr[index].xcurrpos / 10000
-        //   );
-        // }
-        let arr = data.data.posVectorList;
-        for (let index = 0; index < arr.length; index++) {
-          PositionMachine.current = arr[index];
-          // console.log(
-          //   "Effect",
-          //   Date.now(),
-          //   arr[index].xcurrpos,
-          //   arr[index].xcurrpos / 10000
-          // );
-          await sleep(16);
-        }
-      }
       setMachineCoordinates();
     }
   }, [data]);
@@ -144,12 +114,6 @@ const LiveView3d = () => {
     }
   }, [data]);
 
-  /* const points = [
-    new THREE.Vector3(-10000, 0, 0),
-    new THREE.Vector3(10000, 0, 0),
-  ]; */
-  //new THREE.Vector3(10000, 0, 0),
-
   return (
     <Box
       sx={{
@@ -182,18 +146,12 @@ const LiveView3d = () => {
           {lineArray.map((e) => {
             return <Line points={e} />;
           })}
-          <MachineBed visible={true} />
-          <group position={[0, 0, PositionMachine.current.ycurrpos / 10000]}>
-            <Bridge />
-            <group position={[PositionMachine.current.xcurrpos / 10000, 0, 0]}>
-              <XAxis />
-              <group
-                position={[0, PositionMachine.current.zcurrpos / 10000, 0]}
-              >
-                <Spindle />
-              </group>
-            </group>
-          </group>
+
+          <MxCube
+            bridgePosition={positionMachine.ycurrpos / 10000}
+            xAxisPosition={positionMachine.xcurrpos / 10000}
+            spindlePosition={positionMachine.zcurrpos / 10000}
+          />
         </React.Suspense>
       </Canvas>
     </Box>

@@ -70,6 +70,7 @@ const SimulationTable = () => {
               pageSize: 5,
             },
           }}
+          density="standard"
         />
       )}
     </Box>

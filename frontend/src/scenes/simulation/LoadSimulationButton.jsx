@@ -26,13 +26,9 @@ const LoadSimulationButton = (props) => {
       return {
         ...item,
         workpiece: <Workpiece key={item.stlPath} path={item.stlPath} />,
-        //geometry: useLoader(STLLoader, item.stlPath),
       };
     });
-    // const geometryArray = response.data.map((item) =>
-    //   useLoader(STLLoader, item.stlPath)
-    // );
-    // console.log("Geometry Array is: ", geometryArray);
+
     const simData = { ID: id, data: updatedData };
     if (simulationData.some((item) => item.ID === simData.ID)) {
       return null;
@@ -52,18 +48,6 @@ const LoadSimulationButton = (props) => {
   const handleClick = () => {
     refetch();
   };
-
-  /*   useEffect(() => {
-    if (data != undefined) {
-      for (const item of data.data) {
-        console.log(Workpiece());
-      }
-      const id = data.data[0].simulation;
-      const simData = { ID: id, data: data.data };
-      console.log(simData);
-      setSimulationData((e) => [...e, simData]);
-    }
-  }, [data]); */
 
   return (
     <Button

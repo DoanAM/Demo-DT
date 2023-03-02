@@ -1,10 +1,6 @@
 import { Box, Button, useTheme, Typography } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { tokens, RoutingContext } from "../../theme";
-import StatBox from "../../components/StatBox.jsx";
-import { useDrop } from "react-dnd";
-import DragAndDrop from "../../components/DragAndDrop.jsx";
-import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import SimulationView3d from "./SimulationView3d.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
 import SimulationTable from "./SimulationTable.jsx";

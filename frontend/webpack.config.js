@@ -22,6 +22,14 @@ module.exports = {
         test: /\.stl/,
         type: "asset/inline",
       },
+      {
+        test: /\.jpg/,
+        type: "asset/resource",
+      },
+      {
+        test: /\.png/,
+        type: "asset/resource",
+      },
     ],
   },
   optimization: {
