@@ -18,6 +18,7 @@ const MxCube = (props) => {
     bridgeRef.current.position.z = props.bridgePosition;
     xAxisRef.current.position.x = props.xAxisPosition;
     spindleRef.current.position.y = props.spindlePosition;
+    py;
   });
   return (
     <group>
