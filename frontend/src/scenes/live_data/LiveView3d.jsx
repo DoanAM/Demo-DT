@@ -7,21 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
 import { useLoader, useThree } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
-import {
-  Box,
-  IconButton,
-  useTheme,
-  Typography,
-  Slider,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  useForkRef,
-} from "@mui/material";
-import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
-import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
-import LiveDataContext from "./LiveDataContext.jsx";
+import { Box } from "@mui/material";
 import MxCube from "../../components/MxCube.jsx";
 import Line from "../../components/Line.jsx";
 import cncfakedata from "../../data/cncfakedata.json";
@@ -36,21 +22,17 @@ const Loader = () => {
 };
 
 const LiveView3d = () => {
-  // const positionMachine = useRef({
-  //   xcurrpos: 0,
-  //   ycurrpos: 0,
-  //   zcurrpos: 0,
-  // });
   const [positionMachine, setPositionMachine] = useState({
     xcurrpos: 0,
     ycurrpos: 0,
     zcurrpos: 0,
   });
-  const lastPoint = useRef();
+  const endPoint = useRef();
   const [lineArray, setLineArray] = useState([]);
   let startVector = null;
   let endVector = null;
   const axisOffsets = [-516, 530, 681];
+  const lastData = useRef();
   //const data = cncfakedata;
 
   const fetchData = async () => {
@@ -81,10 +63,21 @@ const LiveView3d = () => {
     }
   }, [data]);
 
+  //draw lines
   useEffect(() => {
+    //check if data is available
     if (data != undefined) {
-      if (data.data.line == true) {
-        if (lastPoint.current == undefined) {
+      //check if the new data === last data, then do nothing
+      if (data.data == lastData.current) {
+        console.log("data is old");
+        return;
+      }
+      //check if line should be drawn
+      else if (data.data.line == true) {
+        console.log("data is not old");
+        lastData.current = data.data;
+        //check if line starting point is available
+        if (endPoint.current == undefined) {
           startVector = new THREE.Vector3(
             data.data.posVectorList[data.data.posVectorList.length - 1]
               .xcurrpos /
@@ -100,7 +93,7 @@ const LiveView3d = () => {
               axisOffsets[2]
           );
         } else {
-          startVector = lastPoint.current;
+          startVector = endPoint.current;
         }
         endVector = new THREE.Vector3(
           data.data.posVectorList[0].xcurrpos / 10000 + axisOffsets[0],
@@ -109,7 +102,7 @@ const LiveView3d = () => {
         );
         const newLine = [startVector, endVector];
         setLineArray((e) => [...e, newLine]);
-        lastPoint.current = endVector;
+        endPoint.current = endVector;
       }
     }
   }, [data]);
@@ -159,15 +152,3 @@ const LiveView3d = () => {
 };
 
 export default LiveView3d;
-
-{
-  /* <group position={[0, 0, liveData.ycurrpos / 50000]}>
-            <Bridge />
-            <group position={[liveData.xcurrpos / 50000, 0, 0]}>
-              <XAxis />
-              <group position={[0, liveData.zcurrpos / 100000, 0]}>
-                <Spindle />
-              </group>
-            </group>
-          </group> */
-}
