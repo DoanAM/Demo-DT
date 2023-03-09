@@ -1,6 +1,5 @@
-import { useDrop } from "react-dnd";
 import { tokens } from "../../theme";
-import DragAndDrop from "../../components/DragAndDrop.jsx";
+
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import { useState, useEffect, useRef, useContext } from "react";
 import { Box, Button, useTheme } from "@mui/material";

@@ -1,4 +1,3 @@
-import { useDrop } from "react-dnd";
 import { tokens } from "../../theme";
 import { useState, useEffect, useRef } from "react";
 import { Box, Button, useTheme } from "@mui/material";
@@ -20,27 +19,13 @@ const DropBoxGraphs = () => {
     console.log(boardContent);
   };
 
-  const closeStatBox = (e) => {
-    setBoardContent(boardContent.filter((content) => content[1] !== e));
-    //setShowStatBox(false);
-  };
-
   const generateRandomKey = () => Math.random().toString(16).slice(2);
-
-  const [, drop] = useDrop(() => ({
-    accept: "drag",
-    drop: (item) => addCardToBoard(item),
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
 
   return (
     <Box
       width="50%"
       height="100%"
       marginRight="5px"
-      ref={drop}
       backgroundColor={colors.indigoAccent[900]}
       gap="5px"
       display="flex"
