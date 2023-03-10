@@ -33,6 +33,8 @@ import Line from "../../components/Line.jsx";
 import Workpiece from "../../components/Workpiece.jsx";
 import Tool from "../../components/Tool.jsx";
 import { red } from "@mui/material/colors";
+import { LineColorVariables_Simulation } from "../../data/LineColorVariables.js";
+import { colorMapper } from "../../components/Utilities.jsx";
 
 function normalize(value, min, max, newMin, newMax) {
   return Math.round(((value - min) / (max - min)) * (newMax - newMin) + newMin);
@@ -64,10 +66,11 @@ const SimulationView3d = () => {
   const [yCoordinate, setYCoordinate] = useState(0);
   const [zCoordinate, setZCoordinate] = useState(0);
   const [vectorArray, setVectorArray] = useState();
-  const [color, setColor] = useState();
+  //const [color, setColor] = useState();
   const [stlPath, setStlPath] = useState(null);
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
+  const [lineVariable, setLineVariable] = useState("xcurrpos");
 
   const handleSelectChange = (e) => {
     const id = e.target.value;
@@ -102,20 +105,19 @@ const SimulationView3d = () => {
     }
   }, [playbackIdx]);
 
-  // useEffect(() => {
-  //   if (simulation != null) {
-  //     setVectorArray(
-  //       simulation.map(function (item) {
-  //         return new THREE.Vector3(
-  //           item.xcurrpos,
-  //           item.zcurrpos + 230, //+ 230
-  //           -item.ycurrpos + 260 //+ 260
-  //         );
-  //       })
-  //     );
-  //     console.log(vectorArray);
-  //   }
-  // }, [simulation]);
+  useEffect(() => {
+    if (simulation != null) {
+      setVectorArray(
+        simulation.map(function (item) {
+          return new THREE.Vector3(
+            item.xcurrpos,
+            item.zcurrpos + 230, //+ 230
+            -item.ycurrpos + 260 //+ 260
+          );
+        })
+      );
+    }
+  }, [simulation]);
 
   useEffect(() => {
     if (simulation != null) {
@@ -131,12 +133,21 @@ const SimulationView3d = () => {
           simulation[i + 1].zcurrpos + 230,
           -simulation[i + 1].ycurrpos + 260
         );
-        const red = normalize(simulation[i].xcurrpos, 0, 100, 0, 255);
-        const green = 255 - normalize(simulation[i].xcurrpos, 0, 100, 0, 255);
-        let lineColor = rgbToHex(red, green, 0);
+        ///calculate Color
+        const colorArray = () => {
+          const result = {};
+          LineColorVariables_Simulation.forEach((obj) => {
+            result[obj.variable] = colorMapper(
+              simulation[i][obj.variable],
+              obj.min,
+              obj.max
+            );
+          });
+          return result;
+        };
         pointPairs.push({
           points: [startPoint, endPoint],
-          lineColor: lineColor,
+          color: colorArray(),
         });
       }
       setVectorArray(pointPairs);
@@ -147,6 +158,10 @@ const SimulationView3d = () => {
   const handlePause = () => {
     clearInterval(playbackInterval.current);
     playbackInterval.current = null;
+  };
+
+  const handleLineColorChange = (e) => {
+    setLineVariable(e.target.value);
   };
 
   return (
@@ -164,27 +179,50 @@ const SimulationView3d = () => {
         boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
       }}
     >
-      <FormControl>
-        <InputLabel id="test-select-label">Simulation</InputLabel>
-        <Select
-          labelId="test-select-label"
-          label="Time"
-          defaultValue={""}
-          sx={{
-            width: 200,
-            height: 30,
-          }}
-          onChange={handleSelectChange}
-        >
-          {simulationData.map((item) => {
-            return (
-              <MenuItem value={item.ID} key={item.ID}>
-                {item.ID}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
+      <Box display={"flex"}>
+        <FormControl>
+          <InputLabel id="test-select-label">Simulation</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            value={""}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleSelectChange}
+          >
+            {simulationData.map((item) => {
+              return (
+                <MenuItem value={item.ID} key={item.ID}>
+                  {item.ID}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="test-select-label">Highlight Value</InputLabel>
+          <Select
+            labelId="test-select-label"
+            label="Time"
+            defaultValue={""}
+            sx={{
+              width: 200,
+              height: 30,
+            }}
+            onChange={handleLineColorChange}
+          >
+            {LineColorVariables_Simulation.map((item, index) => {
+              return (
+                <MenuItem value={item.variable} key={index}>
+                  {item.variable}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </Box>
       <Canvas
         camera={{
           position: [0, 1300, 1500],
@@ -204,10 +242,14 @@ const SimulationView3d = () => {
           {vectorArray != undefined &&
             vectorArray.map((item, index) => {
               return (
-                <Line points={item.points} color={item.lineColor} key={index} />
+                <Line
+                  points={item.points}
+                  color={item.color}
+                  key={index}
+                  displayColor={lineVariable}
+                />
               );
             })}
-          {/* {vectorArray != undefined && <Line points={vectorArray} />} */}
           <MachineBed visible={true} />
           <group position={[0, 0, -yCoordinate - 419]}>
             <Bridge />

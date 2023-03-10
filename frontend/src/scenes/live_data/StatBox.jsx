@@ -13,7 +13,6 @@ import datalist from "../../data/datalist.json";
 import DropDown from "../../components/DropDown.jsx";
 
 const StatBox = (props) => {
-  /* const requestString = props.name.toLowerCase(); */
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState("cnc");
@@ -38,7 +37,6 @@ const StatBox = (props) => {
   return (
     <Box
       gridColumn="span 3"
-      //m="0 30px"
       backgroundColor={colors.indigoAccent[900]}
       borderRadius={"15px"}
       padding="20px"
