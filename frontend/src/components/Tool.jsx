@@ -5,7 +5,9 @@ import { CylinderGeometry, Mesh, MeshBasicMaterial } from "three";
 const Tool = (props) => {
   return (
     <mesh position={props.position}>
-      <cylinderGeometry args={[2.5, 2.5, 20, 32]} />
+      <cylinderGeometry
+        args={[props.diameter / 2, props.diameter / 2, props.length, 32]}
+      />
       <meshPhongMaterial attach="material" color={"rgb(67,117,95)"} />
     </mesh>
   );

@@ -244,3 +244,13 @@ class StlFile(models.Model):
     StlFile = models.FileField(blank=True, null=True)
     programname = models.CharField(
         db_column='Programname', max_length=81, blank=True, null=True)
+
+
+class ToolsInChanger(models.Model):
+    toolId = models.BigIntegerField(
+        db_column='Tool ID', primary_key=True, )
+    realOverallLength = models.TextField(db_column='real Overall Length')
+    realDiameter = models.TextField(db_column='real Diameter')
+
+    class Meta:
+        db_table = "toolsInChanger"

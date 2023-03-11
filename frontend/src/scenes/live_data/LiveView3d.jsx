@@ -8,6 +8,7 @@ import { OrbitControls, Html, useProgress } from "@react-three/drei";
 import { Box, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import MxCube from "../../components/MxCube.jsx";
 import Line from "../../components/Line.jsx";
+import Tool from "../../components/Tool.jsx";
 import { colorMapper, sleep, Loader } from "../../components/Utilities.jsx";
 import { LineColorVariables_LiveData } from "../../data/LineColorVariables.js";
 import cncfakedata from "../../data/cncfakedata.json";
@@ -25,7 +26,7 @@ const LiveView3d = () => {
   const axisOffsets = [-516, 530, 681];
   const lastData = useRef();
   const [lineVariable, setLineVariable] = useState("s1acttrq");
-
+  const [tool, setTool] = useState({});
   //const data = cncfakedata;
 
   const fetchData = async () => {
@@ -55,7 +56,12 @@ const LiveView3d = () => {
     }
   }, [data]);
 
-  //draw lines
+  ////////////////////////////////
+  //                            //
+  //         Draw Lines         //
+  //                            //
+  ////////////////////////////////
+
   useEffect(() => {
     //check if data is available
     if (data != undefined) {
@@ -112,6 +118,22 @@ const LiveView3d = () => {
         setLineArray((e) => [...e, newLine]);
         endPoint.current = endVector;
       }
+    }
+  }, [data]);
+
+  ////////////////////////////////
+  //                            //
+  //          Set Tool          //
+  //                            //
+  ////////////////////////////////
+  useEffect(() => {
+    if (data != undefined) {
+      const currentTool = {
+        toolDiameter: data.data.toolDiameter,
+        toolLength: data.data.toolLength,
+      };
+      setTool(currentTool);
+      console.log("current Tool is: ", currentTool);
     }
   }, [data]);
 
@@ -184,6 +206,8 @@ const LiveView3d = () => {
             bridgePosition={positionMachine.ycurrpos / 10000}
             xAxisPosition={positionMachine.xcurrpos / 10000}
             spindlePosition={positionMachine.zcurrpos / 10000}
+            toolDiameter={tool.toolDiameter}
+            toolLength={tool.toolLength}
           />
         </React.Suspense>
       </Canvas>

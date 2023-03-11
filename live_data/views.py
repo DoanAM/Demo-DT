@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics, status
 from .serializers import CncSerializer, AuxiliarySerializer, DriveSerializer, ProgSerializer, ToolSerializer, WcsSerializer, TestSerializer, getGenericSerializer
-from .models import Auxiliary, Cnc, Drive, Tool, Wcs, Prog
+from .models import Auxiliary, Cnc, Drive, Tool, Wcs, Prog, ToolsInChanger
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
@@ -99,8 +99,15 @@ class GetLive3dPoints(APIView):
         return a <= num <= b
 
     def get(self, request, *args, **kwargs):
+
         latestS1acttrq = Drive.objects.last().s1acttrq
         latestS1follerr = Drive.objects.last().s1follerr
+        latestToolID = Tool.objects.last().id
+        latestToolDiameter = ToolsInChanger.objects.get(
+            toolId=latestToolID).realDiameter
+        latestToolLength = ToolsInChanger.objects.get(
+            toolId=latestToolID).realOverallLength
+
         pointAmount = 60
         timeIntervalBetweenPoints = int(1000/pointAmount)
         latestTimestamp = Cnc.objects.last().timestamp
@@ -153,4 +160,6 @@ class GetLive3dPoints(APIView):
                          "posVectorList": posVectorList,
                          "pointAmount": pointAmount,
                          "s1acttrq": latestS1acttrq,
-                         "s1follerr": latestS1follerr, }, status=status.HTTP_200_OK)
+                         "s1follerr": latestS1follerr,
+                         "toolDiameter": latestToolDiameter,
+                         "toolLength": latestToolLength}, status=status.HTTP_200_OK)

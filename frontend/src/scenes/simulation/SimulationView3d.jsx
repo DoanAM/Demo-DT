@@ -35,6 +35,7 @@ import Tool from "../../components/Tool.jsx";
 import { red } from "@mui/material/colors";
 import { LineColorVariables_Simulation } from "../../data/LineColorVariables.js";
 import { colorMapper } from "../../components/Utilities.jsx";
+import MxCube from "../../components/MxCube.jsx";
 
 function normalize(value, min, max, newMin, newMax) {
   return Math.round(((value - min) / (max - min)) * (newMax - newMin) + newMin);
@@ -71,6 +72,8 @@ const SimulationView3d = () => {
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
   const [lineVariable, setLineVariable] = useState("xcurrpos");
+  const toolLength = 70;
+  const toolDiameter = 5;
 
   const handleSelectChange = (e) => {
     const id = e.target.value;
@@ -251,7 +254,7 @@ const SimulationView3d = () => {
               );
             })}
           <MachineBed visible={true} />
-          <group position={[0, 0, -yCoordinate - 419]}>
+          {/* <group position={[0, 0, -yCoordinate - 419]}>
             <Bridge />
             <group position={[xCoordinate + 518, 0, 0]}>
               <XAxis />
@@ -260,7 +263,14 @@ const SimulationView3d = () => {
                 <Tool position={[-518, 527, 680]} />
               </group>
             </group>
-          </group>
+          </group> */}
+          <MxCube
+            bridgePosition={-yCoordinate - 419}
+            xAxisPosition={xCoordinate + 518}
+            spindlePosition={zCoordinate - 285}
+            toolDiameter={toolDiameter}
+            toolLength={toolLength}
+          />
           {simulation != undefined &&
             simulation.map((item, index) => {
               return (

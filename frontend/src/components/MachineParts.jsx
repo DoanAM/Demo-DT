@@ -5,6 +5,7 @@ import pathSpindleStl from "../data/Spindle.stl";
 import React, { useRef, useEffect } from "react";
 import { useLoader, useFrame } from "@react-three/fiber";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
+import { Group } from "three";
 
 export const MachineBed = (props) => {
   const geom = useLoader(STLLoader, pathMachineBedStl);
@@ -51,20 +52,22 @@ export const XAxis = () => {
   );
 };
 
-export const Spindle = () => {
+export const Spindle = (props) => {
   const geom = useLoader(STLLoader, pathSpindleStl);
   const spindleRef = useRef();
-  // useFrame(() => {
-  //   spindleRef.current.rotation.x += 0.03;
-  // });
+  useFrame(() => {
+    spindleRef.current.position.y = props.toolOffset;
+  });
   return (
-    <mesh ref={spindleRef}>
-      <primitive object={geom} attach="geometry" />
-      <meshPhongMaterial
-        attach={"material"}
-        color="rgb(228, 123, 37)"
-        shininess={10}
-      />
-    </mesh>
+    <group ref={spindleRef}>
+      <mesh>
+        <primitive object={geom} attach="geometry" />
+        <meshPhongMaterial
+          attach={"material"}
+          color="rgb(228, 123, 37)"
+          shininess={10}
+        />
+      </mesh>
+    </group>
   );
 };
