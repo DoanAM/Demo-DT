@@ -64,7 +64,7 @@ class GetTimedData(APIView):
         currentTime = round(time.time() * 1000)
 
         queryset = model.objects.filter(
-            timestamp__gt=currentTime-timespan).all() #slice this
+            timestamp__gt=currentTime-timespan).all()  # slice this
         serializer_class = getGenericSerializer(model, field)
         data = serializer_class(queryset, many=True,).data
 
@@ -99,6 +99,8 @@ class GetLive3dPoints(APIView):
         return a <= num <= b
 
     def get(self, request, *args, **kwargs):
+        latestS1acttrq = Drive.objects.last().s1acttrq
+        latestS1follerr = Drive.objects.last().s1follerr
         pointAmount = 60
         timeIntervalBetweenPoints = int(1000/pointAmount)
         latestTimestamp = Cnc.objects.last().timestamp
@@ -142,28 +144,6 @@ class GetLive3dPoints(APIView):
         secLatestTimestamp = Cnc.objects.last().timestamp - 500
         seclatestPosVector = Cnc.objects.values(
             "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=secLatestTimestamp).order_by("timestamp").first()
-        #latestProg = Prog.objects.last().programname
-        # if latestProg == "none":
-        #     line = False
-        #     latestWcs = None
-        # else:
-        #     latestWcs = Wcs.objects.values(
-        #         "x", "y", "z", "minedgex", "minedgey", "minedgez", "maxedgex", "maxedgey", "maxedgez", "timestamp").last()
-        #     xMin = latestWcs["x"]+latestWcs["minedgex"]
-        #     yMin = latestWcs["y"]+latestWcs["minedgey"]
-        #     zMin = latestWcs["z"]+latestWcs["minedgez"]
-        #     xMax = latestWcs["x"]+latestWcs["maxedgex"]
-        #     yMax = latestWcs["y"]+latestWcs["maxedgey"]
-        #     zMax = latestWcs["z"]+latestWcs["maxedgez"]
-        #     if (seclatestPosVector["xcurrpos"]/10000 < xMin or
-        #         seclatestPosVector["xcurrpos"]/10000 > xMax or
-        #         seclatestPosVector["ycurrpos"]/10000 < yMin or
-        #         seclatestPosVector["ycurrpos"]/10000 > yMax or
-        #         seclatestPosVector["zcurrpos"]/10000 < zMin or
-        #             seclatestPosVector["zcurrpos"]/10000 > zMax):
-        #         line = False
-        #     else:
-        #         line = True
 
         return Response({"latestPoint": latestPosVector,
                          "secondLatestPoint": seclatestPosVector,
@@ -171,4 +151,6 @@ class GetLive3dPoints(APIView):
                          "lastProg": latestProg, "line": line,
                          "latestWcs": latestWcs,
                          "posVectorList": posVectorList,
-                         "pointAmount": pointAmount}, status=status.HTTP_200_OK)
+                         "pointAmount": pointAmount,
+                         "s1acttrq": latestS1acttrq,
+                         "s1follerr": latestS1follerr, }, status=status.HTTP_200_OK)

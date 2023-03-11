@@ -1,10 +1,12 @@
 export const LineColorVariables_LiveData = [
   {
+    title: "Spindle Torque",
     variable: "s1acttrq",
     min: 0,
     max: 1000,
   },
   {
+    title: "Spindle Error",
     variable: "s1follerr",
     min: 0,
     max: 20,

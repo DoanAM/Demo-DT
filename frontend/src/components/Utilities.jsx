@@ -26,3 +26,11 @@ export function colorMapper(value, min, max) {
   const green = 255 - normalize(value, min, max, 0, 255);
   return rgbToHex(red, green, 0);
 }
+
+export function colorArray(array) {
+  const result = {};
+  array.forEach((obj) => {
+    result[obj.variable] = colorMapper(20, obj.min, obj.max);
+  });
+  return result;
+}

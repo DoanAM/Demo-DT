@@ -91,11 +91,15 @@ const LiveView3d = () => {
           data.data.posVectorList[0].zcurrpos / 10000 + axisOffsets[1],
           data.data.posVectorList[0].ycurrpos / 10000 + axisOffsets[2]
         );
-        ///calculate Color
+        //calculate Color
         const colorArray = () => {
           const result = {};
           LineColorVariables_LiveData.forEach((obj) => {
-            result[obj.variable] = colorMapper(20, obj.min, obj.max);
+            result[obj.variable] = colorMapper(
+              data.data[obj.variable],
+              obj.min,
+              obj.max
+            );
           });
           return result;
         };
@@ -144,7 +148,7 @@ const LiveView3d = () => {
           {LineColorVariables_LiveData.map((item, index) => {
             return (
               <MenuItem value={item.variable} key={index}>
-                {item.variable}
+                {item.title}
               </MenuItem>
             );
           })}
