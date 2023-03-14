@@ -37,17 +37,6 @@ import { LineColorVariables_Simulation } from "../../data/LineColorVariables.js"
 import { colorMapper } from "../../components/Utilities.jsx";
 import MxCube from "../../components/MxCube.jsx";
 
-function normalize(value, min, max, newMin, newMax) {
-  return Math.round(((value - min) / (max - min)) * (newMax - newMin) + newMin);
-}
-
-function rgbToHex(r, g, b) {
-  const rHex = r.toString(16).padStart(2, "0");
-  const gHex = g.toString(16).padStart(2, "0");
-  const bHex = b.toString(16).padStart(2, "0");
-  return "#" + rHex + gHex + bHex;
-}
-
 const Loader = () => {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
@@ -72,7 +61,7 @@ const SimulationView3d = () => {
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
   const playbackInterval = useRef();
   const [lineVariable, setLineVariable] = useState("xcurrpos");
-  const toolLength = 70;
+  const toolLength = 20;
   const toolDiameter = 5;
 
   const handleSelectChange = (e) => {

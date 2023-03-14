@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { Box, Button, useTheme, Typography } from "@mui/material";
 import { tokens, RoutingContext } from "../../theme";
-import DropBoxStats from "./DropBoxStats.jsx";
+import CardHandler from "./CardHandler.jsx";
 import LiveView3d from "./LiveView3d.jsx";
-import DropBoxGraphs from "./DropBoxGraphs.jsx";
+import Graphs from "./Graphs.jsx";
 import LiveDataContext from "./LiveDataContext.jsx";
 
 const Live_Data = () => {
@@ -21,7 +21,7 @@ const Live_Data = () => {
     <LiveDataContext.Provider value={{ liveData, setLiveData }}>
       <Box m="20px">
         <Box height="120px">
-          <DropBoxStats />
+          <CardHandler />
         </Box>
         <Box
           width="100%"
@@ -30,7 +30,7 @@ const Live_Data = () => {
           display="flex"
           height={"70vh"}
         >
-          <DropBoxGraphs></DropBoxGraphs>
+          <Graphs />
           <LiveView3d />
         </Box>
       </Box>

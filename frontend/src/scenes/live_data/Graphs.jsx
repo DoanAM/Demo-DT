@@ -1,25 +1,14 @@
 import { tokens } from "../../theme";
 import { useState, useEffect, useRef } from "react";
 import { Box, Button, useTheme } from "@mui/material";
-import LineChart from "./LineChart.jsx";
+import LineChartHandler from "./LineChartHandler.jsx";
 
-const DropBoxGraphs = () => {
+const Graphs = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [boardContent, setBoardContent] = useState([]);
   const stateRef = useRef();
   stateRef.boardContentLength = boardContent.length;
-
-  const addCardToBoard = (item) => {
-    if (stateRef.boardContentLength >= 3) {
-      return;
-    }
-    item = [...item, generateRandomKey()];
-    setBoardContent((boardContent) => [...boardContent, item]);
-    console.log(boardContent);
-  };
-
-  const generateRandomKey = () => Math.random().toString(16).slice(2);
 
   return (
     <Box
@@ -42,11 +31,11 @@ const DropBoxGraphs = () => {
           />
         );
       })} */}
-      <LineChart />
-      <LineChart />
-      <LineChart />
+      <LineChartHandler />
+      <LineChartHandler />
+      <LineChartHandler />
     </Box>
   );
 };
 
-export default DropBoxGraphs;
+export default Graphs;

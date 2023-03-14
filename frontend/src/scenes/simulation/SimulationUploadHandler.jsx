@@ -9,7 +9,7 @@ import Axios from "axios";
 import { SimulationDataContext } from "./Context.jsx";
 import Workpiece from "../../components/Workpiece.jsx";
 
-const LoadSimulationButton = (props) => {
+const SimulationUploadHandler = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const sim_id = props.sim_ID;
@@ -60,4 +60,4 @@ const LoadSimulationButton = (props) => {
   );
 };
 
-export default LoadSimulationButton;
+export default SimulationUploadHandler;

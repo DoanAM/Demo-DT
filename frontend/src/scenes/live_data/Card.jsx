@@ -12,7 +12,7 @@ import { tokens } from "../../theme";
 import datalist from "../../data/datalist.json";
 import DropDown from "../../components/DropDown.jsx";
 
-const StatBox = (props) => {
+const Card = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState("cnc");
@@ -43,11 +43,11 @@ const StatBox = (props) => {
     >
       <Box display="flex" flexDirection={"row"} justifyContent="space-between">
         <FormControl size="small">
-          <InputLabel id="test-select-label">Group</InputLabel>
+          <InputLabel id="test-select-label">Category</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
-            defaultValue={title}
+            value={title}
             onChange={handleGroupChange}
             sx={{
               // width: 200,
@@ -65,11 +65,11 @@ const StatBox = (props) => {
         </FormControl>
 
         <FormControl size="small">
-          <InputLabel id="test-select-label">Type</InputLabel>
+          <InputLabel id="test-select-label">Value</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
-            defaultValue={text}
+            value={text}
             sx={{
               // width: 200,
               height: 30,
@@ -95,4 +95,4 @@ const StatBox = (props) => {
   );
 };
 
-export default StatBox;
+export default Card;

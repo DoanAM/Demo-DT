@@ -32,7 +32,7 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = (props) => {
+const LineChartHandler = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [graphPoints, setGraphPoints] = useState([]);
@@ -153,7 +153,7 @@ const LineChart = (props) => {
           <Select
             labelId="test-select-label"
             label="Time"
-            defaultValue={timeFrame}
+            value={timeFrame}
             //defaultValue={"1day"}
             sx={{
               //width: 200,
@@ -170,11 +170,11 @@ const LineChart = (props) => {
           </Select>
         </FormControl>
         <FormControl size="small">
-          <InputLabel id="test-select-label">Group</InputLabel>
+          <InputLabel id="test-select-label">Category</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
-            defaultValue={title}
+            value={title}
             sx={{
               //width: 200,
               height: 30,
@@ -192,13 +192,13 @@ const LineChart = (props) => {
         </FormControl>
 
         <FormControl size="small">
-          <InputLabel id="test-select-label">Type</InputLabel>
+          <InputLabel id="test-select-label">Value</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
-            defaultValue={type}
+            value={type}
             sx={{
-              //width: 200,
+              width: 200,
               height: 30,
             }}
             onChange={handleTypeChange}
@@ -220,7 +220,7 @@ const LineChart = (props) => {
   );
 };
 
-export default LineChart;
+export default LineChartHandler;
 
 /*   useEffect(() => {
     const fetchOldData = async () => {

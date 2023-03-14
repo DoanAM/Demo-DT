@@ -2,7 +2,7 @@ import { Box, Button, useTheme, Typography } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { tokens, RoutingContext } from "../../theme";
 import SimulationView3d from "./SimulationView3d.jsx";
-import FileUploadBox from "./FileUploadBox.jsx";
+import SimulationUploadHandler from "./SimulationUploadHandler.jsx";
 import SimulationTable from "./SimulationTable.jsx";
 import {
   SimulationDataContext,
@@ -33,7 +33,7 @@ const Simulation = () => {
         <Box display="flex" alignItems={"flex-start"} gap="20px">
           <Box width={"50%"} height="120px">
             <Typography variant="h3">Simulation Management</Typography>
-            <FileUploadBox />
+            <SimulationUploadHandler />
           </Box>
           <Box width="50%">
             <SimulationTable />

@@ -3,12 +3,12 @@ import { tokens } from "../../theme";
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import { useState, useEffect, useRef, useContext } from "react";
 import { Box, Button, useTheme } from "@mui/material";
-import StatBox from "./StatBox.jsx";
+import Card from "./Card.jsx";
 import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import LiveDataContext from "./LiveDataContext.jsx";
 
-const DropBoxStats = () => {
+const CardHandler = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [boardContent, setBoardContent] = useState([]);
@@ -52,12 +52,12 @@ const DropBoxStats = () => {
       gap="20px"
       borderRadius={"20px"}
     >
-      <StatBox readings={data.data} />
-      <StatBox readings={data.data} />
-      <StatBox readings={data.data} />
-      <StatBox readings={data.data} />
+      <Card readings={data.data} />
+      <Card readings={data.data} />
+      <Card readings={data.data} />
+      <Card readings={data.data} />
     </Box>
   );
 };
 
-export default DropBoxStats;
+export default CardHandler;
