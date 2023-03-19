@@ -121,6 +121,7 @@ class GetLive3dPoints(APIView):
             posVector = Cnc.objects.values(
                 "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=time).order_by("timestamp").first()
             posVectorList.append(posVector)
+
         latestProg = Prog.objects.last().programname
         if latestProg == "none":
             line = False

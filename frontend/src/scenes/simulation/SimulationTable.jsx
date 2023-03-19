@@ -4,7 +4,8 @@ import { tokens } from "../../theme";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import LoadSimulationButton from "./LoadSimulationButton.jsx";
+import SimulationLoadHandler from "./SimulationLoadHandler.jsx";
+import FileUploadBox from "./FileUploadBox.jsx";
 
 const SimulationTable = () => {
   const theme = useTheme();
@@ -41,8 +42,8 @@ const SimulationTable = () => {
       field: "finished",
       headerName: "finished",
       flex: 1,
-      renderCell: ({ row: { sim_ID } }) => {
-        return <LoadSimulationButton sim_ID={sim_ID} />;
+      renderCell: ({ row: { sim_ID, finished } }) => {
+        return <SimulationLoadHandler sim_ID={sim_ID} finished={finished} />;
       },
     },
   ];

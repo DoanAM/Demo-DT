@@ -33,9 +33,9 @@ class GetSimulationsView(APIView):
     serializer_class = SimulationSerializer
 
     def get(self, request, *args, **kwargs):
-        queryset = Simulation.objects.filter(
-            finished=True).only("timestamp")
-        #queryset = Simulation.objects.all()
+        # queryset = Simulation.objects.filter(
+        #     finished=True).only("timestamp")
+        queryset = Simulation.objects.all()
         data = SimulationSerializer(queryset, many=True).data
         return Response(data, status=status.HTTP_200_OK)
 
@@ -48,7 +48,7 @@ class GetSimulationDataView(APIView):
         # querysetLarge = PredictedData.objects.filter(
         #     simulation=param1).filter(stlPath__exact="").all()
         querysetLarge = PredictedData.objects.filter(
-            simulation=param1).exclude(stlPath__exact="").order_by("timestamp").all()
+            simulation=param1).exclude(stlPath__exact="").order_by("Timestamp").all()
         # querysetLargeCount = querysetLarge.count()
         # querysetReduced = querysetLarge[0: querysetLargeCount:100]
         # querysetStl = PredictedData.objects.filter(

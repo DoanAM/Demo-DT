@@ -2,10 +2,18 @@ import os
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from .models import PredictedData
+from .models import PredictedData, Simulation
 from django.core.files import File
 import shutil
+import csv
 from django.conf import settings
+
+
+def map_column_name_to_field_name(column_name, field_names):
+    for field_name in field_names:
+        if column_name.lower() == field_name.lower():
+            return field_name
+    return None  # Ignore columns that don't match any field names
 
 
 def copyDll(filename):  # filename
@@ -35,17 +43,41 @@ def listStlFiles(path, fileName):
             _df = df.iloc[line*10]
             timestamp = _df['Timestamp']
 
-            # pred_timestamp = pred_data.loc[:, 'Timestamp']
-            # timestampIdx = np.searchsorted(pred_timestamp, timestamp)
-            # print("timestampIdx is ", timestampIdx)
-            # actualTimestamp = pred_timestamp.iloc[timestampIdx]
-
             diff = np.abs(pred_data["Timestamp"] - timestamp)
             timestampIdx = diff.idxmin()
             print("timestampIdx is ", timestampIdx)
             actualTimestamp = pred_data.loc[timestampIdx, "Timestamp"]
 
-            obj = PredictedData.objects.get(timestamp=actualTimestamp)
+            obj = PredictedData.objects.get(Timestamp=actualTimestamp)
             with filepath.open(mode="rb") as f:
                 obj.stlPath = File(f, name=relativeFilepath)
                 obj.save()
+
+
+def uploadToDatabase(pathToCsv=r"Data\CSV_Dateien\1679238901_abc\PredData.csv"):
+    with open(pathToCsv, "r") as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        # Map the column names to the field names
+        field_names = [f.name for f in PredictedData._meta.get_fields()]
+        data_fields = [field for field in header if field in field_names]
+        print("Data_fields is: ", data_fields)
+        for row in reader:
+            # Create a dictionary of field names and values from the row
+            data_dict = {field: value for field, value in zip(
+                header, row) if field in data_fields}
+
+            # Insert data into the database
+            instance = PredictedData(**data_dict)
+            instance.save()
+        # for row in reader:
+        #     data_dict = {}
+        #     for i in range(1, len(header)):
+        #         field_name = map_column_name_to_field_name(
+        #             header[i], field_names)
+        #         if field_name is not None and field_name in data_fields:
+        #             data_dict[field_name] = row[i]
+        #         data_dict['stlPath'] = None
+        #         print("data_dict is: ", data_dict)
+        #         instance = PredictedData(**data_dict)
+        #         instance.save()

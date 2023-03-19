@@ -78,7 +78,7 @@ const LineChartsimulation = (props) => {
   };
 
   const normalizedTimestampArray = (data) => {
-    const timestampArray = Object.values(data).map((obj) => obj.timestamp);
+    const timestampArray = Object.values(data).map((obj) => obj.Timestamp);
     const initVal = timestampArray[0];
     const normalizedArray = timestampArray.map((e) => e - initVal);
     return normalizedArray;
@@ -99,23 +99,20 @@ const LineChartsimulation = (props) => {
 
   const triggerTooltip = (chart, idx) => {
     const tooltip = chart.tooltip;
-    if (tooltip.getActiveElements().length > 0) {
-      tooltip.setActiveElements([], { x: 0, y: 0 });
-    } else {
-      const chartArea = chart.chartArea;
-      tooltip.setActiveElements(
-        [
-          {
-            datasetIndex: 0,
-            index: idx,
-          },
-        ],
+
+    const chartArea = chart.chartArea;
+    tooltip.setActiveElements(
+      [
         {
-          x: (chartArea.left + chartArea.right) / 2,
-          y: (chartArea.top + chartArea.bottom) / 2,
-        }
-      );
-    }
+          datasetIndex: 0,
+          index: idx,
+        },
+      ],
+      {
+        x: (chartArea.left + chartArea.right) / 2,
+        y: (chartArea.top + chartArea.bottom) / 2,
+      }
+    );
 
     chart.update();
   };

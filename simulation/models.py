@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 import time
 import os
 from pathlib import Path
@@ -28,50 +29,50 @@ class Simulation(models.Model):
 
 
 class PredictedData(models.Model):
-    timestamp = models.BigIntegerField(
+    Timestamp = models.BigIntegerField(
         db_column='Timestamp', primary_key=True, )
-    xcurrpos = models.FloatField(db_column='XCurrPos', blank=True, null=True)
-    ycurrpos = models.FloatField(db_column='YCurrPos', blank=True, null=True)
-    zcurrpos = models.FloatField(db_column='ZCurrPos', blank=True, null=True)
-    s1actrev = models.FloatField(db_column='S1Actrev', blank=True, null=True)
-    actfeed = models.FloatField(db_column='Actfeed', blank=True, null=True)
-    area = models.FloatField(db_column='Area', blank=True, null=True)
-    toolID = models.IntegerField(db_column='ToolID', blank=True, null=True)
-    depth = models.FloatField(db_column='Depth', blank=True, null=True)
-    width = models.FloatField(db_column='Width', blank=True, null=True)
-    removal_volume = models.FloatField(
+    XCurrPos = models.FloatField(db_column='XCurrPos', blank=True, null=True)
+    YCurrPos = models.FloatField(db_column='YCurrPos', blank=True, null=True)
+    ZCurrPos = models.FloatField(db_column='ZCurrPos', blank=True, null=True)
+    S1Actrev = models.FloatField(db_column='S1Actrev', blank=True, null=True)
+    Actfeed = models.FloatField(db_column='Actfeed', blank=True, null=True)
+    Area = models.FloatField(db_column='Area', blank=True, null=True)
+    ToolID = models.IntegerField(db_column='ToolID', blank=True, null=True)
+    Depth = models.FloatField(db_column='Depth', blank=True, null=True)
+    Width = models.FloatField(db_column='Width', blank=True, null=True)
+    Removal_Volume = models.FloatField(
         db_column='Removal_Volume', blank=True, null=True)
-    angles = models.FloatField(db_column='Angles', blank=True, null=True)
-    s1ActAccel = models.FloatField(
+    Angles = models.TextField(db_column='Angles', blank=True, null=True)
+    S1ActAccel = models.FloatField(
         db_column='S1ActAccel', blank=True, null=True)
-    xCurrVel = models.FloatField(db_column='XCurrVel', blank=True, null=True)
-    xCurrAccel = models.FloatField(
+    XCurrVel = models.FloatField(db_column='XCurrVel', blank=True, null=True)
+    XCurrAccel = models.FloatField(
         db_column='XCurrAccel', blank=True, null=True)
-    yCurrVel = models.FloatField(db_column='YCurrVel', blank=True, null=True)
-    yCurrAccel = models.FloatField(
+    YCurrVel = models.FloatField(db_column='YCurrVel', blank=True, null=True)
+    YCurrAccel = models.FloatField(
         db_column='YCurrAccel', blank=True, null=True)
-    zCurrVel = models.FloatField(db_column='ZCurrVel', blank=True, null=True)
-    zCurrAccel = models.FloatField(
+    ZCurrVel = models.FloatField(db_column='ZCurrVel', blank=True, null=True)
+    ZCurrAccel = models.FloatField(
         db_column='ZCurrAccel', blank=True, null=True)
-    angle_Mean = models.FloatField(
+    Angle_Mean = models.FloatField(
         db_column='Angle_Mean', blank=True, null=True)
-    angle_Sin = models.FloatField(
+    Angle_Sin = models.FloatField(
         db_column='Angle_Sin', blank=True, null=True)
-    angle_Cos = models.FloatField(
+    Angle_Cos = models.FloatField(
         db_column='Angle_Cos', blank=True, null=True)
-    chipThickness = models.FloatField(
+    ChipThickness = models.FloatField(
         db_column='ChipThickness', blank=True, null=True)
-    TaskID = models.IntegerField(
+    taskID = models.IntegerField(
         db_column='taskID', blank=True, null=True)
-    predOriginS1ActTrq = models.FloatField(
+    PredOriginS1ActTrq = models.FloatField(
         db_column='PredOriginS1ActTrq', blank=True, null=True)
-    predOriginXActTrq = models.FloatField(
+    PredOriginXActTrq = models.FloatField(
         db_column='PredOriginXActTrq', blank=True, null=True)
-    predOriginYActTrq = models.FloatField(
+    PredOriginYActTrq = models.FloatField(
         db_column='PredOriginYActTrq', blank=True, null=True)
-    predOriginY2ActTrq = models.FloatField(
+    PredOriginY2ActTrq = models.FloatField(
         db_column='PredOriginY2ActTrq', blank=True, null=True)
-    predOriginZActTrq = models.FloatField(
+    PredOriginZActTrq = models.FloatField(
         db_column='PredOriginZActTrq', blank=True, null=True)
     simulation = models.ForeignKey(
         Simulation, on_delete=models.CASCADE, db_column='Simulation',)

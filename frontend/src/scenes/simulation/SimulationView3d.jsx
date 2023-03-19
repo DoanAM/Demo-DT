@@ -88,9 +88,9 @@ const SimulationView3d = () => {
       setPlaybackIdx(0);
       return;
     } else {
-      setXCoordinate(simulation[playbackIdx].xcurrpos);
-      setYCoordinate(simulation[playbackIdx].ycurrpos);
-      setZCoordinate(simulation[playbackIdx].zcurrpos);
+      setXCoordinate(simulation[playbackIdx].XCurrPos);
+      setYCoordinate(simulation[playbackIdx].YCurrPos);
+      setZCoordinate(simulation[playbackIdx].ZCurrPos);
       if (simulation[playbackIdx].stlPath != null) {
         setStlPath(simulation[playbackIdx].stlPath);
       }
@@ -116,14 +116,14 @@ const SimulationView3d = () => {
       let pointPairs = [];
       for (let i = 0; i < simulation.length - 1; i++) {
         const startPoint = new THREE.Vector3(
-          simulation[i].xcurrpos,
-          simulation[i].zcurrpos + 230,
-          -simulation[i].ycurrpos + 260
+          simulation[i].XCurrPos,
+          simulation[i].ZCurrPos + 230,
+          -simulation[i].YCurrPos + 260
         );
         const endPoint = new THREE.Vector3(
-          simulation[i + 1].xcurrpos,
-          simulation[i + 1].zcurrpos + 230,
-          -simulation[i + 1].ycurrpos + 260
+          simulation[i + 1].XCurrPos,
+          simulation[i + 1].ZCurrPos + 230,
+          -simulation[i + 1].YCurrPos + 260
         );
         ///calculate Color
         const colorArray = () => {
@@ -256,7 +256,7 @@ const SimulationView3d = () => {
           <MxCube
             bridgePosition={-yCoordinate - 419}
             xAxisPosition={xCoordinate + 518}
-            spindlePosition={zCoordinate - 285}
+            spindlePosition={zCoordinate - 300}
             toolDiameter={toolDiameter}
             toolLength={toolLength}
           />

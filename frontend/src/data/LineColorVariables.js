@@ -15,12 +15,12 @@ export const LineColorVariables_LiveData = [
 
 export const LineColorVariables_Simulation = [
   {
-    variable: "xcurrpos",
+    variable: "XCurrPos",
     min: 0,
     max: 100,
   },
   {
-    variable: "ycurrpos",
+    variable: "YCurrPos",
     min: 0,
     max: 100,
   },

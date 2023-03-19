@@ -2,7 +2,7 @@ import { Box, Button, useTheme, Typography } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { tokens, RoutingContext } from "../../theme";
 import SimulationView3d from "./SimulationView3d.jsx";
-import SimulationUploadHandler from "./SimulationUploadHandler.jsx";
+import SimulationLoadHandler from "./SimulationLoadHandler.jsx";
 import SimulationTable from "./SimulationTable.jsx";
 import {
   SimulationDataContext,
@@ -10,6 +10,7 @@ import {
   PlaybackIdxContext,
 } from "./Context.jsx";
 import BoxGraphs from "./BoxGraphs.jsx";
+import FileUploadBox from "./FileUploadBox.jsx";
 
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
@@ -33,7 +34,7 @@ const Simulation = () => {
         <Box display="flex" alignItems={"flex-start"} gap="20px">
           <Box width={"50%"} height="120px">
             <Typography variant="h3">Simulation Management</Typography>
-            <SimulationUploadHandler />
+            <FileUploadBox />
           </Box>
           <Box width="50%">
             <SimulationTable />

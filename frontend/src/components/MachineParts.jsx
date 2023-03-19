@@ -66,6 +66,8 @@ export const Spindle = (props) => {
           attach={"material"}
           color="rgb(228, 123, 37)"
           shininess={10}
+          transparent={true}
+          opacity={0.4}
         />
       </mesh>
     </group>

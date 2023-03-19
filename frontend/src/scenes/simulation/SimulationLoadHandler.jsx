@@ -9,7 +9,7 @@ import Axios from "axios";
 import { SimulationDataContext } from "./Context.jsx";
 import Workpiece from "../../components/Workpiece.jsx";
 
-const SimulationUploadHandler = (props) => {
+const SimulationLoadHandler = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const sim_id = props.sim_ID;
@@ -51,13 +51,14 @@ const SimulationUploadHandler = (props) => {
 
   return (
     <Button
+      disabled={!props.finished}
       onClick={handleClick}
       width="30px"
       sx={{ color: colors.orangeAccent[300] }}
     >
-      {isFetching ? "Fetching" : "Load"}
+      {props.finished ? "Load" : "Not Finished"}
     </Button>
   );
 };
 
-export default SimulationUploadHandler;
+export default SimulationLoadHandler;
