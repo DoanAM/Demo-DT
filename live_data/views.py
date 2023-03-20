@@ -72,9 +72,10 @@ class GetTimedData(APIView):
         step = max(1, total_rows // max_rows)
         indexed_queryset = [(index + 1, obj) for index,
                             obj in enumerate(queryset) if (index % step) == 0]
+        instances = [item[1] for item in indexed_queryset]
 
         serializer_class = getGenericSerializer(model, field)
-        data = serializer_class(indexed_queryset, many=True,).data
+        data = serializer_class(instances, many=True,).data
 
         return Response(data)
 
