@@ -10,6 +10,8 @@ from rest_framework.decorators import api_view
 import logging
 import datetime
 import time
+from django.db.models import Window, F
+from django.db.models.functions import RowNumber
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -65,8 +67,14 @@ class GetTimedData(APIView):
 
         queryset = model.objects.filter(
             timestamp__gt=currentTime-timespan).all()  # slice this
+        total_rows = queryset.count()
+        max_rows = 500
+        step = max(1, total_rows // max_rows)
+        indexed_queryset = [(index + 1, obj) for index,
+                            obj in enumerate(queryset) if (index % step) == 0]
+
         serializer_class = getGenericSerializer(model, field)
-        data = serializer_class(queryset, many=True,).data
+        data = serializer_class(indexed_queryset, many=True,).data
 
         return Response(data)
 
