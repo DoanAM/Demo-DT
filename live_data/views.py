@@ -99,7 +99,9 @@ class GetLive3dPoints(APIView):
         return a <= num <= b
 
     def get(self, request, *args, **kwargs):
-
+        latestXfolldist = Drive.objects.last().xfolldist
+        latestYfolldist = Drive.objects.last().yfolldist
+        latestZfolldist = Drive.objects.last().zfolldist
         latestS1acttrq = Drive.objects.last().s1acttrq
         latestS1follerr = Drive.objects.last().s1follerr
         latestToolID = Tool.objects.last().id
@@ -162,5 +164,8 @@ class GetLive3dPoints(APIView):
                          "pointAmount": pointAmount,
                          "s1acttrq": latestS1acttrq,
                          "s1follerr": latestS1follerr,
+                         "xfolldist": latestXfolldist,
+                         "yfolldist": latestYfolldist,
+                         "zfolldist": latestZfolldist,
                          "toolDiameter": latestToolDiameter,
                          "toolLength": latestToolLength}, status=status.HTTP_200_OK)

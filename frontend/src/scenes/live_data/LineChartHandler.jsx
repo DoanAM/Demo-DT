@@ -39,7 +39,7 @@ const LineChartHandler = (props) => {
   const [timeFrame, setTimeFrame] = useState("1hr");
   const [title, setTitle] = useState("cnc");
   const [type, setType] = useState(["XCurrPos"]);
-  const [text, setText] = useState("xcurrpos");
+  const [text, setText] = useState("XCurrPos");
 
   const data = {
     datasets: [
@@ -61,7 +61,7 @@ const LineChartHandler = (props) => {
   };
 
   const { status, data: oldData } = useQuery({
-    queryKey: ["OtherData", title, text, timeFrame],
+    queryKey: ["OtherData", title, text.toLowerCase(), timeFrame],
     queryFn: ({ queryKey }) =>
       fetchOldData(queryKey[1], queryKey[2], queryKey[3]),
     refetchOnWindowFocus: false,
@@ -79,7 +79,7 @@ const LineChartHandler = (props) => {
   const checkData = oldData?.data;
 
   const { data: newData } = useQuery({
-    queryKey: ["graphData", title, text, checkData],
+    queryKey: ["graphData", title, text.toLowerCase(), checkData],
     queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
     enabled: !!checkData,
     refetchInterval: 3000,
@@ -96,7 +96,7 @@ const LineChartHandler = (props) => {
   };
 
   const handleTypeChange = (e) => {
-    const lowerCaseText = e.target.value.toLowerCase();
+    const lowerCaseText = e.target.value;
     setText(lowerCaseText);
   };
 
@@ -196,7 +196,7 @@ const LineChartHandler = (props) => {
           <Select
             labelId="test-select-label"
             label="Time"
-            value={type}
+            value={text}
             sx={{
               width: 200,
               height: 30,

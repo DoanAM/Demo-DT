@@ -25,6 +25,7 @@ const LiveView3d = () => {
   let endVector = null;
   const axisOffsets = [-516, 530, 681];
   const lastData = useRef();
+  const currentProgram = useRef();
   const [lineVariable, setLineVariable] = useState("s1acttrq");
   const [tool, setTool] = useState({});
   //const data = cncfakedata;
@@ -69,8 +70,11 @@ const LiveView3d = () => {
       if (data.data == lastData.current) {
         return;
       }
+      if (data.lastProg != currentProgram.current) {
+        setLineArray([]);
+      }
       //check if line should be drawn
-      else if (data.data.line == true) {
+      if (data.data.line == true) {
         console.log("data is not old");
         lastData.current = data.data;
         //check if line starting point is available
@@ -133,7 +137,6 @@ const LiveView3d = () => {
         toolLength: data.data.toolLength,
       };
       setTool(currentTool);
-      console.log("current Tool is: ", currentTool);
     }
   }, [data]);
 

@@ -11,6 +11,24 @@ export const LineColorVariables_LiveData = [
     min: 0,
     max: 20,
   },
+  {
+    title: "X-Error",
+    variable: "xfolldist",
+    min: 0,
+    max: 20,
+  },
+  {
+    title: "Y-Error",
+    variable: "yfolldist",
+    min: 0,
+    max: 20,
+  },
+  {
+    title: "Z-Error",
+    variable: "zfolldist",
+    min: 0,
+    max: 20,
+  },
 ];
 
 export const LineColorVariables_Simulation = [
