@@ -22,3 +22,5 @@ simulation/migrations/*
 !simulation/migrations/_init_.py
 live_data/migrations/*
 !live_data/migrations/_init_.py
+frontend/static/frontend/main.js
+frontend/static/frontend/main.js.LICENSE.txt
