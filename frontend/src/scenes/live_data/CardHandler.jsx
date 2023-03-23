@@ -2,7 +2,7 @@ import { tokens } from "../../theme";
 
 import { AuxiliaryList } from "../../data/AuxiliaryList.js";
 import { useState, useEffect, useRef, useContext } from "react";
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import Card from "./Card.jsx";
 import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -44,18 +44,21 @@ const CardHandler = () => {
   }
 
   return (
-    <Box
-      width="100%"
-      height="100%"
-      display="grid"
-      gridTemplateColumns="repeat(12, 1fr)"
-      gap="20px"
-      borderRadius={"20px"}
-    >
-      <Card readings={data.data} />
-      <Card readings={data.data} />
-      <Card readings={data.data} />
-      <Card readings={data.data} />
+    <Box display={"flex"} flexDirection="column">
+      <Typography name="CardsTest">{data.data.cnc.timestamp}</Typography>
+      <Box
+        width="100%"
+        height="100%"
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gap="20px"
+        borderRadius={"20px"}
+      >
+        <Card readings={data.data} />
+        <Card readings={data.data} />
+        <Card readings={data.data} />
+        <Card readings={data.data} />
+      </Box>
     </Box>
   );
 };

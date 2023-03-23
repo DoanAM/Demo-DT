@@ -44,13 +44,11 @@ def getName():
     print(r"C:/Users/Minh/Documents/Uni/MasterThesis/Project/aicom-dt/" + pathToFileParent + "/"
           "PredData.csv")
 
-# fix paths
-# fix dlls
-
 
 @shared_task
-def runSimulation():
-    obj = Simulation.objects.last()
+def runSimulation(timestamp, precision):
+    #obj = Simulation.objects.last()
+    obj = Simulation.objects.get(timestamp=timestamp)
     pathToFile = obj.nc_file.url
     #pathToFile = r"C:\Users\Minh\Documents\Uni\MasterThesis\Project\aicom-dt\Data\CSV_Dateien\Versuchsteil_Quadrant_7\Versuchsteil_Quadrant_7.NC"
     print("Path to File is: ", pathToFile)
@@ -64,46 +62,10 @@ def runSimulation():
     mwdll2 = ct.cdll.LoadLibrary(
         str(Path(settings.MEDIA_ROOT) / "CSV_Dateien" / fileName / "MwCamSimLib.dll"))
 
-    SimHandler(fileName, mwdll2, instanceKey)
+    SimHandler(fileName, mwdll2, precision, instanceKey, )
 
     pathToCsv = Path(settings.MEDIA_ROOT) / "CSV_Dateien" / \
         fileName / "PredData.csv"
-
-    # with open(pathToCsv) as f:
-    #     reader = csv.reader(f)
-    #     next(reader)
-    #     for row in reader:
-    #         _, created = PredictedData.objects.get_or_create(
-    #             timestamp=row[1],
-    #             xcurrpos=row[2],
-    #             ycurrpos=row[3],
-    #             zcurrpos=row[4],
-    #             s1actrev=row[5],
-    #             simulation=obj,
-    #             stlPath=None
-    #         )
-    # with open(pathToCsv) as f:
-    #     reader = csv.reader(f)
-    #     header = next(reader)
-    #     # Map the column names to the field names
-    #     field_names = [f.name for f in PredictedData._meta.get_fields()]
-    #     data_fields = []
-    #     for field in header:
-    #         mapped_field = map_column_name_to_field_name(field, field_names)
-    #         if mapped_field is not None:
-    #             data_fields.append(mapped_field)
-    #     # Insert data into the database
-    #     for row in reader:
-    #         data_dict = {}
-    #         for i in range(len(header)):
-    #             field_name = map_column_name_to_field_name(
-    #                 header[i], field_names)
-    #             if field_name is not None and field_name in data_fields:
-    #                 data_dict[field_name] = row[i]
-    #             data_dict['simulation'] = obj
-    #             data_dict['stlPath'] = None
-    #             instance = PredictedData(**data_dict)
-    #             instance.save()
 
     with open(pathToCsv, "r") as f:
         reader = csv.reader(f)
@@ -127,3 +89,8 @@ def runSimulation():
     obj.finished = True
     obj.save()
     # time.sleep(5)
+
+
+@shared_task
+def testTask(number):
+    print(number)

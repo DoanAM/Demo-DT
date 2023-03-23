@@ -31,7 +31,7 @@ const Graphs = () => {
           />
         );
       })} */}
-      <LineChartHandler />
+      <LineChartHandler name="1" />
       <LineChartHandler />
       <LineChartHandler />
     </Box>

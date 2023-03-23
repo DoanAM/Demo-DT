@@ -25,7 +25,7 @@ class SimulationView(APIView):
         precision = request.GET.get(self.kwarg1)
         Simulation.objects.create(
             timestamp=timestamp, nc_file=nc_file, precision=precision)
-        runSimulation.delay()  # this is a race condition. pass object as arg into runSimulation()
+        runSimulation.delay(timestamp, precision)
         return Response({"Message: Simulation created"}, status=status.HTTP_201_CREATED)
 
 

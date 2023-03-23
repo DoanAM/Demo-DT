@@ -1,12 +1,12 @@
 import os.path
 
-from .config import mwcamlib_path, data_rootpath, toolpath_filename, simtoolpath_filename, result_real_filename, result_sim_filename, mesh_sim_filename, mesh_real_filename, ToolDict, precision_default, cycleTime_mw
+from .config import mwcamlib_path, data_rootpath, toolpath_filename, simtoolpath_filename, result_real_filename, result_sim_filename, mesh_sim_filename, mesh_real_filename, ToolDict, cycleTime_mw
 from . import mwwrapper
 import platform
 
 
 class mwCamSim:
-    def __init__(self, mwdll, simType: str):
+    def __init__(self, mwdll, precision, simType: str):
         """
         MW CAM function wrapper to conduct the CAM simulation and cutting analysis
         :param simType: string, simulation type, it should be either 'cnc' or 'real'
@@ -33,6 +33,8 @@ class mwCamSim:
         self.toolset = {}
         # visualization padding
         self.viewrange = 100
+
+        self.precision = float(precision)
 
         mwwrapper.init(self.mw_dll)
         self.simType = simType
@@ -169,7 +171,8 @@ class mwCamSim:
         :return: None
         """
 
-        mwwrapper.set_precision(self.mw_dll, precision_default)
+        mwwrapper.set_precision(self.mw_dll, self.precision)
+        print("PRECISION IS", self.precision)
 
         self.workpiece_pos = bounds
 

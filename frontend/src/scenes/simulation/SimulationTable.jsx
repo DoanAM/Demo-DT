@@ -38,6 +38,7 @@ const SimulationTable = () => {
       minWidth: 120,
     },
     { field: "nc_file", headerName: "nc_file" },
+    { field: "precision", headerName: "Precision" },
     {
       field: "finished",
       headerName: "finished",

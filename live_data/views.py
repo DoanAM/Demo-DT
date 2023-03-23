@@ -166,7 +166,7 @@ class GetLive3dPoints(APIView):
 
         return Response({"latestPoint": latestPosVector,
                          "secondLatestPoint": seclatestPosVector,
-                         "timestamp": secLatestTimestamp,
+                         "timestamp": latestTimestamp,
                          "lastProg": latestProg, "line": line,
                          "latestWcs": latestWcs,
                          "posVectorList": posVectorList,

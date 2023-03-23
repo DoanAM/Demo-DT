@@ -135,6 +135,7 @@ const LineChartHandler = (props) => {
 
   return (
     <Box
+      name={props.name}
       sx={{
         gridRow: "span 4",
         paddingBottom: "0px",
@@ -148,6 +149,9 @@ const LineChartHandler = (props) => {
       }}
     >
       <Box width={"100%"} display="flex" justifyContent={"space-between"}>
+        {newData && (
+          <Typography name="LineChartTest">{newData.data.x}</Typography>
+        )}
         <FormControl size="small">
           <InputLabel id="test-select-label">Time</InputLabel>
           <Select

@@ -15,3 +15,5 @@
 
 1. Only certain length for file name allowed
 2. Leave Data Folder in Root Directory
+
+0.0.0.0:8000 to open up server

@@ -29,7 +29,7 @@ This function could be triggered by the offline process planning
 """
 
 
-def SimHandler(foldername, mwdll, kernelKey='abc', simType='vnck'):
+def SimHandler(foldername, mwdll, precision, kernelKey='abc', simType='vnck'):
 
     #######################
     #       VNCK sim      #
@@ -57,7 +57,7 @@ def SimHandler(foldername, mwdll, kernelKey='abc', simType='vnck'):
     #######################
 
     start_time_mw = time.time()
-    mwcam_wrapper = mwCamSim(mwdll, simType)
+    mwcam_wrapper = mwCamSim(mwdll, precision, simType)
     mwcam_wrapper.load_file(foldername)
     mwcam_wrapper.set_stock(bounds)
     mwcam_wrapper.load_toolset()

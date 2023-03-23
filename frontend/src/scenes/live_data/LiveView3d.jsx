@@ -5,7 +5,14 @@ import Axios from "axios";
 import { Canvas } from "@react-three/fiber";
 import { useQuery } from "@tanstack/react-query";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
-import { Box, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+  Typography,
+} from "@mui/material";
 import MxCube from "../../components/MxCube.jsx";
 import Line from "../../components/Line.jsx";
 import Tool from "../../components/Tool.jsx";
@@ -158,6 +165,9 @@ const LiveView3d = () => {
         boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
       }}
     >
+      {data && (
+        <Typography name="LiveView3DTest">{data.data.timestamp}</Typography>
+      )}
       <FormControl>
         <InputLabel id="test-select-label">Highlight Value</InputLabel>
         <Select

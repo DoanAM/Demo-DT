@@ -6,43 +6,43 @@ import datetime
 class AuxiliarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Auxiliary
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class CncSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cnc
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class DriveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drive
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class DriveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drive
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class ProgSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prog
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class ToolSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tool
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class WcsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wcs
-        exclude = ['timestamp']
+        fields = '__all__'
 
 
 class TestSerializer(serializers.ModelSerializer):
