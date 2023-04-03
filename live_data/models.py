@@ -247,10 +247,116 @@ class StlFile(models.Model):
 
 
 class ToolsInChanger(models.Model):
-    toolId = models.BigIntegerField(
-        db_column='Tool ID', primary_key=True, )
-    realOverallLength = models.TextField(db_column='real Overall Length')
-    realDiameter = models.TextField(db_column='real Diameter')
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tool_id = models.BigIntegerField(db_column='Tool ID', primary_key=True)
+    # Field name made lowercase.
+    name = models.TextField(db_column='Name', blank=True, null=True)
+    # Field name made lowercase.
+    category = models.TextField(db_column='Category', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    dominating_property = models.TextField(
+        db_column='dominating Property', blank=True, null=True)
+    vendor = models.TextField(blank=True, null=True)
+    # Field renamed to remove unsuitable characters.
+    max_tool_path = models.TextField(
+        db_column='max. tool path', blank=True, null=True)
+    # Field renamed to remove unsuitable characters.
+    max_tool_life = models.TextField(
+        db_column='max. tool life', blank=True, null=True)
+    # Field renamed to remove unsuitable characters.
+    article_number = models.TextField(
+        db_column='article number', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    current_total_path = models.FloatField(
+        db_column='current total Path', blank=True, null=True)
+    # Field renamed to remove unsuitable characters.
+    current_total_life = models.FloatField(
+        db_column='current total life', blank=True, null=True)
+    # Field renamed to remove unsuitable characters.
+    tool_number = models.BigIntegerField(
+        db_column='tool number', blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_body_length = models.FloatField(
+        db_column='real Body Length', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_reference_bodylength = models.FloatField(
+        db_column='real Reference BodyLength', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it started with '_'.
+    field_real_diameter = models.TextField(
+        db_column='real Diameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_shoulder_length = models.TextField(
+        db_column='real Shoulder Length', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_flutelength = models.TextField(
+        db_column='real FluteLength', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_overall_length = models.TextField(
+        db_column='real Overall Length', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_shoulder_diameter = models.TextField(
+        db_column='real Shoulder Diameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_tip_angle = models.TextField(
+        db_column='real Tip Angle', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_corner_radius = models.TextField(
+        db_column='real Corner Radius', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_number_of_flutes = models.TextField(
+        db_column='real Number Of Flutes', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_shaft_diameter = models.TextField(
+        db_column='real Shaft Diameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_threadpitch = models.TextField(
+        db_column='real ThreadPitch', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    real_tipdiameter = models.TextField(
+        db_column='real TipDiameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it started with '_'.
+    field_nominal_diameter = models.FloatField(
+        db_column='nominal Diameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_flutelength = models.TextField(
+        db_column='nominal FluteLength', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_number_of_flutes = models.TextField(
+        db_column='nominal Number Of Flutes', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_shoulder_diameter = models.TextField(
+        db_column='nominal Shoulder Diameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_shoulder_length = models.TextField(
+        db_column='nominal Shoulder Length', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_shaft_diameter = models.FloatField(
+        db_column='nominal Shaft Diameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_overall_length = models.FloatField(
+        db_column='nominal Overall Length', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_tip_angle = models.TextField(
+        db_column='nominal Tip Angle', blank=True, null=True)
+    # Field name made lowercase.
+    taperangle = models.TextField(
+        db_column='TaperAngle', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_tipdiameter = models.TextField(
+        db_column='nominal TipDiameter', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_corner_radius = models.TextField(
+        db_column='nominal Corner Radius', blank=True, null=True)
+    # Field name made lowercase.
+    threadangle = models.TextField(
+        db_column='ThreadAngle', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_threadpitch = models.TextField(
+        db_column='nominal ThreadPitch', blank=True, null=True)
+    # Field name made lowercase. Field renamed to remove unsuitable characters.
+    nominal_body_length = models.TextField(
+        db_column='nominal Body Length', blank=True, null=True)
 
     class Meta:
         db_table = "toolsInChanger"

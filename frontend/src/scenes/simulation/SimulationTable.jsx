@@ -13,7 +13,7 @@ const SimulationTable = () => {
   const [tableContent, setTableContent] = useState();
 
   const fetchData = async () => {
-    const response = await Axios.get("/simulationAPI/get-simulation");
+    const response = await Axios.get("/simulation-API/get-simulation");
     setTableContent((e) => response.data);
     return response;
   };
@@ -61,6 +61,26 @@ const SimulationTable = () => {
     <Box height="30vh">
       {tableContent != undefined && (
         <DataGrid
+          sx={{
+            "& .MuiDataGrid-cell": {
+              borderBottomColor: colors.black[400],
+            },
+            "	.MuiDataGrid-overlay": {
+              borderLeftColor: colors.black[400],
+            },
+            "& .MuiDataGrid-root": {
+              borderBottomColor: colors.black[400],
+            },
+            "& .MuiDataGrid-footerContainer": {
+              borderTopColor: colors.black[400],
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottomColor: colors.black[400],
+            },
+            border: "2px solid #5921d0",
+            boxShadow: "4px 2px 15px rgba(89, 33, 208, 0.29)",
+            backgroundColor: colors.indigoAccent[900],
+          }}
           rows={tableContent}
           columns={columns}
           getRowId={(row) => row.sim_ID}

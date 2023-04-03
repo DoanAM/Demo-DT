@@ -15,7 +15,7 @@ const Graphs = () => {
       width="50%"
       height="100%"
       marginRight="5px"
-      backgroundColor={colors.indigoAccent[900]}
+      // backgroundColor={colors.indigoAccent[900]}
       gap="5px"
       display="flex"
       flexDirection={"column"}

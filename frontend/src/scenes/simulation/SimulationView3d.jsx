@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import { OrbitControls, Html, useProgress } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
+import { tokens } from "../../theme";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import {
   Box,
@@ -43,6 +44,8 @@ const Loader = () => {
 };
 
 const SimulationView3d = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { simulationData, setSimulationData } = useContext(
     SimulationDataContext
   );
@@ -166,9 +169,10 @@ const SimulationView3d = () => {
         justifyContent: "center",
         alignItems: "center",
         marginLeft: "5px",
-        border: "2px solid #7A410D",
+        border: "2px solid #5921d0",
         borderRadius: "14px",
-        boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
+        boxShadow: "4px 2px 15px rgba(89, 33, 208, 0.29)",
+        backgroundColor: colors.indigoAccent[900],
       }}
     >
       <Box display={"flex"}>
@@ -222,7 +226,7 @@ const SimulationView3d = () => {
         }}
       >
         <React.Suspense fallback={<Loader />}>
-          <axesHelper args={[1000]} />
+          {/* <axesHelper args={[1000]} /> */}
           <OrbitControls />
           <hemisphereLight
             color="rgb(242,247,253)"

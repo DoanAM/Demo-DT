@@ -19,7 +19,7 @@ const SimulationLoadHandler = (props) => {
 
   const getSimulationData = async (id) => {
     const response = await Axios.get(
-      `/simulationAPI/get-simulationData/?simulation=${id}`
+      `/simulation-API/get-simulationData/?simulation=${id}`
     );
     console.log(response.data);
     const updatedData = response.data.map((item) => {

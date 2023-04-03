@@ -104,33 +104,44 @@ class GetWholeData(APIView):
 
 
 class GetLive3dPoints(APIView):
+
     def is_between(num, a, b):
         return a <= num <= b
 
-    def get(self, request, *args, **kwargs):
-        latestXfolldist = Drive.objects.last().xfolldist
-        latestYfolldist = Drive.objects.last().yfolldist
-        latestZfolldist = Drive.objects.last().zfolldist
-        latestS1acttrq = Drive.objects.last().s1acttrq
-        latestS1follerr = Drive.objects.last().s1follerr
+    def get(self, request):
+        currentTime = time.time()
+
+        latestPosVector = Cnc.objects.values(
+            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").last()
+
+        latestCncX = Wcs.objects.last().x
+
+        queryset = Drive.objects.only(
+            "xfolldist", "yfolldist", "zfolldist", "s1acttrq", "s1follerr").last()
+        latestXfolldist = queryset.xfolldist
+        latestYfolldist = queryset.yfolldist
+        latestZfolldist = queryset.zfolldist
+        latestS1acttrq = queryset.s1acttrq
+        latestS1follerr = queryset.s1follerr
+
         latestToolID = Tool.objects.last().id
         latestToolDiameter = ToolsInChanger.objects.get(
-            toolId=latestToolID).realDiameter
+            tool_id=latestToolID).field_nominal_diameter
         latestToolLength = ToolsInChanger.objects.get(
-            toolId=latestToolID).realOverallLength
+            tool_id=latestToolID).nominal_overall_length
 
         pointAmount = 60
         timeIntervalBetweenPoints = int(1000/pointAmount)
         latestTimestamp = Cnc.objects.last().timestamp
-        posVectorList = []
-        latestPosVector = Cnc.objects.values(
-            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").last()
         firstTimestamp = latestTimestamp - 1000
         timestampList = list(
             range(firstTimestamp, latestTimestamp, timeIntervalBetweenPoints))
-        for time in timestampList:
+
+        posVectorList = []
+
+        for timePoint in timestampList:
             posVector = Cnc.objects.values(
-                "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=time).order_by("timestamp").first()
+                "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=timePoint).order_by("timestamp").first()
             posVectorList.append(posVector)
 
         latestProg = Prog.objects.last().programname
@@ -152,23 +163,20 @@ class GetLive3dPoints(APIView):
                        zMin < vector["zcurrpos"]/10000 < zMax]):
                     line = True
                 else:
-                    #line = False
-                    line = True  # for debug purposes
+                    line = False
                     break
+        print((time.time() - currentTime)*1000)
 
         #####################################
-        latestTimestamp = Cnc.objects.last().timestamp
-        latestPosVector = Cnc.objects.values(
-            "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").last()
         secLatestTimestamp = Cnc.objects.last().timestamp - 500
         seclatestPosVector = Cnc.objects.values(
             "xcurrpos", "ycurrpos", "zcurrpos", "timestamp").filter(timestamp__gt=secLatestTimestamp).order_by("timestamp").first()
-
         return Response({"latestPoint": latestPosVector,
                          "secondLatestPoint": seclatestPosVector,
                          "timestamp": latestTimestamp,
-                         "lastProg": latestProg, "line": line,
-                         "latestWcs": latestWcs,
+                         "lastProg": latestProg,
+                         "line": line,
+                         "latestX": latestCncX,
                          "posVectorList": posVectorList,
                          "pointAmount": pointAmount,
                          "s1acttrq": latestS1acttrq,

@@ -25,7 +25,7 @@ const Live_Data = () => {
         </Box>
         <Box
           width="100%"
-          backgroundColor={colors.indigoAccent[900]}
+          // backgroundColor={colors.indigoAccent[900]}
           mt={"20px"}
           display="flex"
           height={"70vh"}

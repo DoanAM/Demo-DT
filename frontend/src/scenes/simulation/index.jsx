@@ -31,7 +31,7 @@ const Simulation = () => {
       value={{ simulationData, setSimulationData }}
     >
       <Box m="20px">
-        <Box display="flex" alignItems={"flex-start"} gap="20px">
+        <Box display="flex" alignItems={"flex-start"} gap="40px">
           <Box width={"50%"} height="120px">
             <Typography variant="h3">Simulation Management</Typography>
             <FileUploadBox />

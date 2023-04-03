@@ -19,7 +19,7 @@ const CardHandler = () => {
   const generateRandomKey = () => Math.random().toString(16).slice(2);
 
   const fetchData = async () => {
-    const response = await Axios.get("/debug/get-all");
+    const response = await Axios.get("/live-data-API/get-all");
     //console.log(response);
     // setLiveData({
     //   xcurrpos: response.data.cnc.xcurrpos,
@@ -44,21 +44,18 @@ const CardHandler = () => {
   }
 
   return (
-    <Box display={"flex"} flexDirection="column">
-      <Typography name="CardsTest">{data.data.cnc.timestamp}</Typography>
-      <Box
-        width="100%"
-        height="100%"
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gap="20px"
-        borderRadius={"20px"}
-      >
-        <Card readings={data.data} />
-        <Card readings={data.data} />
-        <Card readings={data.data} />
-        <Card readings={data.data} />
-      </Box>
+    <Box
+      width="100%"
+      height="100%"
+      display="grid"
+      gridTemplateColumns="repeat(12, 1fr)"
+      gap="20px"
+      borderRadius={"20px"}
+    >
+      <Card readings={data.data} />
+      <Card readings={data.data} />
+      <Card readings={data.data} />
+      <Card readings={data.data} />
     </Box>
   );
 };

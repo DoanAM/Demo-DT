@@ -19,6 +19,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeScale,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
@@ -27,6 +28,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  TimeScale,
   Title,
   Tooltip,
   Legend
@@ -53,7 +55,13 @@ const LineChartHandler = (props) => {
 
   const fetchOldData = async (m, f, t) => {
     const response = await Axios.get(
-      "/debug/get-timedData/" + "?model=" + m + "&field=" + f + "&timespan=" + t
+      "/live-data-API/get-timedData/" +
+        "?model=" +
+        m +
+        "&field=" +
+        f +
+        "&timespan=" +
+        t
     );
     setGraphPoints((e) => response.data);
     //console.log(response);
@@ -69,7 +77,7 @@ const LineChartHandler = (props) => {
 
   const fetchData = async (m, f) => {
     const response = await Axios.get(
-      "/debug/get-cur/" + "?model=" + m + "&field=" + f
+      "/live-data-API/get-cur/" + "?model=" + m + "&field=" + f
     );
     setGraphPoints((e) => [...e, response.data]);
     //console.log("GraphPoints Are:", graphPoints);
@@ -142,16 +150,13 @@ const LineChartHandler = (props) => {
         paddingTop: "15px",
         paddingLeft: "20px",
         paddingRight: "20px",
-        //margin: "5px 5px 5px 0px",
+        backgroundColor: colors.indigoAccent[900],
         border: "2px solid #7A410D",
         borderRadius: "14px",
         boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
       }}
     >
       <Box width={"100%"} display="flex" justifyContent={"space-between"}>
-        {newData && (
-          <Typography name="LineChartTest">{newData.data.x}</Typography>
-        )}
         <FormControl size="small">
           <InputLabel id="test-select-label">Time</InputLabel>
           <Select

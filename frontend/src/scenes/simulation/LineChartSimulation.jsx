@@ -10,6 +10,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useState, useContext, useEffect, useRef } from "react";
+import { tokens } from "../../theme";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { CurrentSimulationContext, PlaybackIdxContext } from "./Context.jsx";
 import {
@@ -35,6 +36,8 @@ ChartJS.register(
 );
 
 const LineChartsimulation = (props) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { currentSimulationData, setCurrentSimulationData } = useContext(
     CurrentSimulationContext
   );
@@ -127,17 +130,18 @@ const LineChartsimulation = (props) => {
     <Box
       sx={{
         height: "50%",
-        border: "2px solid #7A410D",
+        border: "2px solid #5921d0",
         borderRadius: "14px",
-        boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
+        boxShadow: "4px 2px 15px rgba(89, 33, 208, 0.29)",
         display: "flex",
         flexDirection: "column",
+        backgroundColor: colors.indigoAccent[900],
       }}
     >
       <Box mr="5px">
         <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
       </Box>
-      <FormControl fullWidth>
+      <FormControl size="small">
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-label"

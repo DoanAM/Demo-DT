@@ -22,7 +22,7 @@ const FileUploadBox = () => {
 
     axios({
       method: "POST",
-      url: `/simulationAPI/upload-simulation/?precision=${quality}`,
+      url: `/simulation-API/upload-simulation/?precision=${quality}`,
       data: fd,
       xsrfHeaderName: "X-CSRFToken",
       xsrfCookieName: "csrftoken",
@@ -39,7 +39,6 @@ const FileUploadBox = () => {
     <Box>
       <Box display="flex" justifyContent={"flex-start"}>
         <Button variant="contained" component="label">
-          Select File
           <input type="file" accept=".nc" onChange={setFile} />
         </Button>
         <Button variant="contained" component="label" onClick={handleUpload}>

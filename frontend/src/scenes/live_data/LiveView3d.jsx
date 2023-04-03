@@ -12,15 +12,18 @@ import {
   MenuItem,
   InputLabel,
   Typography,
+  useTheme,
 } from "@mui/material";
 import MxCube from "../../components/MxCube.jsx";
 import Line from "../../components/Line.jsx";
 import Tool from "../../components/Tool.jsx";
 import { colorMapper, sleep, Loader } from "../../components/Utilities.jsx";
 import { LineColorVariables_LiveData } from "../../data/LineColorVariables.js";
-import cncfakedata from "../../data/cncfakedata.json";
+import { tokens, RoutingContext } from "../../theme";
 
 const LiveView3d = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [positionMachine, setPositionMachine] = useState({
     xcurrpos: 0,
     ycurrpos: 0,
@@ -38,7 +41,7 @@ const LiveView3d = () => {
   //const data = cncfakedata;
 
   const fetchData = async () => {
-    const response = await Axios.get("debug/live3dPoints");
+    const response = await Axios.get("live-data-API/live3dPoints");
     //console.log("Data is: ", response);
     return response;
   };
@@ -154,20 +157,19 @@ const LiveView3d = () => {
   return (
     <Box
       sx={{
+        backgroundColor: colors.indigoAccent[900],
         width: "50%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginLeft: "5px",
+        paddingTop: "15px",
+        paddingRight: "5px",
         border: "2px solid #7A410D",
         borderRadius: "14px",
         boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
       }}
     >
-      {data && (
-        <Typography name="LiveView3DTest">{data.data.timestamp}</Typography>
-      )}
       <FormControl>
         <InputLabel id="test-select-label">Highlight Value</InputLabel>
         <Select
@@ -196,7 +198,7 @@ const LiveView3d = () => {
         }}
       >
         <React.Suspense fallback={<Loader />}>
-          <axesHelper args={[1000]} />
+          {/* <axesHelper args={[1000]} /> */}
           <OrbitControls />
           <hemisphereLight
             color="rgb(242,247,253)"

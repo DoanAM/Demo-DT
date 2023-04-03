@@ -40,6 +40,8 @@ const Card = (props) => {
       backgroundColor={colors.indigoAccent[900]}
       borderRadius={"15px"}
       padding="20px"
+      boxShadow="4px 2px 15px rgba(122, 65, 13, 0.29)"
+      border="2px solid #7A410D"
     >
       <Box display="flex" flexDirection={"row"} justifyContent="space-between">
         <FormControl size="small">
