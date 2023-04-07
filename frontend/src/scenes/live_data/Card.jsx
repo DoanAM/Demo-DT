@@ -90,7 +90,8 @@ const Card = (props) => {
       </Box>
       <Box display="flex">
         <Typography variant="h2" sx={{ color: colors.primary[500] }}>
-          {String(props.readings[title][text.toLowerCase()])}
+          {/* {String(props.readings[title][text.toLowerCase()])} */}
+          abc
         </Typography>
       </Box>
     </Box>
