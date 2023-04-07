@@ -6,9 +6,6 @@ digital_twin/settings.py
 # npm modules
 frontend/node_modules
 
-#bundled files
-frontend/static
-
 #logs
 warning.log
 frontend/static/frontend/main.js
