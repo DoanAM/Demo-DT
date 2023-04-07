@@ -16,7 +16,7 @@ simulation/machine_learning/Code/SimPy/log
 media
 Data/CSV_Dateien/*
 Data/*
-simulation/machine_learning 
+simulation/machine_learning/
 
 # Migration Files
 simulation/migrations/*
