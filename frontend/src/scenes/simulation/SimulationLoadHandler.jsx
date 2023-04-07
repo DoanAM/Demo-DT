@@ -1,21 +1,10 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Button, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, useContext } from "react";
-import { useLoader } from "@react-three/fiber";
-import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
-import Axios from "axios";
 import { SimulationDataContext } from "./Context.jsx";
-import Workpiece from "../../components/Workpiece.jsx";
 
 const SimulationLoadHandler = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const { simulationData, setSimulationData } = useContext(
-    SimulationDataContext
-  );
 
   return (
     <Button
