@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'digital_twin.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '20221215_Backup',
-        'USER': 'postgres',
-        'PASSWORD': 'minh95',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'myproject',
+        'USER': 'root',
+        'PASSWORD': 'testappptw',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '3306',
     },
 }
 
