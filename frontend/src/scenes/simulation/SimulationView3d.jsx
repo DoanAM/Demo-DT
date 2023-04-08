@@ -44,6 +44,8 @@ const Loader = () => {
 };
 
 const SimulationView3d = () => {
+  const fileNames = Array.from({ length: 286 }, (_, i) => (i + 1) * 100);
+  console.log(fileNames);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { simulationData, setSimulationData } = useContext(
@@ -53,6 +55,14 @@ const SimulationView3d = () => {
     CurrentSimulationContext
   );
   const axisOffsets = [-516, 530, 681];
+
+  const numFiles = 286;
+
+  // const stlContext = require.context("../../data/MRS", false, /\.stl$/);
+  // const workpieces = stlContext.keys().map((key) => {
+  //   const url = stlContext(key);
+  //   return <Workpiece path={url} />;
+  // });
 
   const [simulation, setSimulation] = useState();
   const [xCoordinate, setXCoordinate] = useState(0);
@@ -247,16 +257,6 @@ const SimulationView3d = () => {
               );
             })}
           <MachineBed visible={true} />
-          {/* <group position={[0, 0, -yCoordinate - 419]}>
-            <Bridge />
-            <group position={[xCoordinate + 518, 0, 0]}>
-              <XAxis />
-              <group position={[0, zCoordinate - 285, 0]}>
-                <Spindle />
-                <Tool position={[-518, 527, 680]} />
-              </group>
-            </group>
-          </group> */}
           <MxCube
             bridgePosition={-yCoordinate - 419}
             xAxisPosition={xCoordinate + 518}
@@ -264,16 +264,12 @@ const SimulationView3d = () => {
             toolDiameter={toolDiameter}
             toolLength={toolLength}
           />
-          {simulation != undefined &&
-            simulation.map((item, index) => {
-              return (
-                <Workpiece
-                  path={item.stlPath}
-                  key={index}
-                  visible={index === playbackIdx}
-                />
-              );
-            })}
+          {fileNames.map((filename) => (
+            <Workpiece path={filename} />
+          ))}
+          {/* {filePaths.map((filePath) => (
+            <Workpiece path={filePath} key={filePath} visible={true} />
+          ))} */}
         </React.Suspense>
       </Canvas>
       {simulation != undefined && (
