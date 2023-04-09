@@ -69,12 +69,9 @@ const LineChartHandler = (props) => {
       if (counter === 1) {
         setGraphPoints([]);
       }
-      console.log("Counter is", counter);
+
       const slicedData = LiveJson.slice(0, counter);
-      console.log(
-        "slicedData is",
-        slicedData.map((d) => d[type])
-      );
+
       setGraphPoints(slicedData);
     }
   }, [counter, LiveJson, type]);

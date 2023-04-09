@@ -10,29 +10,28 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { tokens } from "../../theme";
 import datalist from "../../data/datalist.json";
-import DropDown from "../../components/DropDown.jsx";
+
+const types = [
+  { key: "XCurrPos", name: "X Position", unit: "mm" },
+  { key: "YCurrPos", name: "Y Position", unit: "mm" },
+  { key: "ZCurrPos", name: "Z Position", unit: "mm" },
+  { key: "XFollDist", name: "X Error", unit: "mm" },
+  { key: "YFollDist", name: "Y Error", unit: "mm" },
+  { key: "ZFollDist", name: "Z Error", unit: "mm" },
+  { key: "Programname", name: "Programname", unit: "" },
+];
 
 const Card = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState("cnc");
-  const [type, setType] = useState(["XCurrPos"]);
-  const [text, setText] = useState("XCurrPos");
+  const [type, setType] = useState("XCurrPos");
+  const selectedType = types.find((item) => item.key === type);
   const typographyRef = useRef(null);
 
-  const handleGroupChange = (e) => {
-    setTitle(e.target.value);
-  };
-
   const handleTypeChange = (e) => {
-    setText(e.target.value);
+    setType(e.target.value);
   };
-
-  useEffect(() => {
-    const table = datalist.find((obj) => obj.tablename === title);
-    const tableKeys = Object.keys(table["columnnames"]);
-    setType(tableKeys);
-  }, [title]);
 
   return (
     <Box
@@ -45,43 +44,21 @@ const Card = (props) => {
     >
       <Box display="flex" flexDirection={"row"} justifyContent="space-between">
         <FormControl size="small">
-          <InputLabel id="test-select-label">Category</InputLabel>
-          <Select
-            labelId="test-select-label"
-            label="Time"
-            value={title}
-            onChange={handleGroupChange}
-            sx={{
-              // width: 200,
-              height: 30,
-            }}
-          >
-            {datalist.map((item, index) => {
-              return (
-                <MenuItem value={item.tablename} key={index}>
-                  {item.tablename}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-
-        <FormControl size="small">
           <InputLabel id="test-select-label">Value</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
-            value={text}
+            value={type}
             sx={{
               // width: 200,
               height: 30,
             }}
             onChange={handleTypeChange}
           >
-            {type.map((item, index) => {
+            {types.map((item, index) => {
               return (
-                <MenuItem value={item} key={index}>
-                  {item}
+                <MenuItem value={item.key} key={item.index}>
+                  {item.name}
                 </MenuItem>
               );
             })}
@@ -89,9 +66,13 @@ const Card = (props) => {
         </FormControl>
       </Box>
       <Box display="flex">
-        <Typography variant="h2" sx={{ color: colors.primary[500] }}>
-          {/* {String(props.readings[title][text.toLowerCase()])} */}
-          abc
+        <Typography
+          variant="h2"
+          sx={{ color: colors.primary[500] }}
+          typography={{ fontSize: "clamp(14px, 3vw, 25px)" }}
+        >
+          {props.readings && props.readings[type]}{" "}
+          {props.readings && selectedType.unit}
         </Typography>
       </Box>
     </Box>

@@ -18,7 +18,7 @@ const Live_Data = () => {
   return (
     <LiveDataContext.Provider value={{ liveData, setLiveData }}>
       <Box m="20px">
-        <Box height="120px">
+        <Box height="13vh">
           <CardHandler />
         </Box>
         <Box

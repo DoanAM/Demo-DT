@@ -7,6 +7,7 @@ import Card from "./Card.jsx";
 import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import LiveDataContext from "./LiveDataContext.jsx";
+import LiveJson from "../../data/Live.json";
 
 const CardHandler = () => {
   const theme = useTheme();
@@ -15,33 +16,25 @@ const CardHandler = () => {
   const stateRef = useRef();
   stateRef.boardContentLength = boardContent.length;
   const { liveData, setLiveData } = useContext(LiveDataContext);
+  const [counter, setCounter] = useState(null);
+  const [currData, setCurrData] = useState();
 
-  const generateRandomKey = () => Math.random().toString(16).slice(2);
+  useEffect(() => {
+    const startTime = new Date();
+    startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
 
-  const fetchData = async () => {
-    const response = await Axios.get("/live-data-API/get-all");
-    //console.log(response);
-    // setLiveData({
-    //   xcurrpos: response.data.cnc.xcurrpos,
-    //   ycurrpos: response.data.cnc.ycurrpos,
-    //   zcurrpos: response.data.cnc.zcurrpos,
-    // });
-    return response;
-  };
+    const intervalId = setInterval(() => {
+      const timeElapsed = Math.floor((new Date() - startTime) / 1000) + 1;
+      setCounter(timeElapsed % (LiveJson.length - 1));
+    }, 1000);
+    console.log(counter);
+    return () => clearInterval(intervalId);
+  }, []);
 
-  const { status, data } = useQuery({
-    queryKey: ["currentData"],
-    queryFn: fetchData,
-    refetchInterval: 1000,
-  });
-
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "error") {
-    return <div>Error cannot connect to database</div>;
-  }
+  useEffect(() => {
+    console.log("CurrData is ", LiveJson[counter]);
+    setCurrData(LiveJson[counter]);
+  }, [counter, LiveJson]);
 
   return (
     <Box
@@ -52,10 +45,10 @@ const CardHandler = () => {
       gap="20px"
       borderRadius={"20px"}
     >
-      <Card readings={data.data} />
-      <Card readings={data.data} />
-      <Card readings={data.data} />
-      <Card readings={data.data} />
+      <Card readings={currData} />
+      <Card readings={currData} />
+      <Card readings={currData} />
+      <Card readings={currData} />
     </Box>
   );
 };
