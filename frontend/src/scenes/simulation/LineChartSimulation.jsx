@@ -24,6 +24,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import SimulationJSON from "../../data/Simulation.json";
 
 ChartJS.register(
   CategoryScale,
@@ -34,23 +35,29 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+const types = [
+  { key: "XCurrPos", name: "X Position", unit: "mm" },
+  { key: "YCurrPos", name: "Y Position", unit: "mm" },
+  { key: "ZCurrPos", name: "Z Position", unit: "mm" },
+  { key: "Removal_Volume", name: "Removal Volume", unit: "mm³" },
+];
 
 const LineChartsimulation = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const { currentSimulationData, setCurrentSimulationData } = useContext(
     CurrentSimulationContext
   );
-  const [age, setAge] = useState("");
-  const keys = Object.keys(currentSimulationData[0]);
+  const [value, setValue] = useState("XCurrPos");
+  const selectedType = types.find((type) => type.key === value);
+  //const keys = Object.keys(currentSimulationData[0]);
   const chartRef = useRef();
   const { playbackIdx, setPlaybackIdx } = useContext(PlaybackIdxContext);
 
-  const close = () => {
-    props.onClose(props.id);
-  };
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setValue(event.target.value);
+    console.log(event.target.unit);
   };
 
   const options = {
@@ -78,22 +85,31 @@ const LineChartsimulation = (props) => {
       mode: "index",
       intersect: false,
     },
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Time",
+        },
+      },
+
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: `${selectedType.name} in ${selectedType.unit}`,
+        },
+      },
+    },
   };
-
-  const normalizedTimestampArray = (data) => {
-    const timestampArray = Object.values(data).map((obj) => obj.Timestamp);
-    const initVal = timestampArray[0];
-    const normalizedArray = timestampArray.map((e) => e - initVal);
-    return normalizedArray;
-  };
-
-  const labels = normalizedTimestampArray(currentSimulationData);
-
   const data = {
-    labels,
+    labels: Object.keys(SimulationJSON).map(
+      (key) => SimulationJSON[key].Timestamp
+    ),
     datasets: [
       {
-        data: Object.values(currentSimulationData).map((obj) => obj[age]),
+        data: Object.values(SimulationJSON).map((obj) => obj[value]),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
@@ -138,20 +154,22 @@ const LineChartsimulation = (props) => {
         backgroundColor: colors.indigoAccent[900],
       }}
     >
-      <Box mr="5px">
-        <CloseOutlinedIcon onClick={close}>X</CloseOutlinedIcon>
-      </Box>
       <FormControl size="small">
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={value}
           label="Value"
           onChange={handleChange}
         >
-          {keys.map((e) => {
-            return <MenuItem value={e}> {e} </MenuItem>;
+          {types.map((e) => {
+            return (
+              <MenuItem value={e.key} unit={e.unit} key={e.key}>
+                {" "}
+                {e.name}{" "}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

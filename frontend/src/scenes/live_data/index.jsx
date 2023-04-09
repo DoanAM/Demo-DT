@@ -10,12 +10,10 @@ const Live_Data = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [liveData, setLiveData] = useState([]);
-  const { currentSite, setCurrentSite } = useContext(RoutingContext);
 
-  useEffect(() => {
-    setCurrentSite("live_data");
-    console.log("Live_data is set");
-  }, []);
+  const { currentSite, setCurrentSite } = useContext(RoutingContext);
+  const startTime = new Date();
+  startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
 
   return (
     <LiveDataContext.Provider value={{ liveData, setLiveData }}>

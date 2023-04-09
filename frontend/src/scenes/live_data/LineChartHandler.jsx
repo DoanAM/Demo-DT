@@ -21,6 +21,7 @@ import {
   Legend,
   TimeScale,
 } from "chart.js";
+import LiveJson from "../../data/Live.json";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(
@@ -33,86 +34,65 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+const types = [
+  { key: "XCurrPos", name: "X Position", unit: "mm" },
+  { key: "YCurrPos", name: "Y Position", unit: "mm" },
+  { key: "ZCurrPos", name: "Z Position", unit: "mm" },
+  { key: "XFollDist", name: "X Error", unit: "mm" },
+  { key: "YFollDist", name: "Y Error", unit: "mm" },
+  { key: "ZFollDist", name: "Z Error", unit: "mm" },
+];
 
 const LineChartHandler = (props) => {
   const theme = useTheme();
+  const [counter, setCounter] = useState(null);
   const colors = tokens(theme.palette.mode);
   const [graphPoints, setGraphPoints] = useState([]);
   const [timeFrame, setTimeFrame] = useState("1hr");
   const [title, setTitle] = useState("cnc");
-  const [type, setType] = useState(["XCurrPos"]);
-  const [text, setText] = useState("XCurrPos");
+  const [type, setType] = useState("XCurrPos");
+  const selectedType = types.find((item) => item.key === type);
+  useEffect(() => {
+    const startTime = new Date();
+    startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
+
+    const intervalId = setInterval(() => {
+      const timeElapsed = Math.floor((new Date() - startTime) / 1000) + 1;
+      setCounter(timeElapsed % (LiveJson.length - 1));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    if (counter !== null) {
+      if (counter === 1) {
+        setGraphPoints([]);
+      }
+      console.log("Counter is", counter);
+      const slicedData = LiveJson.slice(0, counter);
+      console.log(
+        "slicedData is",
+        slicedData.map((d) => d[type])
+      );
+      setGraphPoints(slicedData);
+    }
+  }, [counter, LiveJson, type]);
 
   const data = {
+    labels: graphPoints.map((item) => item.Timestamp),
     datasets: [
       {
-        data: graphPoints,
+        data: graphPoints.map((d) => d[type]),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
 
-  const fetchOldData = async (m, f, t) => {
-    const response = await Axios.get(
-      "/live-data-API/get-timedData/" +
-        "?model=" +
-        m +
-        "&field=" +
-        f +
-        "&timespan=" +
-        t
-    );
-    setGraphPoints((e) => response.data);
-    //console.log(response);
-    return response;
-  };
-
-  const { status, data: oldData } = useQuery({
-    queryKey: ["OtherData", title, text.toLowerCase(), timeFrame],
-    queryFn: ({ queryKey }) =>
-      fetchOldData(queryKey[1], queryKey[2], queryKey[3]),
-    refetchOnWindowFocus: false,
-  });
-
-  const fetchData = async (m, f) => {
-    const response = await Axios.get(
-      "/live-data-API/get-cur/" + "?model=" + m + "&field=" + f
-    );
-    setGraphPoints((e) => [...e, response.data]);
-    //console.log("GraphPoints Are:", graphPoints);
-    return response;
-  };
-
-  const checkData = oldData?.data;
-
-  const { data: newData } = useQuery({
-    queryKey: ["graphData", title, text.toLowerCase(), checkData],
-    queryFn: ({ queryKey }) => fetchData(queryKey[1], queryKey[2]),
-    enabled: !!checkData,
-    refetchInterval: 3000,
-    refetchOnWindowFocus: false,
-  });
-
-  const handleTimeframeChange = (e) => {
-    //console.log(e.target.value);
-    setTimeFrame(e.target.value);
-  };
-
-  const handleGroupChange = (e) => {
-    setTitle(e.target.value);
-  };
-
   const handleTypeChange = (e) => {
-    const lowerCaseText = e.target.value;
-    setText(lowerCaseText);
+    setType(e.target.value);
   };
-
-  useEffect(() => {
-    const table = datalist.find((obj) => obj.tablename === title);
-    const tableKeys = Object.keys(table["columnnames"]);
-    setType(tableKeys);
-  }, [title]);
 
   const options = {
     responsive: true,
@@ -139,6 +119,27 @@ const LineChartHandler = (props) => {
       mode: "index",
       intersect: false,
     },
+    sampling: {
+      enabled: true,
+      threshold: 5, // Maximum number of points to display on the chart
+    },
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Time in min:sec",
+        },
+      },
+
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: `${selectedType.name} in ${selectedType.unit}`,
+        },
+      },
+    },
   };
 
   return (
@@ -158,64 +159,21 @@ const LineChartHandler = (props) => {
     >
       <Box width={"100%"} display="flex" justifyContent={"space-between"}>
         <FormControl size="small">
-          <InputLabel id="test-select-label">Time</InputLabel>
-          <Select
-            labelId="test-select-label"
-            label="Time"
-            value={timeFrame}
-            //defaultValue={"1day"}
-            sx={{
-              //width: 200,
-              height: 30,
-            }}
-            onChange={handleTimeframeChange}
-          >
-            <MenuItem value="30min">
-              <Typography variant="h6">30min</Typography>
-            </MenuItem>
-            <MenuItem value="1hr">1hr</MenuItem>
-            <MenuItem value="1day">1day</MenuItem>
-            <MenuItem value="1month">1month</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl size="small">
-          <InputLabel id="test-select-label">Category</InputLabel>
-          <Select
-            labelId="test-select-label"
-            label="Time"
-            value={title}
-            sx={{
-              //width: 200,
-              height: 30,
-            }}
-            onChange={handleGroupChange}
-          >
-            {datalist.map((item, index) => {
-              return (
-                <MenuItem value={item.tablename} key={index}>
-                  {item.tablename}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-
-        <FormControl size="small">
           <InputLabel id="test-select-label">Value</InputLabel>
           <Select
             labelId="test-select-label"
             label="Time"
-            value={text}
+            value={type}
             sx={{
               width: 200,
               height: 30,
             }}
             onChange={handleTypeChange}
           >
-            {type.map((item, index) => {
+            {types.map((item, index) => {
               return (
-                <MenuItem value={item} key={index}>
-                  {item}
+                <MenuItem value={item.key} key={item.index}>
+                  {item.name}
                 </MenuItem>
               );
             })}

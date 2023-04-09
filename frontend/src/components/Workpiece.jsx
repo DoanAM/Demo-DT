@@ -6,7 +6,11 @@ const Workpiece = (props) => {
   const geom = useLoader(STLLoader, `/static/frontend/MRS/${props.path}.stl`);
   //const geom = props.geom;
   return (
-    <mesh position={[0, 230, 260]} rotation-x={-Math.PI / 2}>
+    <mesh
+      position={[0, 230, 260]}
+      rotation-x={-Math.PI / 2}
+      visible={props.visible}
+    >
       <primitive object={geom} attach="geometry" />
       <meshPhongMaterial
         attach={"material"}

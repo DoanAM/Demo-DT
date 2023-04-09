@@ -37,6 +37,7 @@ import { red } from "@mui/material/colors";
 import { LineColorVariables_Simulation } from "../../data/LineColorVariables.js";
 import { colorMapper } from "../../components/Utilities.jsx";
 import MxCube from "../../components/MxCube.jsx";
+import SimulationJSON from "../../data/Simulation.json";
 
 const Loader = () => {
   const { progress } = useProgress();
@@ -45,7 +46,7 @@ const Loader = () => {
 
 const SimulationView3d = () => {
   const fileNames = Array.from({ length: 286 }, (_, i) => (i + 1) * 100);
-  console.log(fileNames);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { simulationData, setSimulationData } = useContext(
@@ -54,15 +55,6 @@ const SimulationView3d = () => {
   const { currentSimulationData, setCurrentSimulationData } = useContext(
     CurrentSimulationContext
   );
-  const axisOffsets = [-516, 530, 681];
-
-  const numFiles = 286;
-
-  // const stlContext = require.context("../../data/MRS", false, /\.stl$/);
-  // const workpieces = stlContext.keys().map((key) => {
-  //   const url = stlContext(key);
-  //   return <Workpiece path={url} />;
-  // });
 
   const [simulation, setSimulation] = useState();
   const [xCoordinate, setXCoordinate] = useState(0);
@@ -91,74 +83,81 @@ const SimulationView3d = () => {
   const handlePlayback = () => {
     playbackInterval.current = setInterval(() => {
       setPlaybackIdx((value) => value + 1);
-    }, 40);
+    }, 150);
   };
 
   useEffect(() => {
-    if (simulation == null || playbackIdx == simulation.length) {
-      clearInterval(playbackInterval.current);
-      playbackInterval.current = null;
-      setPlaybackIdx(0);
-      return;
-    } else {
-      setXCoordinate(simulation[playbackIdx].XCurrPos);
-      setYCoordinate(simulation[playbackIdx].YCurrPos);
-      setZCoordinate(simulation[playbackIdx].ZCurrPos);
-      if (simulation[playbackIdx].stlPath != null) {
-        setStlPath(simulation[playbackIdx].stlPath);
-      }
+    if (playbackIdx != 0) {
+      setXCoordinate(SimulationJSON[playbackIdx].XCurrPos);
+      setYCoordinate(SimulationJSON[playbackIdx].YCurrPos);
+      setZCoordinate(SimulationJSON[playbackIdx].ZCurrPos);
     }
   }, [playbackIdx]);
 
   useEffect(() => {
-    if (simulation != null) {
-      setVectorArray(
-        simulation.map(function (item) {
-          return new THREE.Vector3(
-            item.xcurrpos,
-            item.zcurrpos + 230, //+ 230
-            -item.ycurrpos + 260 //+ 260
-          );
-        })
-      );
+    if (playbackIdx >= 285) {
+      clearInterval(playbackInterval.current);
+      playbackInterval.current = null;
+      setPlaybackIdx(0);
     }
-  }, [simulation]);
+  }, [playbackIdx]);
+
+  // useEffect(() => {
+  //   if (simulation == null || playbackIdx == simulation.length) {
+  //     clearInterval(playbackInterval.current);
+  //     playbackInterval.current = null;
+  //     setPlaybackIdx(0);
+  //     return;
+  //   } else {
+  //     setXCoordinate(simulation[playbackIdx].XCurrPos);
+  //     setYCoordinate(simulation[playbackIdx].YCurrPos);
+  //     setZCoordinate(simulation[playbackIdx].ZCurrPos);
+  //     if (simulation[playbackIdx].stlPath != null) {
+  //       setStlPath(simulation[playbackIdx].stlPath);
+  //     }
+  //   }
+  // }, [playbackIdx]);
+
+  // useEffect(() => {
+  //   if (simulation != null) {
+  //     setVectorArray(
+  //       simulation.map(function (item) {
+  //         return new THREE.Vector3(
+  //           item.xcurrpos,
+  //           item.zcurrpos + 230, //+ 230
+  //           -item.ycurrpos + 260 //+ 260
+  //         );
+  //       })
+  //     );
+  //   }
+  // }, [simulation]);
 
   useEffect(() => {
-    if (simulation != null) {
-      let pointPairs = [];
-      for (let i = 0; i < simulation.length - 1; i++) {
-        const startPoint = new THREE.Vector3(
-          simulation[i].XCurrPos,
-          simulation[i].ZCurrPos + 230,
-          -simulation[i].YCurrPos + 260
-        );
-        const endPoint = new THREE.Vector3(
-          simulation[i + 1].XCurrPos,
-          simulation[i + 1].ZCurrPos + 230,
-          -simulation[i + 1].YCurrPos + 260
-        );
-        ///calculate Color
-        const colorArray = () => {
-          const result = {};
-          LineColorVariables_Simulation.forEach((obj) => {
-            result[obj.variable] = colorMapper(
-              simulation[i][obj.variable],
-              obj.min,
-              obj.max
-            );
-          });
-          return result;
-        };
-        pointPairs.push({
-          points: [startPoint, endPoint],
-          color: colorArray(),
-        });
-      }
-      setVectorArray(pointPairs);
-      console.log(vectorArray);
+    let pointPairs = [];
+    for (let i = 1; i < 286; i++) {
+      const startPoint = new THREE.Vector3(
+        SimulationJSON[i].XCurrPos,
+        SimulationJSON[i].ZCurrPos + 230,
+        -SimulationJSON[i].YCurrPos + 260
+      );
+      const endPoint = new THREE.Vector3(
+        SimulationJSON[i + 1].XCurrPos,
+        SimulationJSON[i + 1].ZCurrPos + 230,
+        -SimulationJSON[i + 1].YCurrPos + 260
+      );
+      ///calculate Color
+      const colorArray = () => {
+        let result = {};
+        result = colorMapper(SimulationJSON[i]["Removal_Volume"], -1, 4);
+        return result;
+      };
+      pointPairs.push({
+        points: [startPoint, endPoint],
+        color: colorArray(),
+      });
     }
-  }, [simulation]);
+    setVectorArray(pointPairs);
+  }, []);
 
   const handlePause = () => {
     clearInterval(playbackInterval.current);
@@ -172,6 +171,7 @@ const SimulationView3d = () => {
   return (
     <Box
       sx={{
+        paddingTop: "15px",
         width: "50%",
         height: "55vh",
         display: "flex",
@@ -185,50 +185,6 @@ const SimulationView3d = () => {
         backgroundColor: colors.indigoAccent[900],
       }}
     >
-      <Box display={"flex"}>
-        <FormControl>
-          <InputLabel id="test-select-label">Simulation</InputLabel>
-          <Select
-            labelId="test-select-label"
-            label="Time"
-            value={""}
-            sx={{
-              width: 200,
-              height: 30,
-            }}
-            onChange={handleSelectChange}
-          >
-            {simulationData.map((item) => {
-              return (
-                <MenuItem value={item.ID} key={item.ID}>
-                  {item.ID}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel id="test-select-label">Highlight Value</InputLabel>
-          <Select
-            labelId="test-select-label"
-            label="Time"
-            defaultValue={""}
-            sx={{
-              width: 200,
-              height: 30,
-            }}
-            onChange={handleLineColorChange}
-          >
-            {LineColorVariables_Simulation.map((item, index) => {
-              return (
-                <MenuItem value={item.variable} key={index}>
-                  {item.variable}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </Box>
       <Canvas
         camera={{
           position: [0, 1300, 1500],
@@ -248,12 +204,7 @@ const SimulationView3d = () => {
           {vectorArray != undefined &&
             vectorArray.map((item, index) => {
               return (
-                <Line
-                  points={item.points}
-                  color={item.color}
-                  key={index}
-                  displayColor={lineVariable}
-                />
+                <Line points={item.points} color={item.color} key={index} />
               );
             })}
           <MachineBed visible={true} />
@@ -265,30 +216,33 @@ const SimulationView3d = () => {
             toolLength={toolLength}
           />
           {fileNames.map((filename) => (
-            <Workpiece path={filename} />
+            <Workpiece
+              key={filename}
+              path={filename}
+              visible={filename === playbackIdx * 100}
+            />
           ))}
           {/* {filePaths.map((filePath) => (
             <Workpiece path={filePath} key={filePath} visible={true} />
           ))} */}
         </React.Suspense>
       </Canvas>
-      {simulation != undefined && (
-        <Box display="flex">
-          <Slider
-            onChange={handleSliderChange}
-            valueLabelDisplay="auto"
-            max={simulation.length - 1}
-            sx={{ width: "30vw" }}
-            value={playbackIdx}
-          />
-          <IconButton onClick={handlePlayback}>
-            <PlayArrowOutlinedIcon />
-          </IconButton>
-          <IconButton onClick={handlePause}>
-            <PauseCircleOutlineOutlinedIcon />
-          </IconButton>
-        </Box>
-      )}
+      <Box display="flex">
+        <Slider
+          onChange={handleSliderChange}
+          valueLabelDisplay="auto"
+          min={1}
+          max={285}
+          sx={{ width: "30vw" }}
+          value={playbackIdx}
+        />
+        <IconButton onClick={handlePlayback}>
+          <PlayArrowOutlinedIcon />
+        </IconButton>
+        <IconButton onClick={handlePause}>
+          <PauseCircleOutlineOutlinedIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };

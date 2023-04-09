@@ -26,27 +26,16 @@ const BoxGraphs = () => {
     <Box
       sx={{
         width: "50%",
-        height: "100%",
+        height: "55vh",
         paddingLeft: "15px",
-        //border: "2px solid #7A410D",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         borderRadius: "14px",
-        //boxShadow: "4px 2px 15px rgba(122, 65, 13, 0.29)",
       }}
     >
-      <IconButton
-        style={{ borderRadius: 0 }}
-        onClick={addCardToBox}
-        disabled={currentSimulationData == undefined}
-      >
-        <AddIcon />
-      </IconButton>
-      <Box gap="15px" display="flex" flexDirection={"column"} height="100%">
-        {boxContent.map((e) => {
-          return (
-            <LineChartsimulation onClose={closeStatBox} id={e[1]} key={e[1]} />
-          );
-        })}
-      </Box>
+      <LineChartsimulation id={1} key={1} />
+      <LineChartsimulation id={2} key={2} />
     </Box>
   );
 };

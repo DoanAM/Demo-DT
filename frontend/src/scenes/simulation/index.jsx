@@ -40,7 +40,7 @@ const Simulation = () => {
             <SimulationTable />
           </Box>
         </Box>
-        <Box display="flex" flexDirection={"row"}>
+        <Box display="flex" flexDirection={"row"} paddingTop={"1vh"}>
           <CurrentSimulationContext.Provider
             value={{ currentSimulationData, setCurrentSimulationData }}
           >
