@@ -13,15 +13,28 @@ import {
   InputLabel,
   Typography,
   useTheme,
+  LinearProgress,
 } from "@mui/material";
 import MxCube from "../../components/MxCube.jsx";
-import Line from "../../components/Line.jsx";
-import Tool from "../../components/Tool.jsx";
+import Path from "../../components/Line.jsx";
+
 import { colorMapper, sleep, Loader } from "../../components/Utilities.jsx";
 import { LineColorVariables_LiveData } from "../../data/LineColorVariables.js";
 import { tokens, RoutingContext } from "../../theme";
+import LiveJson from "../../data/Live3D.json";
 
-const LiveView3d = () => {
+import LineCoordinates from "../../data/LineCoordinates.json";
+import RGB_XFollDist from "../../data/RGB_XFollDist.json";
+import RGB_YFollDist from "../../data/RGB_YFollDist.json";
+import RGB_ZFollDist from "../../data/RGB_ZFollDist.json";
+
+const types = [
+  { key: "XFollDist", name: "X Error", min: "-21643", max: "20540" },
+  { key: "YFollDist", name: "Y Error", min: "34644", max: "39034" },
+  { key: "ZFollDist", name: "Z Error", min: "-44296", max: "42503" },
+];
+
+const LiveView3d = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [positionMachine, setPositionMachine] = useState({
@@ -29,129 +42,47 @@ const LiveView3d = () => {
     ycurrpos: 0,
     zcurrpos: 0,
   });
-  const endPoint = useRef();
-  const [lineArray, setLineArray] = useState([]);
-  let startVector = null;
-  let endVector = null;
-  const axisOffsets = [-516, 530, 681];
-  const lastData = useRef();
-  const currentProgram = useRef();
-  const [lineVariable, setLineVariable] = useState("s1acttrq");
-  const [tool, setTool] = useState({});
-  //const data = cncfakedata;
-
-  const fetchData = async () => {
-    const response = await Axios.get("live-data-API/live3dPoints");
-    //console.log("Data is: ", response);
-    return response;
-  };
-
-  const { status, data } = useQuery({
-    queryKey: ["live3dPoints"],
-    queryFn: fetchData,
-    refetchInterval: 1000,
-  });
-
-  async function setMachineCoordinates() {
-    let arr = data.data.posVectorList;
-    for (let index = 0; index < arr.length; index++) {
-      setPositionMachine(arr[index]);
-      //console.log("Effect", Date.now(), positionMachine.current);
-      await sleep(20);
-    }
-  }
+  const [lineArray, setLineArray] = useState();
+  const [lineVariable, setLineVariable] = useState("XFollDist");
+  const [lineColors, setLineColors] = useState();
+  const selectedType = types.find((item) => item.key === lineVariable);
 
   useEffect(() => {
-    if (data != undefined) {
-      setMachineCoordinates();
+    if (props.counter !== null) {
+      const slicedData = LiveJson[props.counter];
+      setPositionMachine({
+        xcurrpos: slicedData.XCurrPos,
+        ycurrpos: slicedData.YCurrPos,
+        zcurrpos: slicedData.ZCurrPos,
+      });
+      setLineArray(LineCoordinates.slice(0, props.counter));
+      setLineColors(RGB_XFollDist.slice(0, props.counter));
     }
-  }, [data]);
-
-  ////////////////////////////////
-  //                            //
-  //         Draw Lines         //
-  //                            //
-  ////////////////////////////////
+  }, [props.counter]);
 
   useEffect(() => {
-    //check if data is available
-    if (data != undefined) {
-      //check if the new data === last data, then do nothing
-      if (data.data == lastData.current) {
-        return;
+    if (props.counter !== null) {
+      if (lineVariable == "XFollDist") {
+        setLineColors(RGB_XFollDist.slice(0, props.counter));
       }
-      if (data.lastProg != currentProgram.current) {
-        setLineArray([]);
+      if (lineVariable == "YFollDist") {
+        setLineColors(RGB_YFollDist.slice(0, props.counter));
       }
-      //check if line should be drawn
-      if (data.data.line == true) {
-        console.log("data is not old");
-        lastData.current = data.data;
-        //check if line starting point is available
-        if (endPoint.current == undefined) {
-          startVector = new THREE.Vector3(
-            data.data.posVectorList[data.data.posVectorList.length - 1]
-              .xcurrpos /
-              10000 +
-              axisOffsets[0],
-            data.data.posVectorList[data.data.posVectorList.length - 1]
-              .zcurrpos /
-              10000 +
-              axisOffsets[1],
-            data.data.posVectorList[data.data.posVectorList.length - 1]
-              .ycurrpos /
-              10000 +
-              axisOffsets[2]
-          );
-        } else {
-          startVector = endPoint.current;
-        }
-        endVector = new THREE.Vector3(
-          data.data.posVectorList[0].xcurrpos / 10000 + axisOffsets[0],
-          data.data.posVectorList[0].zcurrpos / 10000 + axisOffsets[1],
-          data.data.posVectorList[0].ycurrpos / 10000 + axisOffsets[2]
-        );
-        //calculate Color
-        const colorArray = () => {
-          const result = {};
-          LineColorVariables_LiveData.forEach((obj) => {
-            result[obj.variable] = colorMapper(
-              data.data[obj.variable],
-              obj.min,
-              obj.max
-            );
-          });
-          return result;
-        };
-        const newLine = {
-          vectors: [startVector, endVector],
-          color: colorArray(),
-        };
-        console.log("newLine is", newLine);
-        //create new line object with vectors and colors
-        setLineArray((e) => [...e, newLine]);
-        endPoint.current = endVector;
+      if (lineVariable == "ZFollDist") {
+        setLineColors(RGB_ZFollDist.slice(0, props.counter));
       }
     }
-  }, [data]);
-
-  ////////////////////////////////
-  //                            //
-  //          Set Tool          //
-  //                            //
-  ////////////////////////////////
-  useEffect(() => {
-    if (data != undefined) {
-      const currentTool = {
-        toolDiameter: data.data.toolDiameter,
-        toolLength: data.data.toolLength,
-      };
-      setTool(currentTool);
-    }
-  }, [data]);
+  }, [props.counter, lineVariable]);
 
   const handleSelectChange = (e) => {
     setLineVariable(e.target.value);
+  };
+
+  const barStyle = {
+    borderRadius: 10,
+    background: "linear-gradient(to right, #00FF00, #0000FF)",
+    height: 20,
+    width: 100,
   };
 
   return (
@@ -182,20 +113,26 @@ const LiveView3d = () => {
           }}
           onChange={handleSelectChange}
         >
-          {LineColorVariables_LiveData.map((item, index) => {
+          {types.map((item, index) => {
             return (
-              <MenuItem value={item.variable} key={index}>
-                {item.title}
+              <MenuItem value={item.key} key={index}>
+                {item.name}
               </MenuItem>
             );
           })}
         </Select>
       </FormControl>
+      <Box display={"flex"}>
+        <Typography style={{ left: 0 }}>{selectedType.min}</Typography>
+        <Box style={barStyle} />
+        <Typography style={{ right: 0 }}>{selectedType.max}</Typography>
+      </Box>
       <Canvas
         camera={{
           position: [0, 1300, 1500],
           far: 10000,
         }}
+        gl={{ localClippingEnabled: true }}
       >
         <React.Suspense fallback={<Loader />}>
           {/* <axesHelper args={[1000]} /> */}
@@ -207,7 +144,7 @@ const LiveView3d = () => {
           />
           <directionalLight position={[5, 575, 2265]} />
           <pointLight position={[0, 756, -2243]} />
-          {lineArray.map((e) => {
+          {/* {lineArray.map((e) => {
             return (
               <Line
                 points={e.vectors}
@@ -215,14 +152,17 @@ const LiveView3d = () => {
                 displayColor={lineVariable}
               />
             );
-          })}
+          })} */}
+          {lineArray && lineColors && (
+            <Path points={lineArray} rgb={lineColors} />
+          )}
 
           <MxCube
-            bridgePosition={positionMachine.ycurrpos / 10000}
-            xAxisPosition={positionMachine.xcurrpos / 10000}
-            spindlePosition={positionMachine.zcurrpos / 10000}
-            toolDiameter={tool.toolDiameter}
-            toolLength={tool.toolLength}
+            bridgePosition={-positionMachine.ycurrpos}
+            xAxisPosition={positionMachine.xcurrpos}
+            spindlePosition={positionMachine.zcurrpos}
+            toolDiameter={10}
+            toolLength={25}
           />
         </React.Suspense>
       </Canvas>

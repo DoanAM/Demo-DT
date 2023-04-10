@@ -9,32 +9,31 @@ import { useQuery } from "@tanstack/react-query";
 import LiveDataContext from "./LiveDataContext.jsx";
 import LiveJson from "../../data/Live.json";
 
-const CardHandler = () => {
+const CardHandler = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [boardContent, setBoardContent] = useState([]);
   const stateRef = useRef();
   stateRef.boardContentLength = boardContent.length;
   const { liveData, setLiveData } = useContext(LiveDataContext);
-  const [counter, setCounter] = useState(null);
+  //const [counter, setCounter] = useState(null);
   const [currData, setCurrData] = useState();
 
-  useEffect(() => {
-    const startTime = new Date();
-    startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
+  // useEffect((props) => {
+  //   const startTime = new Date();
+  //   startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
 
-    const intervalId = setInterval(() => {
-      const timeElapsed = Math.floor((new Date() - startTime) / 1000) + 1;
-      setCounter(timeElapsed % (LiveJson.length - 1));
-    }, 1000);
-    console.log(counter);
-    return () => clearInterval(intervalId);
-  }, []);
+  //   const intervalId = setInterval(() => {
+  //     const timeElapsed = Math.floor((new Date() - startTime) / 1000) + 1;
+  //     setCounter(timeElapsed % (LiveJson.length - 1));
+  //   }, 1000);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   useEffect(() => {
-    console.log("CurrData is ", LiveJson[counter]);
-    setCurrData(LiveJson[counter]);
-  }, [counter, LiveJson]);
+    setCurrData(LiveJson[props.counter]);
+  }, [props.counter, LiveJson]);
 
   return (
     <Box

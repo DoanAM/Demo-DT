@@ -5,21 +5,37 @@ import CardHandler from "./CardHandler.jsx";
 import LiveView3d from "./LiveView3d.jsx";
 import Graphs from "./Graphs.jsx";
 import LiveDataContext from "./LiveDataContext.jsx";
+import { useScroll } from "@react-three/drei";
+import LiveJson from "../../data/Live3D.json";
 
 const Live_Data = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [liveData, setLiveData] = useState([]);
-
+  const [counter, setCounter] = useState();
+  const [counter2, setCounter2] = useState();
   const { currentSite, setCurrentSite } = useContext(RoutingContext);
-  const startTime = new Date();
-  startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
+
+  useEffect(() => {
+    const startTime = new Date();
+    startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
+
+    const intervalId = setInterval(() => {
+      const timeElapsed = Math.floor((new Date() - startTime) / 100) + 1;
+      let miliseconds = timeElapsed % (LiveJson.length - 1);
+      let seconds = Math.round((timeElapsed % (LiveJson.length - 1)) / 10);
+      setCounter(miliseconds);
+      setCounter2(seconds);
+    }, 100);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <LiveDataContext.Provider value={{ liveData, setLiveData }}>
       <Box m="20px">
         <Box height="13vh">
-          <CardHandler />
+          {counter2 && <CardHandler counter={counter2} />}
         </Box>
         <Box
           width="100%"
@@ -28,8 +44,8 @@ const Live_Data = () => {
           display="flex"
           height={"70vh"}
         >
-          <Graphs />
-          <LiveView3d />
+          {counter2 && <Graphs counter={counter2} />}
+          {counter && <LiveView3d counter={counter} />}
         </Box>
       </Box>
     </LiveDataContext.Provider>

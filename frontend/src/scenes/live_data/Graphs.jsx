@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Box, Button, useTheme } from "@mui/material";
 import LineChartHandler from "./LineChartHandler.jsx";
 
-const Graphs = () => {
+const Graphs = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [boardContent, setBoardContent] = useState([]);
@@ -31,9 +31,9 @@ const Graphs = () => {
           />
         );
       })} */}
-      <LineChartHandler name="1" />
-      <LineChartHandler />
-      <LineChartHandler />
+      <LineChartHandler counter={props.counter} />
+      <LineChartHandler counter={props.counter} />
+      <LineChartHandler counter={props.counter} />
     </Box>
   );
 };

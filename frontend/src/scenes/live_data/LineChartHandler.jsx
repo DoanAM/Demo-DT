@@ -45,36 +45,34 @@ const types = [
 
 const LineChartHandler = (props) => {
   const theme = useTheme();
-  const [counter, setCounter] = useState(null);
+  //const [counter, setCounter] = useState(null);
   const colors = tokens(theme.palette.mode);
   const [graphPoints, setGraphPoints] = useState([]);
-  const [timeFrame, setTimeFrame] = useState("1hr");
-  const [title, setTitle] = useState("cnc");
   const [type, setType] = useState("XCurrPos");
   const selectedType = types.find((item) => item.key === type);
+  // useEffect(() => {
+  //   const startTime = new Date();
+  //   startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
+
+  //   const intervalId = setInterval(() => {
+  //     const timeElapsed = Math.floor((new Date() - startTime) / 1000) + 1;
+  //     setCounter(timeElapsed % (LiveJson.length - 1));
+  //   }, 1000);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
   useEffect(() => {
-    const startTime = new Date();
-    startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
-
-    const intervalId = setInterval(() => {
-      const timeElapsed = Math.floor((new Date() - startTime) / 1000) + 1;
-      setCounter(timeElapsed % (LiveJson.length - 1));
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    if (counter !== null) {
-      if (counter === 1) {
+    if (props.counter !== null) {
+      if (props.counter === 1) {
         setGraphPoints([]);
       }
 
-      const slicedData = LiveJson.slice(0, counter);
+      const slicedData = LiveJson.slice(0, props.counter);
 
       setGraphPoints(slicedData);
     }
-  }, [counter, LiveJson, type]);
+  }, [props.counter, LiveJson, type]);
 
   const data = {
     labels: graphPoints.map((item) => item.Timestamp),
@@ -92,6 +90,7 @@ const LineChartHandler = (props) => {
   };
 
   const options = {
+    animation: false,
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
