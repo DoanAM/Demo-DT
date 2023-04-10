@@ -30,7 +30,7 @@ import {
   XAxis,
   Spindle,
 } from "../../components/MachineParts.jsx";
-import Line from "../../components/Line.jsx";
+import Line2 from "../../components/Line2.jsx";
 import Workpiece from "../../components/Workpiece.jsx";
 import Tool from "../../components/Tool.jsx";
 import { red } from "@mui/material/colors";
@@ -204,7 +204,7 @@ const SimulationView3d = () => {
           {vectorArray != undefined &&
             vectorArray.map((item, index) => {
               return (
-                <Line points={item.points} color={item.color} key={index} />
+                <Line2 points={item.points} color={item.color} key={index} />
               );
             })}
           <MachineBed visible={true} />

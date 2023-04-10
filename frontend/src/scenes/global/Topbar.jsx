@@ -17,7 +17,7 @@ const Topbar = () => {
       display="flex"
       justifyContent="flex-end"
       p={2}
-      gap="152px"
+      gap="6vw"
       alignItems={"center"}
     >
       <Box>
@@ -55,16 +55,6 @@ const Topbar = () => {
         Simulation
       </Button>
       <Box height={"50px"} component="img" alt="Logo" src={AICom_Logo_2021} />
-      {/* <Button
-        variant="text"
-        sx={{
-          fontSize: "20px",
-          color: colors.black[100],
-          textTransform: "none",
-        }}
-      >
-        My Account
-      </Button> */}
     </Box>
   );
 };

@@ -6,7 +6,6 @@ const FileUploadBox = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selectedFile, setSelectedFile] = useState();
-  const [quality, setQuality] = useState(0.5);
 
   return (
     <Box>
@@ -16,9 +15,7 @@ const FileUploadBox = () => {
         </Button>
       </Box>
       <Slider
-        //key={`slider-${quality}`}
         aria-label="Precision"
-        value={quality}
         valueLabelDisplay="auto"
         step={0.1}
         marks

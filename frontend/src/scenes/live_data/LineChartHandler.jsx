@@ -38,9 +38,9 @@ const types = [
   { key: "XCurrPos", name: "X Position", unit: "mm" },
   { key: "YCurrPos", name: "Y Position", unit: "mm" },
   { key: "ZCurrPos", name: "Z Position", unit: "mm" },
-  { key: "XFollDist", name: "X Error", unit: "mm" },
-  { key: "YFollDist", name: "Y Error", unit: "mm" },
-  { key: "ZFollDist", name: "Z Error", unit: "mm" },
+  { key: "XFollDist", name: "X Error", unit: "steps" },
+  { key: "YFollDist", name: "Y Error", unit: "steps" },
+  { key: "ZFollDist", name: "Z Error", unit: "steps" },
 ];
 
 const LineChartHandler = (props) => {

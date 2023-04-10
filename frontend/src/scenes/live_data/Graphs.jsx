@@ -12,7 +12,7 @@ const Graphs = (props) => {
 
   return (
     <Box
-      width="50%"
+      width="50vw"
       height="100%"
       marginRight="5px"
       // backgroundColor={colors.indigoAccent[900]}

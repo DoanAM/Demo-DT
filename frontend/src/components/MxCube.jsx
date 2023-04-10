@@ -19,7 +19,7 @@ const MxCube = (props) => {
   const toolDiameter = 30;
 
   useFrame(() => {
-    bridgeRef.current.position.z = props.bridgePosition - 51;
+    bridgeRef.current.position.z = props.bridgePosition;
     xAxisRef.current.position.x = props.xAxisPosition;
     zAxisRef.current.position.y = props.spindlePosition;
   });

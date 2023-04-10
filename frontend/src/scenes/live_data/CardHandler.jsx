@@ -8,6 +8,7 @@ import Axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import LiveDataContext from "./LiveDataContext.jsx";
 import LiveJson from "../../data/Live.json";
+import MediaQuery from "react-responsive";
 
 const CardHandler = (props) => {
   const theme = useTheme();
@@ -39,15 +40,18 @@ const CardHandler = (props) => {
     <Box
       width="100%"
       height="100%"
-      display="grid"
-      gridTemplateColumns="repeat(12, 1fr)"
+      display="flex"
+      flexDirection={"row"}
+      //gridTemplateColumns="repeat(12, 1fr)"
       gap="20px"
       borderRadius={"20px"}
     >
-      <Card readings={currData} />
-      <Card readings={currData} />
-      <Card readings={currData} />
-      <Card readings={currData} />
+      <Card readings={currData} key={1} defaultValue={"XCurrPos"} />
+      <Card readings={currData} key={2} defaultValue={"YCurrPos"} />
+      <MediaQuery minWidth={1200}>
+        <Card readings={currData} key={3} defaultValue={"ZCurrPos"} />
+        <Card readings={currData} key={4} defaultValue={"Programname"} />
+      </MediaQuery>
     </Box>
   );
 };

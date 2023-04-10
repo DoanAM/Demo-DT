@@ -7,6 +7,7 @@ import Graphs from "./Graphs.jsx";
 import LiveDataContext from "./LiveDataContext.jsx";
 import { useScroll } from "@react-three/drei";
 import LiveJson from "../../data/Live3D.json";
+import MediaQuery from "react-responsive";
 
 const Live_Data = () => {
   const theme = useTheme();
@@ -44,7 +45,9 @@ const Live_Data = () => {
           display="flex"
           height={"70vh"}
         >
-          {counter2 && <Graphs counter={counter2} />}
+          <MediaQuery minWidth={1200}>
+            {counter2 && <Graphs counter={counter2} />}
+          </MediaQuery>
           {counter && <LiveView3d counter={counter} />}
         </Box>
       </Box>

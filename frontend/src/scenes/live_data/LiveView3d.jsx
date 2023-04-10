@@ -17,11 +17,11 @@ import {
 } from "@mui/material";
 import MxCube from "../../components/MxCube.jsx";
 import Path from "../../components/Line.jsx";
-
+import { useMediaQuery } from "react-responsive";
 import { colorMapper, sleep, Loader } from "../../components/Utilities.jsx";
 import { LineColorVariables_LiveData } from "../../data/LineColorVariables.js";
 import { tokens, RoutingContext } from "../../theme";
-import LiveJson from "../../data/Live3D.json";
+import LiveJson from "../../data/MachineCoordinates.json";
 
 import LineCoordinates from "../../data/LineCoordinates.json";
 import RGB_XFollDist from "../../data/RGB_XFollDist.json";
@@ -84,12 +84,15 @@ const LiveView3d = (props) => {
     height: 20,
     width: 100,
   };
-
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   return (
     <Box
       sx={{
         backgroundColor: colors.indigoAccent[900],
-        width: "50%",
+        width: isDesktopOrLaptop ? "50%" : "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -122,7 +125,7 @@ const LiveView3d = (props) => {
           })}
         </Select>
       </FormControl>
-      <Box display={"flex"}>
+      <Box display={"flex"} paddingTop={"2px"} paddingBottom={"2px"}>
         <Typography style={{ left: 0 }}>{selectedType.min}</Typography>
         <Box style={barStyle} />
         <Typography style={{ right: 0 }}>{selectedType.max}</Typography>

@@ -11,6 +11,7 @@ import {
 } from "./Context.jsx";
 import BoxGraphs from "./BoxGraphs.jsx";
 import FileUploadBox from "./FileUploadBox.jsx";
+import { useMediaQuery } from "react-responsive";
 
 //import DropBoxGraphs from "./DropBoxGraphs.jsx";
 
@@ -25,34 +26,50 @@ const Simulation = () => {
   useEffect(() => {
     setCurrentSite("simulation");
   }, []);
-
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   return (
     <SimulationDataContext.Provider
       value={{ simulationData, setSimulationData }}
     >
-      <Box m="20px">
-        <Box display="flex" alignItems={"flex-start"} gap="40px">
-          <Box width={"50%"} height="120px">
+      {isDesktopOrLaptop && (
+        <Box m="20px">
+          <Box display="flex" alignItems={"flex-start"} gap="40px">
+            <Box width={"50%"} height="120px">
+              <Typography variant="h3">Simulation Management</Typography>
+              <FileUploadBox />
+            </Box>
+            <Box width="50%">
+              <SimulationTable />
+            </Box>
+          </Box>
+          <Box display="flex" flexDirection={"row"} paddingTop={"1vh"}>
+            <CurrentSimulationContext.Provider
+              value={{ currentSimulationData, setCurrentSimulationData }}
+            >
+              <PlaybackIdxContext.Provider
+                value={{ playbackIdx, setPlaybackIdx }}
+              >
+                <SimulationView3d />
+                <BoxGraphs />
+              </PlaybackIdxContext.Provider>
+            </CurrentSimulationContext.Provider>
+          </Box>
+        </Box>
+      )}
+      {isTabletOrMobile && (
+        <Box m="20px" display={"flex"} flexDirection={"column"}>
+          <Box width={"100%"} height="120px">
             <Typography variant="h3">Simulation Management</Typography>
             <FileUploadBox />
           </Box>
-          <Box width="50%">
-            <SimulationTable />
+          <Box width="100%">
+            <SimulationTable height="50vh" />
           </Box>
         </Box>
-        <Box display="flex" flexDirection={"row"} paddingTop={"1vh"}>
-          <CurrentSimulationContext.Provider
-            value={{ currentSimulationData, setCurrentSimulationData }}
-          >
-            <PlaybackIdxContext.Provider
-              value={{ playbackIdx, setPlaybackIdx }}
-            >
-              <SimulationView3d />
-              <BoxGraphs />
-            </PlaybackIdxContext.Provider>
-          </CurrentSimulationContext.Provider>
-        </Box>
-      </Box>
+      )}
     </SimulationDataContext.Provider>
   );
 };

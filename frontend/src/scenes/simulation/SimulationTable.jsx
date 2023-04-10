@@ -10,21 +10,21 @@ const rows = [
   {
     sim_ID: 1,
     timestamp: "2023-04-08 20:25:13",
-    nc_file: 2,
+    nc_file: "Teil 3",
     precision: 0.3,
     finished: true,
   },
   {
     sim_ID: 2,
     timestamp: "2023-04-08 20:25:13",
-    nc_file: 2,
+    nc_file: "Teil 2",
     precision: 0.1,
     finished: false,
   },
   {
     sim_ID: 3,
     timestamp: "2023-04-08 20:25:13",
-    nc_file: 2,
+    nc_file: "Teil 1",
     precision: 0.4,
     finished: false,
   },
@@ -71,6 +71,7 @@ const SimulationTable = () => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTopColor: colors.black[400],
+            minHeight: "5vh",
           },
           "& .MuiDataGrid-columnHeaders": {
             borderBottomColor: colors.black[400],
