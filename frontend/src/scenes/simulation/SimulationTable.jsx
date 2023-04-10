@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import SimulationLoadHandler from "./SimulationLoadHandler.jsx";
+import { useMediaQuery } from "react-responsive";
 
 const rows = [
   {
@@ -34,6 +35,9 @@ const SimulationTable = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [tableContent, setTableContent] = useState();
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
 
   const columns = [
     { field: "sim_ID", headerName: "sim_ID" },
@@ -57,7 +61,7 @@ const SimulationTable = () => {
   ];
 
   return (
-    <Box height="30vh">
+    <Box height={isDesktopOrLaptop ? "30vh" : "50vh"}>
       <DataGrid
         sx={{
           "& .MuiDataGrid-cell": {
