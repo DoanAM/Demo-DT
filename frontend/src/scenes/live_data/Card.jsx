@@ -15,9 +15,9 @@ const types = [
   { key: "XCurrPos", name: "X Position", unit: "mm" },
   { key: "YCurrPos", name: "Y Position", unit: "mm" },
   { key: "ZCurrPos", name: "Z Position", unit: "mm" },
-  { key: "XFollDist", name: "X Error", unit: "" },
-  { key: "YFollDist", name: "Y Error", unit: "" },
-  { key: "ZFollDist", name: "Z Error", unit: "" },
+  { key: "XFollDist", name: "X Error", unit: "mm" },
+  { key: "YFollDist", name: "Y Error", unit: "mm" },
+  { key: "ZFollDist", name: "Z Error", unit: "mm" },
   { key: "Programname", name: "Programname", unit: "" },
 ];
 

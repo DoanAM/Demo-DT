@@ -19,7 +19,7 @@ const Live_Data = () => {
 
   useEffect(() => {
     const startTime = new Date();
-    startTime.setHours(8, 0, 0, 0); // set the starting time to 08:00:00.000
+    startTime.setHours(10, 0, 0, 0); // set the starting time to 08:00:00.000
 
     const intervalId = setInterval(() => {
       const timeElapsed = Math.floor((new Date() - startTime) / 100) + 1;

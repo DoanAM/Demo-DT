@@ -98,7 +98,7 @@ const SimulationView3d = () => {
     if (playbackIdx >= 285) {
       clearInterval(playbackInterval.current);
       playbackInterval.current = null;
-      setPlaybackIdx(0);
+      setPlaybackIdx(1);
     }
   }, [playbackIdx]);
 
@@ -164,8 +164,11 @@ const SimulationView3d = () => {
     playbackInterval.current = null;
   };
 
-  const handleLineColorChange = (e) => {
-    setLineVariable(e.target.value);
+  const barStyle = {
+    borderRadius: 10,
+    background: "linear-gradient(to right, #FF0000, #00FF00)",
+    height: 20,
+    width: 100,
   };
 
   return (
@@ -185,6 +188,11 @@ const SimulationView3d = () => {
         backgroundColor: colors.indigoAccent[900],
       }}
     >
+      <Box display={"flex"} paddingTop={"2px"} paddingBottom={"2px"}>
+        <Typography style={{ left: 0 }}>2.640mm³</Typography>
+        <Box style={barStyle} marginLeft={"3px"} marginRight={"3px"} />
+        <Typography style={{ right: 0 }}>0.003mm³</Typography>
+      </Box>
       <Canvas
         camera={{
           position: [0, 1300, 1500],

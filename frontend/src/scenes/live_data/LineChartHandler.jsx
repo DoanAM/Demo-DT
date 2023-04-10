@@ -38,9 +38,9 @@ const types = [
   { key: "XCurrPos", name: "X Position", unit: "mm" },
   { key: "YCurrPos", name: "Y Position", unit: "mm" },
   { key: "ZCurrPos", name: "Z Position", unit: "mm" },
-  { key: "XFollDist", name: "X Error", unit: "steps" },
-  { key: "YFollDist", name: "Y Error", unit: "steps" },
-  { key: "ZFollDist", name: "Z Error", unit: "steps" },
+  { key: "XFollDist", name: "X Error", unit: "mm" },
+  { key: "YFollDist", name: "Y Error", unit: "mm" },
+  { key: "ZFollDist", name: "Z Error", unit: "mm" },
 ];
 
 const LineChartHandler = (props) => {
@@ -48,7 +48,7 @@ const LineChartHandler = (props) => {
   //const [counter, setCounter] = useState(null);
   const colors = tokens(theme.palette.mode);
   const [graphPoints, setGraphPoints] = useState([]);
-  const [type, setType] = useState("XCurrPos");
+  const [type, setType] = useState(props.defaultValue);
   const selectedType = types.find((item) => item.key === type);
   // useEffect(() => {
   //   const startTime = new Date();

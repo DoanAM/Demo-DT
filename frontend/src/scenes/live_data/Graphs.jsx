@@ -31,9 +31,21 @@ const Graphs = (props) => {
           />
         );
       })} */}
-      <LineChartHandler counter={props.counter} />
-      <LineChartHandler counter={props.counter} />
-      <LineChartHandler counter={props.counter} />
+      <LineChartHandler
+        counter={props.counter}
+        key={"1"}
+        defaultValue={"XCurrPos"}
+      />
+      <LineChartHandler
+        counter={props.counter}
+        key={"2"}
+        defaultValue={"YCurrPos"}
+      />
+      <LineChartHandler
+        counter={props.counter}
+        key={"3"}
+        defaultValue={"ZCurrPos"}
+      />
     </Box>
   );
 };

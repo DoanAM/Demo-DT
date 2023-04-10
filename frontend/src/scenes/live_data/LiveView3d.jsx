@@ -29,9 +29,9 @@ import RGB_YFollDist from "../../data/RGB_YFollDist.json";
 import RGB_ZFollDist from "../../data/RGB_ZFollDist.json";
 
 const types = [
-  { key: "XFollDist", name: "X Error", min: "-21643", max: "20540" },
-  { key: "YFollDist", name: "Y Error", min: "34644", max: "39034" },
-  { key: "ZFollDist", name: "Z Error", min: "-44296", max: "42503" },
+  { key: "XFollDist", name: "X Error", min: "-2.16", max: "2.05" },
+  { key: "YFollDist", name: "Y Error", min: "3.46", max: "3.90" },
+  { key: "ZFollDist", name: "Z Error", min: "-4.42", max: "4.25" },
 ];
 
 const LiveView3d = (props) => {
@@ -126,9 +126,9 @@ const LiveView3d = (props) => {
         </Select>
       </FormControl>
       <Box display={"flex"} paddingTop={"2px"} paddingBottom={"2px"}>
-        <Typography style={{ left: 0 }}>{selectedType.min}</Typography>
-        <Box style={barStyle} />
-        <Typography style={{ right: 0 }}>{selectedType.max}</Typography>
+        <Typography style={{ left: 0 }}>{selectedType.min}mm</Typography>
+        <Box style={barStyle} marginLeft={"3px"} marginRight={"3px"} />
+        <Typography style={{ right: 0 }}>{selectedType.max}mm</Typography>
       </Box>
       <Canvas
         camera={{
