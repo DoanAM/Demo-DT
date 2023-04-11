@@ -92,7 +92,7 @@ const LiveView3d = (props) => {
     <Box
       sx={{
         backgroundColor: colors.indigoAccent[900],
-        width: isDesktopOrLaptop ? "50%" : "100%",
+        width: isDesktopOrLaptop ? "50%" : "95%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

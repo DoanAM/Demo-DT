@@ -13,13 +13,13 @@ const Live_Data = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [liveData, setLiveData] = useState([]);
-  const [counter, setCounter] = useState();
-  const [counter2, setCounter2] = useState();
+  const [counter, setCounter] = useState(0);
+  const [counter2, setCounter2] = useState(0);
   const { currentSite, setCurrentSite } = useContext(RoutingContext);
 
   useEffect(() => {
     const startTime = new Date();
-    startTime.setHours(10, 5, 0, 0); // set the starting time to 10:00:00.000
+    startTime.setHours(9, 0, 0, 0); // set the starting time to 10:00:00.000
 
     const intervalId = setInterval(() => {
       const timeElapsed = Math.floor((new Date() - startTime) / 100) + 1;
@@ -43,6 +43,7 @@ const Live_Data = () => {
           // backgroundColor={colors.indigoAccent[900]}
           mt={"20px"}
           display="flex"
+          justifyContent={"space-evenly"}
           height={"70vh"}
         >
           <MediaQuery minWidth={1200}>

@@ -34,8 +34,8 @@ const BoxGraphs = () => {
         borderRadius: "14px",
       }}
     >
-      <LineChartsimulation id={1} key={1} />
-      <LineChartsimulation id={2} key={2} />
+      <LineChartsimulation id={1} key={1} defaultValue={"XCurrPos"} />
+      <LineChartsimulation id={2} key={2} defaultValue={"YCurrPos"} />
     </Box>
   );
 };

@@ -49,7 +49,7 @@ const LineChartsimulation = (props) => {
   const { currentSimulationData, setCurrentSimulationData } = useContext(
     CurrentSimulationContext
   );
-  const [value, setValue] = useState("XCurrPos");
+  const [value, setValue] = useState(props.defaultValue);
   const selectedType = types.find((type) => type.key === value);
   //const keys = Object.keys(currentSimulationData[0]);
   const chartRef = useRef();
@@ -57,7 +57,6 @@ const LineChartsimulation = (props) => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    console.log(event.target.unit);
   };
 
   const options = {
@@ -146,6 +145,9 @@ const LineChartsimulation = (props) => {
     <Box
       sx={{
         height: "50%",
+        paddingTop: "15px",
+        paddingLeft: "20px",
+        paddingRight: "20px",
         border: "2px solid #5921d0",
         borderRadius: "14px",
         boxShadow: "4px 2px 15px rgba(89, 33, 208, 0.29)",
